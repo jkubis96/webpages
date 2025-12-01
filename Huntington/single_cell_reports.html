@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Raporty HTML</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(180deg, #0d1b3d, #1e3a8a);
+      color: #e0eaff;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: rgba(255,255,255,0.08);
+      padding: 20px;
+      text-align: center;
+      font-size: 28px;
+      font-weight: bold;
+      backdrop-filter: blur(6px);
+    }
+    .tabs {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+      gap: 20px;
+    }
+    .tab {
+      padding: 12px 22px;
+      background: rgba(255,255,255,0.12);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+      font-weight: bold;
+    }
+    .tab:hover {
+      background: rgba(255,255,255,0.25);
+    }
+    .active {
+      background: rgba(0,0,0,0.35);
+    }
+    .section {
+      display: none;
+      padding: 25px;
+      max-width: 900px;
+      margin: auto;
+    }
+    .section.active {
+      display: block;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      margin: 10px 0;
+      padding: 12px;
+      background: rgba(255,255,255,0.12);
+      border-radius: 6px;
+    }
+    a {
+      color: #a3d0ff;
+      font-weight: bold;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <header>Raporty HTML – Index</header>
+
+  <div class="tabs">
+    <div class="tab active" onclick="openTab('fused')">Fused organoids</div>
+    <div class="tab" onclick="openTab('embryos')">Embryos E13.5</div>
+    <div class="tab" onclick="openTab('mosaic')">Mosaic fused organoids</div>
+  </div>
+
+  <div id="fused" class="section active">
+    <h2>Fused organoids</h2>
+    <ul>
+      <li><a href="organoids_17ventral_17dorsal.html">organoids_17ventral_17dorsal</a></li>
+      <li><a href="organoids_21ventral_21dorsal.html">organoids_21ventral_21dorsal</a></li>
+      <li><a href="organoids_71ventral_71dorsal.html">organoids_71ventral_71dorsal</a></li>
+      <li><a href="organoids_77ventral_77dorsal.html">organoids_77ventral_77dorsal</a></li>
+    </ul>
+  </div>
+
+  <div id="embryos" class="section">
+    <h2>Embryos E13.5</h2>
+    <ul>
+      <li><a href="bac_21_dorsal.html">bac_21_dorsal</a></li>
+      <li><a href="bac_21_ventral.html">bac_21_ventral</a></li>
+      <li><a href="hu_128-21_dorsal.html.html">hu_128-21_dorsal</a></li>
+      <li><a href="hu_128-21_ventral.html">hu_128-21_ventral</a></li>
+      <li><a href="yac_128_dorsal.html">yac_128_dorsal</a></li>
+      <li><a href="yac_128_ventral.html">yac_128_ventral</a></li>
+    </ul>
+  </div>
+
+  <div id="mosaic" class="section">
+    <h2>Mosaic fused organoids</h2>
+    <ul>
+      <li><a href="mosaic_organoids_21ventral_71dorsal.html.html">mosaic_organoids_21ventral_71dorsal</a></li>
+      <li><a href="mosaic_organoids_71ventral_21dorsal.html">mosaic_organoids_71ventral_21dorsal</a></li>
+    </ul>
+  </div>
+
+  <script>
+    function openTab(id) {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+      event.target.classList.add('active');
+      document.getElementById(id).classList.add('active');
+    }
+  </script>
+</body>
+</html>
