@@ -1,0 +1,674 @@
+<html>
+    <head>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 1900px;
+                 height: 864px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+             #loadingBar {
+                 position:absolute;
+                 top:0px;
+                 left:0px;
+                 width: 1900px;
+                 height: 864px;
+                 background-color:rgba(200,200,200,0.8);
+                 -webkit-transition: all 0.5s ease;
+                 -moz-transition: all 0.5s ease;
+                 -ms-transition: all 0.5s ease;
+                 -o-transition: all 0.5s ease;
+                 transition: all 0.5s ease;
+                 opacity:1;
+             }
+
+             #bar {
+                 position:absolute;
+                 top:0px;
+                 left:0px;
+                 width:20px;
+                 height:20px;
+                 margin:auto auto auto auto;
+                 border-radius:11px;
+                 border:2px solid rgba(30,30,30,0.05);
+                 background: rgb(0, 173, 246); /* Old browsers */
+                 box-shadow: 2px 0px 4px rgba(0,0,0,0.4);
+             }
+
+             #border {
+                 position:absolute;
+                 top:10px;
+                 left:10px;
+                 width:500px;
+                 height:23px;
+                 margin:auto auto auto auto;
+                 box-shadow: 0px 0px 4px rgba(0,0,0,0.2);
+                 border-radius:10px;
+             }
+
+             #text {
+                 position:absolute;
+                 top:8px;
+                 left:530px;
+                 width:30px;
+                 height:50px;
+                 margin:auto auto auto auto;
+                 font-size:22px;
+                 color: #000000;
+             }
+
+             div.outerBorder {
+                 position:relative;
+                 top:400px;
+                 width:600px;
+                 height:44px;
+                 margin:auto auto auto auto;
+                 border:8px solid rgba(0,0,0,0.1);
+                 background: rgb(252,252,252); /* Old browsers */
+                 background: -moz-linear-gradient(top,  rgba(252,252,252,1) 0%, rgba(237,237,237,1) 100%); /* FF3.6+ */
+                 background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(252,252,252,1)), color-stop(100%,rgba(237,237,237,1))); /* Chrome,Safari4+ */
+                 background: -webkit-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Chrome10+,Safari5.1+ */
+                 background: -o-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Opera 11.10+ */
+                 background: -ms-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* IE10+ */
+                 background: linear-gradient(to bottom,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* W3C */
+                 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfcfc', endColorstr='#ededed',GradientType=0 ); /* IE6-9 */
+                 border-radius:72px;
+                 box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+             }
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+            <div id="loadingBar">
+              <div class="outerBorder">
+                <div id="text">0%</div>
+                <div id="border">
+                  <div id="bar"></div>
+                </div>
+              </div>
+            </div>
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "royalblue", "id": "Hsp90aa1", "label": "Hsp90aa1", "shape": "dot", "size": 15}, {"color": "royalblue", "id": "Actb", "label": "Actb", "shape": "dot", "size": 15}, {"color": "royalblue", "id": "Ccdc32", "label": "Ccdc32", "shape": "dot", "size": 12}, {"color": "royalblue", "id": "Dnajc7", "label": "Dnajc7", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Gapdh", "label": "Gapdh", "shape": "dot", "size": 15}, {"color": "royalblue", "id": "Ctnnb1", "label": "Ctnnb1", "shape": "dot", "size": 15}, {"color": "royalblue", "id": "Hsp90ab1", "label": "Hsp90ab1", "shape": "dot", "size": 15}, {"color": "royalblue", "id": "Hsp90b1", "label": "Hsp90b1", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Hspa4", "label": "Hspa4", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Hspa5", "label": "Hspa5", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Hspa8", "label": "Hspa8", "shape": "dot", "size": 15}, {"color": "royalblue", "id": "Ptges3", "label": "Ptges3", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Ywhae", "label": "Ywhae", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Arpc2", "label": "Arpc2", "shape": "dot", "size": 12}, {"color": "royalblue", "id": "Eef1a1", "label": "Eef1a1", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "H3f3b", "label": "H3f3b", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Msn", "label": "Msn", "shape": "dot", "size": 12}, {"color": "royalblue", "id": "Myl12a", "label": "Myl12a", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Tmsb4x", "label": "Tmsb4x", "shape": "dot", "size": 12}, {"color": "royalblue", "id": "Tpt1", "label": "Tpt1", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Dnaja2", "label": "Dnaja2", "shape": "dot", "size": 12}, {"color": "royalblue", "id": "Pabpc1", "label": "Pabpc1", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Ybx1", "label": "Ybx1", "shape": "dot", "size": 15}, {"color": "royalblue", "id": "Hnrnpa1", "label": "Hnrnpa1", "shape": "dot", "size": 15}, {"color": "royalblue", "id": "Ddx5", "label": "Ddx5", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Hnrnpa2b1", "label": "Hnrnpa2b1", "shape": "dot", "size": 15}, {"color": "royalblue", "id": "Hnrnpa3", "label": "Hnrnpa3", "shape": "dot", "size": 15}, {"color": "royalblue", "id": "Hnrnpc", "label": "Hnrnpc", "shape": "dot", "size": 15}, {"color": "royalblue", "id": "Hnrnpk", "label": "Hnrnpk", "shape": "dot", "size": 15}, {"color": "royalblue", "id": "Hnrnpu", "label": "Hnrnpu", "shape": "dot", "size": 15}, {"color": "royalblue", "id": "Matr3", "label": "Matr3", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Npm1", "label": "Npm1", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Rbmxl1", "label": "Rbmxl1", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Ncl", "label": "Ncl", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Celf1", "label": "Celf1", "shape": "dot", "size": 12}, {"color": "royalblue", "id": "Traf2", "label": "Traf2", "shape": "dot", "size": 12}, {"color": "royalblue", "id": "Clta", "label": "Clta", "shape": "dot", "size": 12}, {"color": "royalblue", "id": "Egr1", "label": "Egr1", "shape": "dot", "size": 12}, {"color": "royalblue", "id": "Sox2", "label": "Sox2", "shape": "dot", "size": 11}, {"color": "royalblue", "id": "Tcf4", "label": "Tcf4", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Top2a", "label": "Top2a", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Ywhaz", "label": "Ywhaz", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Prpf40a", "label": "Prpf40a", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Rheb", "label": "Rheb", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "G3bp1", "label": "G3bp1", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Sf3b2", "label": "Sf3b2", "shape": "dot", "size": 12}, {"color": "royalblue", "id": "Fos", "label": "Fos", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Mdk", "label": "Mdk", "shape": "dot", "size": 11}, {"color": "royalblue", "id": "Ddit3", "label": "Ddit3", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Eif2ak2", "label": "Eif2ak2", "shape": "dot", "size": 11}, {"color": "royalblue", "id": "Ddx3x", "label": "Ddx3x", "shape": "dot", "size": 11}, {"color": "royalblue", "id": "Eif4a1", "label": "Eif4a1", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Polr2i", "label": "Polr2i", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Rbm25", "label": "Rbm25", "shape": "dot", "size": 11}, {"color": "royalblue", "id": "Eef1b2", "label": "Eef1b2", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Aspm", "label": "Aspm", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Kif15", "label": "Kif15", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Mki67", "label": "Mki67", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Pclaf", "label": "Pclaf", "shape": "dot", "size": 11}, {"color": "royalblue", "id": "Top1", "label": "Top1", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Top2b", "label": "Top2b", "shape": "dot", "size": 12}, {"color": "royalblue", "id": "H2az1", "label": "H2az1", "shape": "dot", "size": 12}, {"color": "royalblue", "id": "Polr2e", "label": "Polr2e", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Rtf1", "label": "Rtf1", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Supt5", "label": "Supt5", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Tcea1", "label": "Tcea1", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Arhgap11a", "label": "Arhgap11a", "shape": "dot", "size": 11}, {"color": "royalblue", "id": "Ppp1r12a", "label": "Ppp1r12a", "shape": "dot", "size": 12}, {"color": "royalblue", "id": "Eif4g2", "label": "Eif4g2", "shape": "dot", "size": 12}, {"color": "orangered", "id": "Prps1", "label": "Prps1", "shape": "dot", "size": 14}, {"color": "orangered", "id": "Arnt2", "label": "Arnt2", "shape": "dot", "size": 12}, {"color": "orangered", "id": "Ten1", "label": "Ten1", "shape": "dot", "size": 12}, {"color": "orangered", "id": "Zfp366", "label": "Zfp366", "shape": "dot", "size": 12}, {"color": "royalblue", "id": "Suz12", "label": "Suz12", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Hdac2", "label": "Hdac2", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Mtf2", "label": "Mtf2", "shape": "dot", "size": 12}, {"color": "orangered", "id": "Zdhhc17", "label": "Zdhhc17", "shape": "dot", "size": 13}, {"color": "orangered", "id": "Add1", "label": "Add1", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Nsmce2", "label": "Nsmce2", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Elavl4", "label": "Elavl4", "shape": "dot", "size": 12}, {"color": "royalblue", "id": "Nsmce1", "label": "Nsmce1", "shape": "dot", "size": 12}, {"color": "royalblue", "id": "Upf3b", "label": "Upf3b", "shape": "dot", "size": 11}, {"color": "royalblue", "id": "Ndufab1", "label": "Ndufab1", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Malsu1", "label": "Malsu1", "shape": "dot", "size": 11}, {"color": "royalblue", "id": "Mrpl36", "label": "Mrpl36", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Ndufaf2", "label": "Ndufaf2", "shape": "dot", "size": 12}, {"color": "royalblue", "id": "Mrps7", "label": "Mrps7", "shape": "dot", "size": 12}, {"color": "orangered", "id": "Ubqln4", "label": "Ubqln4", "shape": "dot", "size": 13}, {"color": "orangered", "id": "Psmc2", "label": "Psmc2", "shape": "dot", "size": 13}, {"color": "orangered", "id": "Psmd11", "label": "Psmd11", "shape": "dot", "size": 13}, {"color": "orangered", "id": "Tmod3", "label": "Tmod3", "shape": "dot", "size": 12}, {"color": "orangered", "id": "Pak1", "label": "Pak1", "shape": "dot", "size": 13}, {"color": "orangered", "id": "Actr1a", "label": "Actr1a", "shape": "dot", "size": 13}, {"color": "orangered", "id": "Actr10", "label": "Actr10", "shape": "dot", "size": 12}, {"color": "orangered", "id": "Dync1li2", "label": "Dync1li2", "shape": "dot", "size": 12}, {"color": "orangered", "id": "Flnb", "label": "Flnb", "shape": "dot", "size": 13}, {"color": "orangered", "id": "Cerk", "label": "Cerk", "shape": "dot", "size": 13}, {"color": "orangered", "id": "Galc", "label": "Galc", "shape": "dot", "size": 12}, {"color": "orangered", "id": "Smpd1", "label": "Smpd1", "shape": "dot", "size": 12}, {"color": "orangered", "id": "Pes1", "label": "Pes1", "shape": "dot", "size": 13}, {"color": "orangered", "id": "Nip7", "label": "Nip7", "shape": "dot", "size": 12}, {"color": "orangered", "id": "Wdr3", "label": "Wdr3", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Cbx3", "label": "Cbx3", "shape": "dot", "size": 11}, {"color": "orangered", "id": "Rtca", "label": "Rtca", "shape": "dot", "size": 12}, {"color": "orangered", "id": "Camk2b", "label": "Camk2b", "shape": "dot", "size": 12}, {"color": "orangered", "id": "Pxn", "label": "Pxn", "shape": "dot", "size": 11}, {"color": "orangered", "id": "Chpt1", "label": "Chpt1", "shape": "dot", "size": 13}, {"color": "orangered", "id": "Pafah1b2", "label": "Pafah1b2", "shape": "dot", "size": 11}, {"color": "orangered", "id": "Ptdss1", "label": "Ptdss1", "shape": "dot", "size": 12}, {"color": "royalblue", "id": "Ttc3", "label": "Ttc3", "shape": "dot", "size": 11}, {"color": "royalblue", "id": "Vim", "label": "Vim", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Skil", "label": "Skil", "shape": "dot", "size": 12}, {"color": "orangered", "id": "Dmd", "label": "Dmd", "shape": "dot", "size": 12}, {"color": "orangered", "id": "Dtna", "label": "Dtna", "shape": "dot", "size": 12}, {"color": "royalblue", "id": "Lsm7", "label": "Lsm7", "shape": "dot", "size": 12}, {"color": "orangered", "id": "Dbn1", "label": "Dbn1", "shape": "dot", "size": 12}, {"color": "orangered", "id": "Aplp1", "label": "Aplp1", "shape": "dot", "size": 12}, {"color": "orangered", "id": "Impa1", "label": "Impa1", "shape": "dot", "size": 12}, {"color": "orangered", "id": "Inpp4b", "label": "Inpp4b", "shape": "dot", "size": 12}, {"color": "orangered", "id": "Eif3l", "label": "Eif3l", "shape": "dot", "size": 12}, {"color": "orangered", "id": "Eif3b", "label": "Eif3b", "shape": "dot", "size": 12}, {"color": "royalblue", "id": "Psmd9", "label": "Psmd9", "shape": "dot", "size": 12}, {"color": "royalblue", "id": "Lpl", "label": "Lpl", "shape": "dot", "size": 12}, {"color": "royalblue", "id": "Dennd5a", "label": "Dennd5a", "shape": "dot", "size": 12}, {"color": "royalblue", "id": "Rab6a", "label": "Rab6a", "shape": "dot", "size": 12}, {"color": "orangered", "id": "Ppp2ca", "label": "Ppp2ca", "shape": "dot", "size": 12}, {"color": "orangered", "id": "Ptpa", "label": "Ptpa", "shape": "dot", "size": 12}, {"color": "orangered", "id": "Adk", "label": "Adk", "shape": "dot", "size": 12}, {"color": "orangered", "id": "Pde1c", "label": "Pde1c", "shape": "dot", "size": 11}, {"color": "orangered", "id": "Pde8b", "label": "Pde8b", "shape": "dot", "size": 11}, {"color": "orangered", "id": "Plcb1", "label": "Plcb1", "shape": "dot", "size": 12}, {"color": "orangered", "id": "Ipmk", "label": "Ipmk", "shape": "dot", "size": 11}, {"color": "royalblue", "id": "Cdkn1c", "label": "Cdkn1c", "shape": "dot", "size": 12}, {"color": "royalblue", "id": "Ccnd2", "label": "Ccnd2", "shape": "dot", "size": 12}, {"color": "royalblue", "id": "Psma7", "label": "Psma7", "shape": "dot", "size": 12}, {"color": "royalblue", "id": "Psma5", "label": "Psma5", "shape": "dot", "size": 12}, {"color": "royalblue", "id": "Rad21", "label": "Rad21", "shape": "dot", "size": 12}, {"color": "royalblue", "id": "Nipbl", "label": "Nipbl", "shape": "dot", "size": 12}, {"color": "royalblue", "id": "Ranbp9", "label": "Ranbp9", "shape": "dot", "size": 12}, {"color": "royalblue", "id": "Mkln1", "label": "Mkln1", "shape": "dot", "size": 12}, {"color": "orangered", "id": "Flt3", "label": "Flt3", "shape": "dot", "size": 12}, {"color": "orangered", "id": "Ptprj", "label": "Ptprj", "shape": "dot", "size": 11}, {"color": "royalblue", "id": "Hmgb1", "label": "Hmgb1", "shape": "dot", "size": 12}, {"color": "royalblue", "id": "Hmgb2", "label": "Hmgb2", "shape": "dot", "size": 11}, {"color": "orangered", "id": "Ell", "label": "Ell", "shape": "dot", "size": 12}, {"color": "orangered", "id": "Ccnt2", "label": "Ccnt2", "shape": "dot", "size": 12}, {"color": "orangered", "id": "Fgfr2", "label": "Fgfr2", "shape": "dot", "size": 12}, {"color": "orangered", "id": "Sos1", "label": "Sos1", "shape": "dot", "size": 11}, {"color": "royalblue", "id": "Elovl2", "label": "Elovl2", "shape": "dot", "size": 11}, {"color": "royalblue", "id": "Elovl5", "label": "Elovl5", "shape": "dot", "size": 11}, {"color": "orangered", "id": "Bad", "label": "Bad", "shape": "dot", "size": 11}, {"color": "orangered", "id": "Ywhag", "label": "Ywhag", "shape": "dot", "size": 11}, {"color": "orangered", "id": "Cdk8", "label": "Cdk8", "shape": "dot", "size": 11}, {"color": "orangered", "id": "Med13", "label": "Med13", "shape": "dot", "size": 11}, {"color": "orangered", "id": "Ablim1", "label": "Ablim1", "shape": "dot", "size": 11}, {"color": "orangered", "id": "Ablim3", "label": "Ablim3", "shape": "dot", "size": 11}, {"color": "orangered", "id": "Arhgef1", "label": "Arhgef1", "shape": "dot", "size": 11}, {"color": "orangered", "id": "Gna12", "label": "Gna12", "shape": "dot", "size": 11}, {"color": "orangered", "id": "Sh3gl2", "label": "Sh3gl2", "shape": "dot", "size": 11}, {"color": "orangered", "id": "Gpc4", "label": "Gpc4", "shape": "dot", "size": 11}, {"color": "orangered", "id": "Lrrtm4", "label": "Lrrtm4", "shape": "dot", "size": 11}, {"color": "orangered", "id": "Trp53bp1", "label": "Trp53bp1", "shape": "dot", "size": 11}, {"color": "orangered", "id": "Xrcc6", "label": "Xrcc6", "shape": "dot", "size": 11}, {"color": "royalblue", "id": "Ptn", "label": "Ptn", "shape": "dot", "size": 11}, {"color": "orangered", "id": "Tuba1a", "label": "Tuba1a", "shape": "dot", "size": 12.550746785383243}, {"color": "orangered", "id": "Ppm1b", "label": "Ppm1b", "shape": "dot", "size": 11.287712379549449}]);
+                  edges = new vis.DataSet([{"color": "#8eb041", "from": "Hsp90aa1", "to": "Actb", "width": 1}, {"color": "#f47832", "from": "Hsp90aa1", "to": "Ccdc32", "width": 1}, {"color": "#8eb041", "from": "Hsp90aa1", "to": "Dnajc7", "width": 1}, {"color": "#8eb041", "from": "Hsp90aa1", "to": "Gapdh", "width": 1}, {"color": "#f47832", "from": "Hsp90aa1", "to": "Ctnnb1", "width": 1}, {"color": "#8eb041", "from": "Hsp90aa1", "to": "Hsp90ab1", "width": 1}, {"color": "#8eb041", "from": "Hsp90aa1", "to": "Hsp90b1", "width": 1}, {"color": "#8eb041", "from": "Hsp90aa1", "to": "Hspa4", "width": 1}, {"color": "#8eb041", "from": "Hsp90aa1", "to": "Hspa5", "width": 1}, {"color": "#8eb041", "from": "Hsp90aa1", "to": "Hspa8", "width": 1}, {"color": "#8eb041", "from": "Hsp90aa1", "to": "Ptges3", "width": 1}, {"color": "#8eb041", "from": "Hsp90aa1", "to": "Ywhae", "width": 1}, {"color": "#8eb041", "from": "Actb", "to": "Arpc2", "width": 1}, {"color": "#8eb041", "from": "Actb", "to": "Eef1a1", "width": 1}, {"color": "#8eb041", "from": "Actb", "to": "Gapdh", "width": 1}, {"color": "#8eb041", "from": "Actb", "to": "H3f3b", "width": 1}, {"color": "#8eb041", "from": "Actb", "to": "Hsp90ab1", "width": 1}, {"color": "#8eb041", "from": "Actb", "to": "Hspa8", "width": 1}, {"color": "#8eb041", "from": "Actb", "to": "Msn", "width": 1}, {"color": "#8eb041", "from": "Actb", "to": "Myl12a", "width": 1}, {"color": "#8eb041", "from": "Actb", "to": "Tmsb4x", "width": 1}, {"color": "#f47832", "from": "Actb", "to": "Tpt1", "width": 1}, {"color": "#8eb041", "from": "Hspa8", "to": "Dnaja2", "width": 1}, {"color": "#8eb041", "from": "Hspa8", "to": "Dnajc7", "width": 1}, {"color": "#8eb041", "from": "Hspa8", "to": "Eef1a1", "width": 1}, {"color": "#8eb041", "from": "Hspa8", "to": "Gapdh", "width": 1}, {"color": "#8eb041", "from": "Hspa8", "to": "Hsp90ab1", "width": 1}, {"color": "#8eb041", "from": "Hspa8", "to": "Hspa4", "width": 1}, {"color": "#8eb041", "from": "Hspa8", "to": "Hspa5", "width": 1}, {"color": "#8eb041", "from": "Hspa8", "to": "Pabpc1", "width": 1}, {"color": "#8eb041", "from": "Hspa8", "to": "Ptges3", "width": 1}, {"color": "#8eb041", "from": "Hspa8", "to": "Ybx1", "width": 1}, {"color": "#8eb041", "from": "Hnrnpa1", "to": "Ddx5", "width": 1}, {"color": "#8eb041", "from": "Hnrnpa1", "to": "Hnrnpa2b1", "width": 1}, {"color": "#8eb041", "from": "Hnrnpa1", "to": "Hnrnpa3", "width": 1}, {"color": "#8eb041", "from": "Hnrnpa1", "to": "Hnrnpc", "width": 1}, {"color": "#8eb041", "from": "Hnrnpa1", "to": "Hnrnpk", "width": 1}, {"color": "#8eb041", "from": "Hnrnpa1", "to": "Hnrnpu", "width": 1}, {"color": "#8eb041", "from": "Hnrnpa1", "to": "Matr3", "width": 1}, {"color": "#8eb041", "from": "Hnrnpa1", "to": "Npm1", "width": 1}, {"color": "#8eb041", "from": "Hnrnpa1", "to": "Pabpc1", "width": 1}, {"color": "#8eb041", "from": "Hnrnpa1", "to": "Rbmxl1", "width": 1}, {"color": "#8eb041", "from": "Hnrnpa1", "to": "Ybx1", "width": 1}, {"color": "#8eb041", "from": "Hnrnpu", "to": "Hnrnpa2b1", "width": 1}, {"color": "#8eb041", "from": "Hnrnpu", "to": "Hnrnpa3", "width": 1}, {"color": "#8eb041", "from": "Hnrnpu", "to": "Hnrnpc", "width": 1}, {"color": "#8eb041", "from": "Hnrnpu", "to": "Hnrnpk", "width": 1}, {"color": "#8eb041", "from": "Hnrnpu", "to": "Ncl", "width": 1}, {"color": "#8eb041", "from": "Hnrnpu", "to": "Rbmxl1", "width": 1}, {"color": "#8eb041", "from": "Hnrnpu", "to": "Ybx1", "width": 1}, {"color": "#8eb041", "from": "Hnrnpk", "to": "Ddx5", "width": 1}, {"color": "#8eb041", "from": "Hnrnpk", "to": "Hnrnpa2b1", "width": 1}, {"color": "#8eb041", "from": "Hnrnpk", "to": "Hnrnpa3", "width": 1}, {"color": "#8eb041", "from": "Hnrnpk", "to": "Hnrnpc", "width": 1}, {"color": "#8eb041", "from": "Hnrnpk", "to": "Matr3", "width": 1}, {"color": "#8eb041", "from": "Hnrnpk", "to": "Ncl", "width": 1}, {"color": "#8eb041", "from": "Hnrnpk", "to": "Pabpc1", "width": 1}, {"color": "#8eb041", "from": "Hnrnpk", "to": "Rbmxl1", "width": 1}, {"color": "#8eb041", "from": "Hnrnpc", "to": "Celf1", "width": 1}, {"color": "#8eb041", "from": "Hnrnpc", "to": "Ddx5", "width": 1}, {"color": "#8eb041", "from": "Hnrnpc", "to": "Hnrnpa2b1", "width": 1}, {"color": "#8eb041", "from": "Hnrnpc", "to": "Hnrnpa3", "width": 1}, {"color": "#8eb041", "from": "Hnrnpc", "to": "Matr3", "width": 1}, {"color": "#8eb041", "from": "Hnrnpc", "to": "Pabpc1", "width": 1}, {"color": "#8eb041", "from": "Hnrnpc", "to": "Rbmxl1", "width": 1}, {"color": "#8eb041", "from": "Hnrnpc", "to": "Ybx1", "width": 1}, {"color": "#8eb041", "from": "Hsp90ab1", "to": "Dnajc7", "width": 1}, {"color": "#8eb041", "from": "Hsp90ab1", "to": "Eef1a1", "width": 1}, {"color": "#8eb041", "from": "Hsp90ab1", "to": "Gapdh", "width": 1}, {"color": "#8eb041", "from": "Hsp90ab1", "to": "Hsp90b1", "width": 1}, {"color": "#8eb041", "from": "Hsp90ab1", "to": "Hspa4", "width": 1}, {"color": "#8eb041", "from": "Hsp90ab1", "to": "Hspa5", "width": 1}, {"color": "#8eb041", "from": "Hsp90ab1", "to": "Ptges3", "width": 1}, {"color": "#f47832", "from": "Hsp90ab1", "to": "Traf2", "width": 1}, {"color": "#f47832", "from": "Ctnnb1", "to": "Clta", "width": 1}, {"color": "#f47832", "from": "Ctnnb1", "to": "Egr1", "width": 1}, {"color": "#f47832", "from": "Ctnnb1", "to": "Sox2", "width": 1}, {"color": "#8eb041", "from": "Ctnnb1", "to": "Tcf4", "width": 1}, {"color": "#f47832", "from": "Ctnnb1", "to": "Top2a", "width": 1}, {"color": "#8eb041", "from": "Ctnnb1", "to": "Ywhaz", "width": 1}, {"color": "#f47832", "from": "Ctnnb1", "to": "Gapdh", "width": 1}, {"color": "#f47832", "from": "Ctnnb1", "to": "Prpf40a", "width": 1}, {"color": "#8eb041", "from": "Gapdh", "to": "Eef1a1", "width": 1}, {"color": "#8eb041", "from": "Gapdh", "to": "Hspa4", "width": 1}, {"color": "#8eb041", "from": "Gapdh", "to": "Rheb", "width": 1}, {"color": "#8eb041", "from": "Gapdh", "to": "Traf2", "width": 1}, {"color": "#8eb041", "from": "Hnrnpa3", "to": "Hnrnpa2b1", "width": 1}, {"color": "#8eb041", "from": "Hnrnpa3", "to": "Pabpc1", "width": 1}, {"color": "#8eb041", "from": "Hnrnpa3", "to": "Rbmxl1", "width": 1}, {"color": "#8eb041", "from": "Hnrnpa3", "to": "Ybx1", "width": 1}, {"color": "#8eb041", "from": "Hnrnpa2b1", "to": "Ncl", "width": 1}, {"color": "#8eb041", "from": "Hnrnpa2b1", "to": "Ybx1", "width": 1}, {"color": "#8eb041", "from": "Ybx1", "to": "G3bp1", "width": 1}, {"color": "#8eb041", "from": "Ybx1", "to": "Ncl", "width": 1}, {"color": "#8eb041", "from": "Ybx1", "to": "Pabpc1", "width": 1}, {"color": "#8eb041", "from": "Ybx1", "to": "Sf3b2", "width": 1}, {"color": "#f47832", "from": "Ybx1", "to": "Tpt1", "width": 1}, {"color": "#f47832", "from": "Ncl", "to": "Fos", "width": 1}, {"color": "#8eb041", "from": "Ncl", "to": "Mdk", "width": 1}, {"color": "#8eb041", "from": "Ncl", "to": "Npm1", "width": 1}, {"color": "#f47832", "from": "Ncl", "to": "Tpt1", "width": 1}, {"color": "#8eb041", "from": "Hspa5", "to": "Ddit3", "width": 1}, {"color": "#8eb041", "from": "Hspa5", "to": "Eif2ak2", "width": 1}, {"color": "#8eb041", "from": "Hspa5", "to": "Hsp90b1", "width": 1}, {"color": "#8eb041", "from": "Hspa5", "to": "Hspa4", "width": 1}, {"color": "#8eb041", "from": "Pabpc1", "to": "Ddx3x", "width": 1}, {"color": "#8eb041", "from": "Pabpc1", "to": "Eif4a1", "width": 1}, {"color": "#8eb041", "from": "Pabpc1", "to": "G3bp1", "width": 1}, {"color": "#8eb041", "from": "Hspa4", "to": "Dnaja2", "width": 1}, {"color": "#8eb041", "from": "Hspa4", "to": "Dnajc7", "width": 1}, {"color": "#8eb041", "from": "Hspa4", "to": "Eef1a1", "width": 1}, {"color": "#8eb041", "from": "Hspa4", "to": "Hsp90b1", "width": 1}, {"color": "#8eb041", "from": "Hspa4", "to": "Ptges3", "width": 1}, {"color": "#f47832", "from": "Prpf40a", "to": "Clta", "width": 1}, {"color": "#f47832", "from": "Prpf40a", "to": "Polr2i", "width": 1}, {"color": "#8eb041", "from": "Prpf40a", "to": "Rbm25", "width": 1}, {"color": "#f47832", "from": "Prpf40a", "to": "Rheb", "width": 1}, {"color": "#8eb041", "from": "Eef1a1", "to": "Eef1b2", "width": 1}, {"color": "#8eb041", "from": "Eef1a1", "to": "Eif4a1", "width": 1}, {"color": "#8eb041", "from": "Eef1a1", "to": "Tpt1", "width": 1}, {"color": "#8eb041", "from": "Top2a", "to": "Aspm", "width": 1}, {"color": "#8eb041", "from": "Top2a", "to": "Kif15", "width": 1}, {"color": "#8eb041", "from": "Top2a", "to": "Mki67", "width": 1}, {"color": "#8eb041", "from": "Top2a", "to": "Pclaf", "width": 1}, {"color": "#8eb041", "from": "Top2a", "to": "Top1", "width": 1}, {"color": "#8eb041", "from": "Top2a", "to": "Top2b", "width": 1}, {"color": "#8eb041", "from": "Polr2i", "to": "H2az1", "width": 1}, {"color": "#8eb041", "from": "Polr2i", "to": "Polr2e", "width": 1}, {"color": "#8eb041", "from": "Polr2i", "to": "Rtf1", "width": 1}, {"color": "#8eb041", "from": "Polr2i", "to": "Supt5", "width": 1}, {"color": "#8eb041", "from": "Polr2i", "to": "Tcea1", "width": 1}, {"color": "#8eb041", "from": "Aspm", "to": "Arhgap11a", "width": 1}, {"color": "#8eb041", "from": "Aspm", "to": "Kif15", "width": 1}, {"color": "#8eb041", "from": "Aspm", "to": "Mki67", "width": 1}, {"color": "#8eb041", "from": "Aspm", "to": "Pclaf", "width": 1}, {"color": "#f47832", "from": "Hsp90b1", "to": "Fos", "width": 1}, {"color": "#8eb041", "from": "Fos", "to": "Ddit3", "width": 1}, {"color": "#8eb041", "from": "Fos", "to": "Egr1", "width": 1}, {"color": "#f47832", "from": "Fos", "to": "Matr3", "width": 1}, {"color": "#f47832", "from": "Fos", "to": "Ppp1r12a", "width": 1}, {"color": "#8eb041", "from": "Eif4a1", "to": "Eif4g2", "width": 1}, {"color": "#8eb041", "from": "Eif4a1", "to": "G3bp1", "width": 1}, {"color": "#f47832", "from": "Prps1", "to": "Arnt2", "width": 1}, {"color": "#f47832", "from": "Prps1", "to": "Ten1", "width": 1}, {"color": "#f47832", "from": "Prps1", "to": "Zfp366", "width": 1}, {"color": "#8eb041", "from": "Polr2e", "to": "H2az1", "width": 1}, {"color": "#8eb041", "from": "Polr2e", "to": "Rtf1", "width": 1}, {"color": "#8eb041", "from": "Polr2e", "to": "Supt5", "width": 1}, {"color": "#8eb041", "from": "Polr2e", "to": "Tcea1", "width": 1}, {"color": "#8eb041", "from": "Suz12", "to": "H3f3b", "width": 1}, {"color": "#8eb041", "from": "Suz12", "to": "Hdac2", "width": 1}, {"color": "#8eb041", "from": "Suz12", "to": "Mtf2", "width": 1}, {"color": "#f47832", "from": "Zdhhc17", "to": "Add1", "width": 1}, {"color": "#f47832", "from": "Zdhhc17", "to": "Zdhhc17", "width": 1}, {"color": "#8eb041", "from": "Kif15", "to": "Mki67", "width": 1}, {"color": "#8eb041", "from": "G3bp1", "to": "Ddx3x", "width": 1}, {"color": "#f47832", "from": "G3bp1", "to": "Ddit3", "width": 1}, {"color": "#f47832", "from": "G3bp1", "to": "G3bp1", "width": 1}, {"color": "#8eb041", "from": "Supt5", "to": "Rtf1", "width": 1}, {"color": "#8eb041", "from": "Supt5", "to": "Tcea1", "width": 1}, {"color": "#f47832", "from": "Nsmce2", "to": "Elavl4", "width": 1}, {"color": "#8eb041", "from": "Nsmce2", "to": "Nsmce1", "width": 1}, {"color": "#8eb041", "from": "Ddx5", "to": "Upf3b", "width": 1}, {"color": "#8eb041", "from": "Tcea1", "to": "Rtf1", "width": 1}, {"color": "#8eb041", "from": "Ndufab1", "to": "Malsu1", "width": 1}, {"color": "#8eb041", "from": "Ndufab1", "to": "Mrpl36", "width": 1}, {"color": "#8eb041", "from": "Ndufab1", "to": "Ndufaf2", "width": 1}, {"color": "#8eb041", "from": "Mrpl36", "to": "Malsu1", "width": 1}, {"color": "#8eb041", "from": "Mrpl36", "to": "Mrps7", "width": 1}, {"color": "#8eb041", "from": "Ywhaz", "to": "Ywhae", "width": 1}, {"color": "#8eb041", "from": "Rheb", "to": "Tpt1", "width": 1}, {"color": "#8eb041", "from": "Tpt1", "to": "Eef1b2", "width": 1}, {"color": "#8eb041", "from": "Ubqln4", "to": "Psmc2", "width": 1}, {"color": "#8eb041", "from": "Ubqln4", "to": "Psmd11", "width": 1}, {"color": "#8eb041", "from": "Add1", "to": "Tmod3", "width": 1}, {"color": "#f47832", "from": "Add1", "to": "Pak1", "width": 1}, {"color": "#8eb041", "from": "Psmd11", "to": "Psmc2", "width": 1}, {"color": "#8eb041", "from": "Actr1a", "to": "Actr10", "width": 1}, {"color": "#8eb041", "from": "Actr1a", "to": "Dync1li2", "width": 1}, {"color": "#f47832", "from": "Tcf4", "to": "Tcf4", "width": 1}, {"color": "#8eb041", "from": "Hdac2", "to": "H2az1", "width": 1}, {"color": "#8eb041", "from": "Hdac2", "to": "H3f3b", "width": 1}, {"color": "#8eb041", "from": "Pak1", "to": "Flnb", "width": 1}, {"color": "#8eb041", "from": "Cerk", "to": "Galc", "width": 1}, {"color": "#8eb041", "from": "Cerk", "to": "Smpd1", "width": 1}, {"color": "#8eb041", "from": "Pes1", "to": "Nip7", "width": 1}, {"color": "#8eb041", "from": "Pes1", "to": "Wdr3", "width": 1}, {"color": "#8eb041", "from": "H3f3b", "to": "Cbx3", "width": 1}, {"color": "#8eb041", "from": "H3f3b", "to": "H2az1", "width": 1}, {"color": "#8eb041", "from": "Top1", "to": "Top2b", "width": 1}, {"color": "#8eb041", "from": "Myl12a", "to": "Ppp1r12a", "width": 1}, {"color": "#8eb041", "from": "Wdr3", "to": "Rtca", "width": 1}, {"color": "#f47832", "from": "Flnb", "to": "Camk2b", "width": 1}, {"color": "#8eb041", "from": "Flnb", "to": "Pxn", "width": 1}, {"color": "#f47832", "from": "Chpt1", "to": "Pafah1b2", "width": 1}, {"color": "#8eb041", "from": "Chpt1", "to": "Ptdss1", "width": 1}, {"color": "#f47832", "from": "Ywhae", "to": "Ttc3", "width": 1}, {"color": "#f47832", "from": "Vim", "to": "Skil", "width": 1}, {"color": "#f47832", "from": "Vim", "to": "Vim", "width": 1}, {"color": "#f47832", "from": "Smpd1", "to": "Galc", "width": 1}, {"color": "#8eb041", "from": "Dmd", "to": "Dtna", "width": 1}, {"color": "#8eb041", "from": "Actr10", "to": "Dync1li2", "width": 1}, {"color": "#8eb041", "from": "Sf3b2", "to": "Lsm7", "width": 1}, {"color": "#f47832", "from": "Eif4g2", "to": "Ttc3", "width": 1}, {"color": "#f47832", "from": "Dbn1", "to": "Dbn1", "width": 1}, {"color": "#f47832", "from": "Aplp1", "to": "Aplp1", "width": 1}, {"color": "#8eb041", "from": "Impa1", "to": "Inpp4b", "width": 1}, {"color": "#8eb041", "from": "Eif3l", "to": "Eif3b", "width": 1}, {"color": "#f47832", "from": "Psmd9", "to": "Lpl", "width": 1}, {"color": "#8eb041", "from": "Dennd5a", "to": "Rab6a", "width": 1}, {"color": "#8eb041", "from": "Ppp2ca", "to": "Ptpa", "width": 1}, {"color": "#f47832", "from": "Adk", "to": "Pde1c", "width": 1}, {"color": "#f47832", "from": "Adk", "to": "Pde8b", "width": 1}, {"color": "#8eb041", "from": "Plcb1", "to": "Camk2b", "width": 1}, {"color": "#8eb041", "from": "Plcb1", "to": "Ipmk", "width": 1}, {"color": "#8eb041", "from": "Cdkn1c", "to": "Ccnd2", "width": 1}, {"color": "#8eb041", "from": "Psma7", "to": "Psma5", "width": 1}, {"color": "#8eb041", "from": "Rad21", "to": "Nipbl", "width": 1}, {"color": "#8eb041", "from": "Ranbp9", "to": "Mkln1", "width": 1}, {"color": "#f47832", "from": "Flt3", "to": "Flt3", "width": 1}, {"color": "#8eb041", "from": "Flt3", "to": "Ptprj", "width": 1}, {"color": "#8eb041", "from": "Hmgb1", "to": "Hmgb2", "width": 1}, {"color": "#8eb041", "from": "Ell", "to": "Ccnt2", "width": 1}, {"color": "#f47832", "from": "Fgfr2", "to": "Fgfr2", "width": 1}, {"color": "#f47832", "from": "Fgfr2", "to": "Sos1", "width": 1}, {"color": "#8eb041", "from": "Elovl2", "to": "Elovl5", "width": 1}, {"color": "#8eb041", "from": "Bad", "to": "Ywhag", "width": 1}, {"color": "#8eb041", "from": "Cdk8", "to": "Med13", "width": 1}, {"color": "#8eb041", "from": "Ablim1", "to": "Ablim3", "width": 1}, {"color": "#8eb041", "from": "Arhgef1", "to": "Gna12", "width": 1}, {"color": "#f47832", "from": "Sh3gl2", "to": "Sh3gl2", "width": 1}, {"color": "#f47832", "from": "Gpc4", "to": "Lrrtm4", "width": 1}, {"color": "#f47832", "from": "Cbx3", "to": "Cbx3", "width": 1}, {"color": "#8eb041", "from": "Trp53bp1", "to": "Xrcc6", "width": 1}, {"color": "#f47832", "from": "Ptn", "to": "Ptn", "width": 1}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "repulsion": {
+            "centralGravity": 0.2,
+            "damping": 0.09,
+            "nodeDistance": 150,
+            "springConstant": 0.05,
+            "springLength": 200
+        },
+        "solver": "repulsion",
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+                      network.on("stabilizationProgress", function(params) {
+                          document.getElementById('loadingBar').removeAttribute("style");
+                          var maxWidth = 496;
+                          var minWidth = 20;
+                          var widthFactor = params.iterations/params.total;
+                          var width = Math.max(minWidth,maxWidth * widthFactor);
+                          document.getElementById('bar').style.width = width + 'px';
+                          document.getElementById('text').innerHTML = Math.round(widthFactor*100) + '%';
+                      });
+                      network.once("stabilizationIterationsDone", function() {
+                          document.getElementById('text').innerHTML = '100%';
+                          document.getElementById('bar').style.width = '496px';
+                          document.getElementById('loadingBar').style.opacity = 0;
+                          // really clean the dom element
+                          setTimeout(function () {document.getElementById('loadingBar').style.display = 'none';}, 500);
+                      });
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+        <script type="text/javascript">
+        
+            let selectedNodes = [];
+            let previousStyles = {}; 
+            let undoStack = [];
+    
+            function saveNetworkState() {
+                const nodes = network.body.data.nodes.get();
+                const edges = network.body.data.edges.get();
+                const styles = {};
+            
+                nodes.forEach(node => {
+                    styles[node.id] = {
+                        color: previousStyles[node.id]?.color || node.color || null
+                    };
+                });
+            
+                undoStack.push(JSON.stringify({ nodes, edges, styles }));
+            }
+            
+            
+            function removeSelectedNodes() {
+                if (selectedNodes.length > 0) {
+                    saveNetworkState();
+            
+                    network.body.data.nodes.remove(selectedNodes.map(id => ({ id })));
+                    selectedNodes = [];
+                } else {
+                    alert("No nodes selected.");
+                }
+            }
+            
+            function undo() {
+                if (undoStack.length > 0) {
+                    const previousState = JSON.parse(undoStack.pop());
+            
+                    network.body.data.nodes.clear();
+                    network.body.data.edges.clear();
+                    network.body.data.nodes.add(previousState.nodes);
+                    network.body.data.edges.add(previousState.edges);
+            
+                    Object.keys(previousState.styles).forEach(nodeId => {
+                        network.body.data.nodes.update({
+                            id: nodeId,
+                            ...previousState.styles[nodeId]
+                        });
+                    });
+            
+                    selectedNodes = [];
+                    previousStyles = previousState.styles;
+                } else {
+                    alert("Nothing to undo.");
+                }
+            }
+            
+            network.on("selectNode", function (params) {
+                if (event.ctrlKey) {
+                    selectedNodes = [...new Set([...selectedNodes, ...params.nodes])];
+                } else {
+                    selectedNodes.forEach(nodeId => {
+                        if (previousStyles[nodeId]) {
+                            network.body.data.nodes.update({
+                                id: nodeId,
+                                ...previousStyles[nodeId]
+                            });
+                        }
+                    });
+                    selectedNodes = params.nodes;
+                }
+            
+                params.nodes.forEach(nodeId => {
+                    const nodeData = network.body.data.nodes.get(nodeId);
+                    if (!previousStyles[nodeId]) {
+                        previousStyles[nodeId] = {
+                            color: nodeData.color || null
+                        };
+                    }
+                    network.body.data.nodes.update({
+                        id: nodeId,
+                        color: "black"
+                    });
+                });
+            });
+            
+            network.on("deselectNode", function (params) {
+                if (!event.ctrlKey) {
+                    selectedNodes.forEach(nodeId => {
+                        if (previousStyles[nodeId]) {
+                            network.body.data.nodes.update({
+                                id: nodeId,
+                                ...previousStyles[nodeId]
+                            });
+                        }
+                    });
+                    selectedNodes = [];
+                } else {
+                    params.nodes.forEach(nodeId => {
+                        if (previousStyles[nodeId]) {
+                            network.body.data.nodes.update({
+                                id: nodeId,
+                                ...previousStyles[nodeId]
+                            });
+                        }
+                    });
+                }
+            });
+                    
+                    
+            
+            
+            
+            function changePhysics(value) {
+                network.setOptions({
+                    physics: {
+                        solver: 'repulsion',
+                        repulsion: {
+                            nodeDistance: parseInt(value),
+                        },
+                    },
+                });
+            }
+            
+            
+            
+            
+            
+                            
+            let originalNodeSizes = {};
+            
+            function initializeOriginalNodeSizes() {
+                network.body.data.nodes.get().forEach(node => {
+                    if (!originalNodeSizes[node.id]) {
+                        originalNodeSizes[node.id] = node.size || 1; 
+                    }
+                });
+            }
+            
+            function scaleNetworkSize(scaleFactor) {
+                initializeOriginalNodeSizes(); 
+            
+                network.body.data.nodes.update(
+                    network.body.data.nodes.get().map(node => ({
+                        id: node.id,
+                        size: originalNodeSizes[node.id] * scaleFactor 
+                    }))
+                );
+            }
+                            
+                        
+            
+            function changeFontSize(size) {
+                network.body.data.nodes.update(
+                    network.body.data.nodes.get().map(node => ({
+                        id: node.id,
+                        font: { size: size }
+                    }))
+                );
+            }
+            
+            
+            let physicsEnabled = true;
+            
+            function togglePhysics() {
+                physicsEnabled = !physicsEnabled;
+            
+                network.setOptions({
+                    physics: physicsEnabled
+                });
+            
+
+                document.getElementById("togglePhysicsButton").innerText = physicsEnabled
+                    ? "Disable Physics"
+                    : "Enable Physics";
+            }
+
+
+
+            function downloadFile(blob, filename) {
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = filename;
+                link.click();
+    
+                URL.revokeObjectURL(link.href);
+            }
+
+
+            function saveGraph(format, resolution = 96) {
+                
+                if (format === "svg") {
+
+                    const positions = network.getPositions();
+
+                    const nodes = network.body.data.nodes.get();
+                    const edges = network.body.data.edges.get();
+                
+                    let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+                    Object.values(positions).forEach(pos => {
+                        minX = Math.min(minX, pos.x);
+                        maxX = Math.max(maxX, pos.x);
+                        minY = Math.min(minY, pos.y);
+                        maxY = Math.max(maxY, pos.y);
+                    });
+                
+                    const margin = 600; 
+                    const width = maxX - minX + margin * 2.5; 
+                    const height = maxY - minY + margin * 1.5; 
+                
+                    const offsetX = margin - minX; 
+                    const offsetY = margin - minY; 
+                
+                    let svgContent = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">`;
+                
+                    edges.forEach((edge) => {
+                        const from = positions[edge.from];
+                        const to = positions[edge.to];
+                        if (from && to) {
+                            const controlX = (from.x + to.x) / 2; 
+                            const controlY = (from.y + to.y) / 2 - 50; 
+                    
+                            const pathData = `M${from.x + offsetX},${from.y + offsetY} C${controlX + offsetX},${controlY + offsetY} ${controlX + offsetX},${controlY + offsetY} ${to.x + offsetX},${to.y + offsetY}`;
+                            const color = edge.color || "black"; 
+                            const width = edge.width || 2; 
+                            svgContent += `<path d="${pathData}" stroke="${color}" stroke-width="${width}" fill="none"/>`;
+                        }
+                    });
+                
+
+                    nodes.forEach((node) => {
+                        const pos = positions[node.id];
+                        if (pos) {
+                            const size = (node.size || 10); 
+                            const color = node.color || "blue"; 
+                            svgContent += `<circle cx="${pos.x + offsetX}" cy="${pos.y + offsetY}" r="${size}" fill="${color}" />`;
+                
+                            const labelColor = node.font?.color || "black"; 
+                            const labelFontSize = node.font?.size || 12; 
+                            svgContent += `<text x="${pos.x + offsetX + size + 5}" y="${pos.y + offsetY}" font-size="${labelFontSize}" fill="${labelColor}">${node.label || node.id}</text>`;
+                        }
+                    });
+                
+                    svgContent += `</svg>`;
+                
+                    const blob = new Blob([svgContent], { type: "image/svg+xml;charset=utf-8" });
+                    const link = document.createElement("a");
+                    link.href = URL.createObjectURL(blob);
+                    link.download = "graph.svg";
+                    link.click();
+                                            
+                    
+                } else {
+                    
+                    const positions = network.getPositions();
+
+                    const nodes = network.body.data.nodes.get();
+                    const edges = network.body.data.edges.get();
+                
+                    let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+                    Object.values(positions).forEach(pos => {
+                        minX = Math.min(minX, pos.x);
+                        maxX = Math.max(maxX, pos.x);
+                        minY = Math.min(minY, pos.y);
+                        maxY = Math.max(maxY, pos.y);
+                    });
+                
+                    const margin = 600;  
+                    const width = maxX - minX + margin * 2.5; 
+                    const height = maxY - minY + margin * 1.5; 
+                
+                    const offsetX = margin - minX; 
+                    const offsetY = margin - minY; 
+                
+                    let svgContent = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">`;
+                
+                    edges.forEach((edge) => {
+                        const from = positions[edge.from];
+                        const to = positions[edge.to];
+                        if (from && to) {
+                            const controlX = (from.x + to.x) / 2; 
+                            const controlY = (from.y + to.y) / 2 - 50; 
+                    
+                            const pathData = `M${from.x + offsetX},${from.y + offsetY} C${controlX + offsetX},${controlY + offsetY} ${controlX + offsetX},${controlY + offsetY} ${to.x + offsetX},${to.y + offsetY}`;
+                            const color = edge.color || "black"; 
+                            const width = edge.width || 2; 
+                            svgContent += `<path d="${pathData}" stroke="${color}" stroke-width="${width}" fill="none"/>`;
+                        }
+                    });
+                
+                    nodes.forEach((node) => {
+                        const pos = positions[node.id];
+                        if (pos) {
+                            const size = (node.size || 10); 
+                            const color = node.color || "blue"; 
+                            svgContent += `<circle cx="${pos.x + offsetX}" cy="${pos.y + offsetY}" r="${size}" fill="${color}" />`;
+                
+                            const labelColor = node.font?.color || "black"; 
+                            const labelFontSize = node.font?.size || 12; 
+                            svgContent += `<text x="${pos.x + offsetX + size + 5}" y="${pos.y + offsetY}" font-size="${labelFontSize}" fill="${labelColor}">${node.label || node.id}</text>`;
+                        }
+                    });
+                
+                    svgContent += `</svg>`;
+                    
+                    const svgBlob = new Blob([svgContent], { type: 'image/svg+xml' });
+                    const svgUrl = URL.createObjectURL(svgBlob);
+                    
+                    const getScaleFactor = (resolution = 300) => {
+                        const defaultDPI = 96;
+                        return resolution / defaultDPI;
+                    };
+                    
+                    const scaleFactor = getScaleFactor(resolution || 300);
+                    
+                    const canvas = document.createElement('canvas');
+                    const context = canvas.getContext('2d');
+                    const img = new Image();
+                    
+                    img.onload = () => {
+                        try {
+                            canvas.width = width * scaleFactor;
+                            canvas.height = height * scaleFactor;
+                    
+                            context.setTransform(scaleFactor, 0, 0, scaleFactor, 0, 0);
+                    
+                            if (format === 'jpeg' || format === 'jpg') {
+                                context.fillStyle = 'white';
+                                context.fillRect(0, 0, canvas.width, canvas.height);
+                            }
+                    
+                            context.drawImage(img, 0, 0, width, height);
+                    
+                            canvas.toBlob((blob) => {
+                                if (blob) {
+                                    downloadFile(blob, `image.${format}`);
+                                } else {
+                                    console.error('Błąd: Blob jest pusty!');
+                                }
+                            }, `image/${format}`);
+                        } catch (error) {
+                            console.error('Błąd podczas rysowania na canvasie:', error);
+                        }
+                    };
+                    
+                    img.onerror = (error) => {
+                        console.error('Nie udało się załadować obrazu SVG jako źródła:', error);
+                    };
+                    
+                    img.src = svgUrl;
+                    
+
+                        
+                        
+                }
+            }
+                        
+                        
+                        
+    
+    
+            document.body.insertAdjacentHTML('beforeend', `
+                <div style="position: fixed; top: 0; left: 0; width: 100%; background: #353834; padding: 10px; z-index: 1000; display: flex; gap: 10px; align-items: center; border-bottom: 1px solid #ddd;">
+                    <button onclick="removeSelectedNodes()">
+                        <i class="fa-solid fa-eraser"></i>
+                    </button>
+                    
+                    
+
+                    
+                    
+                    <button onclick="undo()">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </button>
+                    
+
+                    <label for="formatSelect" style="color: white;">Save As:</label>
+                    <select id="formatSelect">
+                        <option value="png">PNG</option>
+                        <option value="jpg">JPEG</option>
+                        <option value="svg">SVG</option>
+
+                    </select>
+                    
+                    <label for="resolutionSelect" style="color: white;">Resolution (DPI):</label>
+                    <select id="resolutionSelect">
+                        <option value="200">300 DPI</option>
+                        <option value="300">300 DPI</option>
+                        <option value="600">600 DPI</option>
+
+                    </select>
+                    
+                    <button onclick="saveGraph(
+                        document.getElementById('formatSelect').value,
+                        parseInt(document.getElementById('resolutionSelect').value)
+                    )">
+                        Export Graph
+                    </button>
+                    
+
+        
+                    <label style="color: white;">Font Size:</label>
+                    <input type="range" min="10" max="50" value="14" onchange="changeFontSize(this.value)">
+                    <label style="color: white;">Node Size:</label>
+                    <input type="range" min="0.1" max="10" value="0.1" onchange="scaleNetworkSize(this.value)">
+                    
+                    <button id="togglePhysicsButton" onclick="togglePhysics()">Disable Physics</button>
+
+                    <label style="color: white;">Physics:</label>
+                    <input type="range" min="50" max="500" value="200" step="10" onchange="changePhysics(this.value)">
+               
+                </div>
+            `);
+        </script>
+        </body>
+</html>

@@ -1,0 +1,579 @@
+<html>
+    <head>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 1900px;
+                 height: 864px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#FFA07A", "id": "CTX EMX2 MT-RNR2 - HMGB1", "label": "CTX EMX2 MT-RNR2 - HMGB1", "shape": "dot", "size": 10}, {"color": "#FFA07A", "id": "CTX FOXG1 MAP1B - DNAJA1", "label": "CTX FOXG1 MAP1B - DNAJA1", "shape": "dot", "size": 10}, {"color": "#FFA07A", "id": "CTX FOXG1 MAP1B - VIM", "label": "CTX FOXG1 MAP1B - VIM", "shape": "dot", "size": 10}, {"color": "#FFA07A", "id": "CTX FOXG1 MAP1B - DDX17", "label": "CTX FOXG1 MAP1B - DDX17", "shape": "dot", "size": 10}, {"color": "#FFA07A", "id": "CTX FOXG1 MT-RNR2 - RPS6", "label": "CTX FOXG1 MT-RNR2 - RPS6", "shape": "dot", "size": 10}, {"color": "#FFA07A", "id": "CTX EMX2 COL3A1 - RPLP0", "label": "CTX EMX2 COL3A1 - RPLP0", "shape": "dot", "size": 10}, {"color": "#FFA07A", "id": "CTX EMX2 MAP1B - FTL", "label": "CTX EMX2 MAP1B - FTL", "shape": "dot", "size": 10}, {"color": "#FFA07A", "id": "CTX EMX2 MAP1B - PRPF40A", "label": "CTX EMX2 MAP1B - PRPF40A", "shape": "dot", "size": 10}, {"color": "#FFA07A", "id": "CTX EMX2 MAP1B - RPS28", "label": "CTX EMX2 MAP1B - RPS28", "shape": "dot", "size": 10}, {"color": "#FFA07A", "id": "CTX EMX2 MT-RNR2 - PAFAH1B1", "label": "CTX EMX2 MT-RNR2 - PAFAH1B1", "shape": "dot", "size": 10}, {"color": "#FFA07A", "id": "CTX EMX2 TOP2A - WSB1", "label": "CTX EMX2 TOP2A - WSB1", "shape": "dot", "size": 10}, {"color": "#FFA07A", "id": "CTX FOXG1 MAP1B - ATP5F1E", "label": "CTX FOXG1 MAP1B - ATP5F1E", "shape": "dot", "size": 10}, {"color": "#FFA07A", "id": "HIP LHX2 MT-CO3 - RPS2", "label": "HIP LHX2 MT-CO3 - RPS2", "shape": "dot", "size": 10}, {"color": "#FFA07A", "id": "STR FOXP1 COL3A1 - HSP90B1", "label": "STR FOXP1 COL3A1 - HSP90B1", "shape": "dot", "size": 10}, {"color": "#FFA07A", "id": "STR FOXP1 MAP1B - HSP90B1", "label": "STR FOXP1 MAP1B - HSP90B1", "shape": "dot", "size": 10}, {"color": "#FFA07A", "id": "CTX EMX2 MT-RNR2 - SETD5", "label": "CTX EMX2 MT-RNR2 - SETD5", "shape": "dot", "size": 10}, {"color": "#FFA07A", "id": "CTX EMX2 MT-RNR2 - COPG2", "label": "CTX EMX2 MT-RNR2 - COPG2", "shape": "dot", "size": 10}, {"color": "#FFA07A", "id": "CTX EMX2 TOP2A - RPL12", "label": "CTX EMX2 TOP2A - RPL12", "shape": "dot", "size": 10}, {"color": "#FFA07A", "id": "STR FOXP1 MT-CO3 - SRSF4", "label": "STR FOXP1 MT-CO3 - SRSF4", "shape": "dot", "size": 10}, {"color": "#FFA07A", "id": "ChP TTR MT-RNR2 - FTL", "label": "ChP TTR MT-RNR2 - FTL", "shape": "dot", "size": 10}, {"color": "#FFA07A", "id": "HIP LHX2 MT-RNR2 - RPL35", "label": "HIP LHX2 MT-RNR2 - RPL35", "shape": "dot", "size": 10}, {"color": "#FFA07A", "id": "CTX FOXG1 TOP2A - SOX4", "label": "CTX FOXG1 TOP2A - SOX4", "shape": "dot", "size": 10}, {"color": "#FFA07A", "id": "MEL DCT MT-RNR2 - PPIG", "label": "MEL DCT MT-RNR2 - PPIG", "shape": "dot", "size": 10}, {"color": "#FFA07A", "id": "CTX EMX2 MAP1B - RPS23P8", "label": "CTX EMX2 MAP1B - RPS23P8", "shape": "dot", "size": 10}, {"color": "#FFA07A", "id": "HIP LHX2 CHST11 - EEF1A1", "label": "HIP LHX2 CHST11 - EEF1A1", "shape": "dot", "size": 10}, {"color": "#FFA07A", "id": "STR FOXP1 MT-RNR2 - FNBP1L", "label": "STR FOXP1 MT-RNR2 - FNBP1L", "shape": "dot", "size": 10}]);
+                  edges = new vis.DataSet([{"alpha": 0.05, "color": "#DCDCDC", "from": "CTX EMX2 MT-RNR2 - HMGB1", "to": "CTX FOXG1 MAP1B - DNAJA1", "width": 6.90875477931522}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX EMX2 MT-RNR2 - HMGB1", "to": "CTX FOXG1 MAP1B - VIM", "width": 6.731018100482083}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX EMX2 MT-RNR2 - HMGB1", "to": "CTX FOXG1 MAP1B - DDX17", "width": 6.704414354964107}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX FOXG1 MT-RNR2 - RPS6", "to": "CTX EMX2 COL3A1 - RPLP0", "width": 7.168579897264035}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX FOXG1 MT-RNR2 - RPS6", "to": "CTX EMX2 MAP1B - FTL", "width": 6.761572768804055}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX FOXG1 MT-RNR2 - RPS6", "to": "CTX EMX2 MAP1B - PRPF40A", "width": 7.236339342754344}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX FOXG1 MT-RNR2 - RPS6", "to": "CTX EMX2 MAP1B - RPS28", "width": 7.565793282428515}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX FOXG1 MT-RNR2 - RPS6", "to": "CTX EMX2 MT-RNR2 - PAFAH1B1", "width": 5.537334267018537}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX FOXG1 MT-RNR2 - RPS6", "to": "CTX EMX2 TOP2A - WSB1", "width": 7.055312843339752}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX FOXG1 MT-RNR2 - RPS6", "to": "CTX FOXG1 MAP1B - ATP5F1E", "width": 7.635786861395585}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX FOXG1 MT-RNR2 - RPS6", "to": "CTX FOXG1 MAP1B - DDX17", "width": 7.988542982737695}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX FOXG1 MT-RNR2 - RPS6", "to": "CTX FOXG1 MAP1B - DNAJA1", "width": 7.978996370854115}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX FOXG1 MT-RNR2 - RPS6", "to": "CTX FOXG1 MAP1B - VIM", "width": 7.768533300926033}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX FOXG1 MT-RNR2 - RPS6", "to": "HIP LHX2 MT-CO3 - RPS2", "width": 7.301147805856032}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX FOXG1 MT-RNR2 - RPS6", "to": "STR FOXP1 COL3A1 - HSP90B1", "width": 7.175489713624222}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX FOXG1 MT-RNR2 - RPS6", "to": "STR FOXP1 MAP1B - HSP90B1", "width": 7.44600149832412}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX EMX2 MT-RNR2 - SETD5", "to": "CTX FOXG1 MAP1B - DDX17", "width": 6.834108738813838}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX EMX2 MT-RNR2 - SETD5", "to": "CTX FOXG1 MAP1B - DNAJA1", "width": 6.7580945044277305}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX EMX2 MAP1B - FTL", "to": "CTX FOXG1 MAP1B - DNAJA1", "width": 7.1770187659099}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX EMX2 MAP1B - FTL", "to": "CTX FOXG1 MAP1B - DDX17", "width": 7.1631723908466425}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX EMX2 MAP1B - FTL", "to": "CTX FOXG1 MAP1B - ATP5F1E", "width": 6.9440872082295275}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX EMX2 MAP1B - FTL", "to": "CTX FOXG1 MAP1B - VIM", "width": 6.942156705699469}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX EMX2 TOP2A - WSB1", "to": "CTX FOXG1 MAP1B - DDX17", "width": 7.340186835320115}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX EMX2 TOP2A - WSB1", "to": "CTX FOXG1 MAP1B - DNAJA1", "width": 7.307872780763706}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX EMX2 TOP2A - WSB1", "to": "CTX FOXG1 MAP1B - VIM", "width": 7.064759027791802}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX EMX2 TOP2A - WSB1", "to": "CTX FOXG1 MAP1B - ATP5F1E", "width": 7.00033446027523}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX EMX2 MAP1B - RPS28", "to": "CTX FOXG1 MAP1B - DNAJA1", "width": 7.613324979540639}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX EMX2 MAP1B - RPS28", "to": "CTX FOXG1 MAP1B - DDX17", "width": 7.745002803515839}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX EMX2 MAP1B - RPS28", "to": "CTX FOXG1 MAP1B - VIM", "width": 7.411556287811163}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX EMX2 MAP1B - RPS28", "to": "CTX FOXG1 MAP1B - ATP5F1E", "width": 7.3427791893318455}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX EMX2 MAP1B - RPS28", "to": "CTX EMX2 MT-RNR2 - COPG2", "width": 7.381501894506707}, {"alpha": 0.05, "color": "#DCDCDC", "from": "HIP LHX2 MT-CO3 - RPS2", "to": "CTX FOXG1 MAP1B - DDX17", "width": 7.575584651557793}, {"alpha": 0.05, "color": "#DCDCDC", "from": "HIP LHX2 MT-CO3 - RPS2", "to": "CTX FOXG1 MAP1B - DNAJA1", "width": 7.54274354536855}, {"alpha": 0.05, "color": "#DCDCDC", "from": "HIP LHX2 MT-CO3 - RPS2", "to": "CTX FOXG1 MAP1B - VIM", "width": 7.329093736246592}, {"alpha": 0.05, "color": "#DCDCDC", "from": "HIP LHX2 MT-CO3 - RPS2", "to": "CTX FOXG1 MAP1B - ATP5F1E", "width": 7.1853870155804165}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX EMX2 COL3A1 - RPLP0", "to": "CTX FOXG1 MAP1B - DNAJA1", "width": 7.509335266016592}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX EMX2 COL3A1 - RPLP0", "to": "CTX FOXG1 MAP1B - DDX17", "width": 7.505492274737424}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX EMX2 COL3A1 - RPLP0", "to": "CTX FOXG1 MAP1B - VIM", "width": 7.31455283232408}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX EMX2 COL3A1 - RPLP0", "to": "CTX FOXG1 MAP1B - ATP5F1E", "width": 7.214504414151143}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX EMX2 TOP2A - RPL12", "to": "CTX FOXG1 MAP1B - DDX17", "width": 6.364750756851911}, {"alpha": 0.05, "color": "#DCDCDC", "from": "STR FOXP1 COL3A1 - HSP90B1", "to": "CTX FOXG1 MAP1B - DNAJA1", "width": 7.471363088187097}, {"alpha": 0.05, "color": "#DCDCDC", "from": "STR FOXP1 COL3A1 - HSP90B1", "to": "CTX FOXG1 MAP1B - DDX17", "width": 7.467942332285852}, {"alpha": 0.05, "color": "#DCDCDC", "from": "STR FOXP1 COL3A1 - HSP90B1", "to": "CTX FOXG1 MAP1B - VIM", "width": 7.273786317844895}, {"alpha": 0.05, "color": "#DCDCDC", "from": "STR FOXP1 COL3A1 - HSP90B1", "to": "CTX FOXG1 MAP1B - ATP5F1E", "width": 7.175489713624222}, {"alpha": 0.05, "color": "#DCDCDC", "from": "STR FOXP1 MT-CO3 - SRSF4", "to": "CTX FOXG1 MAP1B - DNAJA1", "width": 6.416732282512326}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX FOXG1 MAP1B - ATP5F1E", "to": "CTX EMX2 MAP1B - PRPF40A", "width": 6.70808408385307}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX FOXG1 MAP1B - ATP5F1E", "to": "CTX EMX2 MT-RNR2 - COPG2", "width": 7.5740450053721995}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX FOXG1 MAP1B - ATP5F1E", "to": "CTX FOXG1 MAP1B - DNAJA1", "width": 7.900636613018005}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX FOXG1 MAP1B - ATP5F1E", "to": "CTX FOXG1 MAP1B - DDX17", "width": 7.870165946469845}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX FOXG1 MAP1B - ATP5F1E", "to": "CTX FOXG1 MAP1B - VIM", "width": 6.99117688712121}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX FOXG1 MAP1B - ATP5F1E", "to": "STR FOXP1 MAP1B - HSP90B1", "width": 7.5822291942764615}, {"alpha": 0.05, "color": "#DCDCDC", "from": "ChP TTR MT-RNR2 - FTL", "to": "CTX FOXG1 MAP1B - DNAJA1", "width": 6.431331081933479}, {"alpha": 0.05, "color": "#DCDCDC", "from": "HIP LHX2 MT-RNR2 - RPL35", "to": "CTX FOXG1 MAP1B - DNAJA1", "width": 6.726233402358747}, {"alpha": 0.05, "color": "#DCDCDC", "from": "HIP LHX2 MT-RNR2 - RPL35", "to": "CTX FOXG1 MAP1B - DDX17", "width": 6.690842277418564}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX FOXG1 MAP1B - DDX17", "to": "CTX EMX2 MAP1B - PRPF40A", "width": 7.477604243197589}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX FOXG1 MAP1B - DDX17", "to": "CTX EMX2 MT-RNR2 - COPG2", "width": 7.673223121121708}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX FOXG1 MAP1B - DDX17", "to": "CTX FOXG1 MAP1B - DNAJA1", "width": 8.128585200374497}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX FOXG1 MAP1B - DDX17", "to": "CTX FOXG1 MAP1B - VIM", "width": 6.810142450115136}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX FOXG1 MAP1B - DDX17", "to": "CTX FOXG1 TOP2A - SOX4", "width": 6.612041034833092}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX FOXG1 MAP1B - DDX17", "to": "MEL DCT MT-RNR2 - PPIG", "width": 5.697093486505405}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX FOXG1 MAP1B - DDX17", "to": "STR FOXP1 MAP1B - HSP90B1", "width": 7.798112628829788}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX FOXG1 MAP1B - VIM", "to": "CTX EMX2 MAP1B - PRPF40A", "width": 7.3310603052186325}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX FOXG1 MAP1B - VIM", "to": "CTX EMX2 MT-RNR2 - COPG2", "width": 7.587817219993427}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX FOXG1 MAP1B - VIM", "to": "CTX FOXG1 MAP1B - DNAJA1", "width": 6.82001636467413}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX FOXG1 MAP1B - VIM", "to": "STR FOXP1 MAP1B - HSP90B1", "width": 7.62657020629066}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX EMX2 MAP1B - PRPF40A", "to": "CTX FOXG1 MAP1B - DNAJA1", "width": 7.7057128238944275}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX EMX2 MT-RNR2 - COPG2", "to": "CTX FOXG1 MAP1B - DNAJA1", "width": 7.772331575169614}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX EMX2 MAP1B - RPS23P8", "to": "CTX FOXG1 MAP1B - DNAJA1", "width": 6.786716950605081}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX FOXG1 MAP1B - DNAJA1", "to": "HIP LHX2 CHST11 - EEF1A1", "width": 6.499787040655854}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX FOXG1 MAP1B - DNAJA1", "to": "STR FOXP1 MAP1B - HSP90B1", "width": 7.815207062189088}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX FOXG1 MAP1B - DNAJA1", "to": "STR FOXP1 MT-RNR2 - FNBP1L", "width": 6.57507584059962}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "repulsion": {
+            "centralGravity": 0.2,
+            "damping": 0.09,
+            "nodeDistance": 150,
+            "springConstant": 0.05,
+            "springLength": 200
+        },
+        "solver": "repulsion",
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+        <script type="text/javascript">
+        
+            let selectedNodes = [];
+            let previousStyles = {}; 
+            let undoStack = [];
+    
+            function saveNetworkState() {
+                const nodes = network.body.data.nodes.get();
+                const edges = network.body.data.edges.get();
+                const styles = {};
+            
+                nodes.forEach(node => {
+                    styles[node.id] = {
+                        color: previousStyles[node.id]?.color || node.color || null
+                    };
+                });
+            
+                undoStack.push(JSON.stringify({ nodes, edges, styles }));
+            }
+            
+            
+            function removeSelectedNodes() {
+                if (selectedNodes.length > 0) {
+                    saveNetworkState();
+            
+                    network.body.data.nodes.remove(selectedNodes.map(id => ({ id })));
+                    selectedNodes = [];
+                } else {
+                    alert("No nodes selected.");
+                }
+            }
+            
+            function undo() {
+                if (undoStack.length > 0) {
+                    const previousState = JSON.parse(undoStack.pop());
+            
+                    network.body.data.nodes.clear();
+                    network.body.data.edges.clear();
+                    network.body.data.nodes.add(previousState.nodes);
+                    network.body.data.edges.add(previousState.edges);
+            
+                    Object.keys(previousState.styles).forEach(nodeId => {
+                        network.body.data.nodes.update({
+                            id: nodeId,
+                            ...previousState.styles[nodeId]
+                        });
+                    });
+            
+                    selectedNodes = [];
+                    previousStyles = previousState.styles;
+                } else {
+                    alert("Nothing to undo.");
+                }
+            }
+            
+            network.on("selectNode", function (params) {
+                if (event.ctrlKey) {
+                    selectedNodes = [...new Set([...selectedNodes, ...params.nodes])];
+                } else {
+                    selectedNodes.forEach(nodeId => {
+                        if (previousStyles[nodeId]) {
+                            network.body.data.nodes.update({
+                                id: nodeId,
+                                ...previousStyles[nodeId]
+                            });
+                        }
+                    });
+                    selectedNodes = params.nodes;
+                }
+            
+                params.nodes.forEach(nodeId => {
+                    const nodeData = network.body.data.nodes.get(nodeId);
+                    if (!previousStyles[nodeId]) {
+                        previousStyles[nodeId] = {
+                            color: nodeData.color || null
+                        };
+                    }
+                    network.body.data.nodes.update({
+                        id: nodeId,
+                        color: "black"
+                    });
+                });
+            });
+            
+            network.on("deselectNode", function (params) {
+                if (!event.ctrlKey) {
+                    selectedNodes.forEach(nodeId => {
+                        if (previousStyles[nodeId]) {
+                            network.body.data.nodes.update({
+                                id: nodeId,
+                                ...previousStyles[nodeId]
+                            });
+                        }
+                    });
+                    selectedNodes = [];
+                } else {
+                    params.nodes.forEach(nodeId => {
+                        if (previousStyles[nodeId]) {
+                            network.body.data.nodes.update({
+                                id: nodeId,
+                                ...previousStyles[nodeId]
+                            });
+                        }
+                    });
+                }
+            });
+                    
+                    
+            
+            
+            
+            function changePhysics(value) {
+                network.setOptions({
+                    physics: {
+                        solver: 'repulsion',
+                        repulsion: {
+                            nodeDistance: parseInt(value),
+                        },
+                    },
+                });
+            }
+            
+            
+            
+            
+            
+                            
+            let originalNodeSizes = {};
+            
+            function initializeOriginalNodeSizes() {
+                network.body.data.nodes.get().forEach(node => {
+                    if (!originalNodeSizes[node.id]) {
+                        originalNodeSizes[node.id] = node.size || 1; 
+                    }
+                });
+            }
+            
+            function scaleNetworkSize(scaleFactor) {
+                initializeOriginalNodeSizes(); 
+            
+                network.body.data.nodes.update(
+                    network.body.data.nodes.get().map(node => ({
+                        id: node.id,
+                        size: originalNodeSizes[node.id] * scaleFactor 
+                    }))
+                );
+            }
+                            
+                        
+            
+            function changeFontSize(size) {
+                network.body.data.nodes.update(
+                    network.body.data.nodes.get().map(node => ({
+                        id: node.id,
+                        font: { size: size }
+                    }))
+                );
+            }
+            
+            
+            let physicsEnabled = true;
+            
+            function togglePhysics() {
+                physicsEnabled = !physicsEnabled;
+            
+                network.setOptions({
+                    physics: physicsEnabled
+                });
+            
+
+                document.getElementById("togglePhysicsButton").innerText = physicsEnabled
+                    ? "Disable Physics"
+                    : "Enable Physics";
+            }
+
+
+
+            function downloadFile(blob, filename) {
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = filename;
+                link.click();
+    
+                URL.revokeObjectURL(link.href);
+            }
+
+
+            function saveGraph(format, resolution = 96) {
+                
+                if (format === "svg") {
+
+                    const positions = network.getPositions();
+
+                    const nodes = network.body.data.nodes.get();
+                    const edges = network.body.data.edges.get();
+                
+                    let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+                    Object.values(positions).forEach(pos => {
+                        minX = Math.min(minX, pos.x);
+                        maxX = Math.max(maxX, pos.x);
+                        minY = Math.min(minY, pos.y);
+                        maxY = Math.max(maxY, pos.y);
+                    });
+                
+                    const margin = 600; 
+                    const width = maxX - minX + margin * 2.5; 
+                    const height = maxY - minY + margin * 1.5; 
+                
+                    const offsetX = margin - minX; 
+                    const offsetY = margin - minY; 
+                
+                    let svgContent = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">`;
+                
+                    edges.forEach((edge) => {
+                        const from = positions[edge.from];
+                        const to = positions[edge.to];
+                        if (from && to) {
+                            const controlX = (from.x + to.x) / 2; 
+                            const controlY = (from.y + to.y) / 2 - 50; 
+                    
+                            const pathData = `M${from.x + offsetX},${from.y + offsetY} C${controlX + offsetX},${controlY + offsetY} ${controlX + offsetX},${controlY + offsetY} ${to.x + offsetX},${to.y + offsetY}`;
+                            const color = edge.color || "black"; 
+                            const width = edge.width || 2; 
+                            svgContent += `<path d="${pathData}" stroke="${color}" stroke-width="${width}" fill="none"/>`;
+                        }
+                    });
+                
+
+                    nodes.forEach((node) => {
+                        const pos = positions[node.id];
+                        if (pos) {
+                            const size = (node.size || 10); 
+                            const color = node.color || "blue"; 
+                            svgContent += `<circle cx="${pos.x + offsetX}" cy="${pos.y + offsetY}" r="${size}" fill="${color}" />`;
+                
+                            const labelColor = node.font?.color || "black"; 
+                            const labelFontSize = node.font?.size || 12; 
+                            svgContent += `<text x="${pos.x + offsetX + size + 5}" y="${pos.y + offsetY}" font-size="${labelFontSize}" fill="${labelColor}">${node.label || node.id}</text>`;
+                        }
+                    });
+                
+                    svgContent += `</svg>`;
+                
+                    const blob = new Blob([svgContent], { type: "image/svg+xml;charset=utf-8" });
+                    const link = document.createElement("a");
+                    link.href = URL.createObjectURL(blob);
+                    link.download = "graph.svg";
+                    link.click();
+                                            
+                    
+                } else {
+                    
+                    const positions = network.getPositions();
+
+                    const nodes = network.body.data.nodes.get();
+                    const edges = network.body.data.edges.get();
+                
+                    let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+                    Object.values(positions).forEach(pos => {
+                        minX = Math.min(minX, pos.x);
+                        maxX = Math.max(maxX, pos.x);
+                        minY = Math.min(minY, pos.y);
+                        maxY = Math.max(maxY, pos.y);
+                    });
+                
+                    const margin = 600;  
+                    const width = maxX - minX + margin * 2.5; 
+                    const height = maxY - minY + margin * 1.5; 
+                
+                    const offsetX = margin - minX; 
+                    const offsetY = margin - minY; 
+                
+                    let svgContent = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">`;
+                
+                    edges.forEach((edge) => {
+                        const from = positions[edge.from];
+                        const to = positions[edge.to];
+                        if (from && to) {
+                            const controlX = (from.x + to.x) / 2; 
+                            const controlY = (from.y + to.y) / 2 - 50; 
+                    
+                            const pathData = `M${from.x + offsetX},${from.y + offsetY} C${controlX + offsetX},${controlY + offsetY} ${controlX + offsetX},${controlY + offsetY} ${to.x + offsetX},${to.y + offsetY}`;
+                            const color = edge.color || "black"; 
+                            const width = edge.width || 2; 
+                            svgContent += `<path d="${pathData}" stroke="${color}" stroke-width="${width}" fill="none"/>`;
+                        }
+                    });
+                
+                    nodes.forEach((node) => {
+                        const pos = positions[node.id];
+                        if (pos) {
+                            const size = (node.size || 10); 
+                            const color = node.color || "blue"; 
+                            svgContent += `<circle cx="${pos.x + offsetX}" cy="${pos.y + offsetY}" r="${size}" fill="${color}" />`;
+                
+                            const labelColor = node.font?.color || "black"; 
+                            const labelFontSize = node.font?.size || 12; 
+                            svgContent += `<text x="${pos.x + offsetX + size + 5}" y="${pos.y + offsetY}" font-size="${labelFontSize}" fill="${labelColor}">${node.label || node.id}</text>`;
+                        }
+                    });
+                
+                    svgContent += `</svg>`;
+                    
+                    const svgBlob = new Blob([svgContent], { type: 'image/svg+xml' });
+                    const svgUrl = URL.createObjectURL(svgBlob);
+                    
+                    const getScaleFactor = (resolution = 300) => {
+                        const defaultDPI = 96;
+                        return resolution / defaultDPI;
+                    };
+                    
+                    const scaleFactor = getScaleFactor(resolution || 300);
+                    
+                    const canvas = document.createElement('canvas');
+                    const context = canvas.getContext('2d');
+                    const img = new Image();
+                    
+                    img.onload = () => {
+                        try {
+                            canvas.width = width * scaleFactor;
+                            canvas.height = height * scaleFactor;
+                    
+                            context.setTransform(scaleFactor, 0, 0, scaleFactor, 0, 0);
+                    
+                            if (format === 'jpeg' || format === 'jpg') {
+                                context.fillStyle = 'white';
+                                context.fillRect(0, 0, canvas.width, canvas.height);
+                            }
+                    
+                            context.drawImage(img, 0, 0, width, height);
+                    
+                            canvas.toBlob((blob) => {
+                                if (blob) {
+                                    downloadFile(blob, `image.${format}`);
+                                } else {
+                                    console.error('Błąd: Blob jest pusty!');
+                                }
+                            }, `image/${format}`);
+                        } catch (error) {
+                            console.error('Błąd podczas rysowania na canvasie:', error);
+                        }
+                    };
+                    
+                    img.onerror = (error) => {
+                        console.error('Nie udało się załadować obrazu SVG jako źródła:', error);
+                    };
+                    
+                    img.src = svgUrl;
+                    
+
+                        
+                        
+                }
+            }
+                        
+                        
+                        
+    
+    
+            document.body.insertAdjacentHTML('beforeend', `
+                <div style="position: fixed; top: 0; left: 0; width: 100%; background: #353834; padding: 10px; z-index: 1000; display: flex; gap: 10px; align-items: center; border-bottom: 1px solid #ddd;">
+                    <button onclick="removeSelectedNodes()">
+                        <i class="fa-solid fa-eraser"></i>
+                    </button>
+                    
+                    
+
+                    
+                    
+                    <button onclick="undo()">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </button>
+                    
+
+                    <label for="formatSelect" style="color: white;">Save As:</label>
+                    <select id="formatSelect">
+                        <option value="png">PNG</option>
+                        <option value="jpg">JPEG</option>
+                        <option value="svg">SVG</option>
+
+                    </select>
+                    
+                    <label for="resolutionSelect" style="color: white;">Resolution (DPI):</label>
+                    <select id="resolutionSelect">
+                        <option value="200">300 DPI</option>
+                        <option value="300">300 DPI</option>
+                        <option value="600">600 DPI</option>
+
+                    </select>
+                    
+                    <button onclick="saveGraph(
+                        document.getElementById('formatSelect').value,
+                        parseInt(document.getElementById('resolutionSelect').value)
+                    )">
+                        Export Graph
+                    </button>
+                    
+
+        
+                    <label style="color: white;">Font Size:</label>
+                    <input type="range" min="10" max="50" value="14" onchange="changeFontSize(this.value)">
+                    <label style="color: white;">Node Size:</label>
+                    <input type="range" min="0.1" max="10" value="0.1" onchange="scaleNetworkSize(this.value)">
+                    
+                    <button id="togglePhysicsButton" onclick="togglePhysics()">Disable Physics</button>
+
+                    <label style="color: white;">Physics:</label>
+                    <input type="range" min="50" max="500" value="200" step="10" onchange="changePhysics(this.value)">
+               
+                </div>
+            `);
+        </script>
+        </body>
+</html>

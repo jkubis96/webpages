@@ -1,0 +1,674 @@
+<html>
+    <head>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 1900px;
+                 height: 864px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+             #loadingBar {
+                 position:absolute;
+                 top:0px;
+                 left:0px;
+                 width: 1900px;
+                 height: 864px;
+                 background-color:rgba(200,200,200,0.8);
+                 -webkit-transition: all 0.5s ease;
+                 -moz-transition: all 0.5s ease;
+                 -ms-transition: all 0.5s ease;
+                 -o-transition: all 0.5s ease;
+                 transition: all 0.5s ease;
+                 opacity:1;
+             }
+
+             #bar {
+                 position:absolute;
+                 top:0px;
+                 left:0px;
+                 width:20px;
+                 height:20px;
+                 margin:auto auto auto auto;
+                 border-radius:11px;
+                 border:2px solid rgba(30,30,30,0.05);
+                 background: rgb(0, 173, 246); /* Old browsers */
+                 box-shadow: 2px 0px 4px rgba(0,0,0,0.4);
+             }
+
+             #border {
+                 position:absolute;
+                 top:10px;
+                 left:10px;
+                 width:500px;
+                 height:23px;
+                 margin:auto auto auto auto;
+                 box-shadow: 0px 0px 4px rgba(0,0,0,0.2);
+                 border-radius:10px;
+             }
+
+             #text {
+                 position:absolute;
+                 top:8px;
+                 left:530px;
+                 width:30px;
+                 height:50px;
+                 margin:auto auto auto auto;
+                 font-size:22px;
+                 color: #000000;
+             }
+
+             div.outerBorder {
+                 position:relative;
+                 top:400px;
+                 width:600px;
+                 height:44px;
+                 margin:auto auto auto auto;
+                 border:8px solid rgba(0,0,0,0.1);
+                 background: rgb(252,252,252); /* Old browsers */
+                 background: -moz-linear-gradient(top,  rgba(252,252,252,1) 0%, rgba(237,237,237,1) 100%); /* FF3.6+ */
+                 background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(252,252,252,1)), color-stop(100%,rgba(237,237,237,1))); /* Chrome,Safari4+ */
+                 background: -webkit-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Chrome10+,Safari5.1+ */
+                 background: -o-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Opera 11.10+ */
+                 background: -ms-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* IE10+ */
+                 background: linear-gradient(to bottom,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* W3C */
+                 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfcfc', endColorstr='#ededed',GradientType=0 ); /* IE6-9 */
+                 border-radius:72px;
+                 box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+             }
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+            <div id="loadingBar">
+              <div class="outerBorder">
+                <div id="text">0%</div>
+                <div id="border">
+                  <div id="bar"></div>
+                </div>
+              </div>
+            </div>
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "royalblue", "id": "APP", "label": "APP", "shape": "dot", "size": 20}, {"color": "royalblue", "id": "AP2B1", "label": "AP2B1", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "ATXN1", "label": "ATXN1", "shape": "dot", "size": 19}, {"color": "royalblue", "id": "BAG6", "label": "BAG6", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "CALR", "label": "CALR", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "DLG4", "label": "DLG4", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "DR1", "label": "DR1", "shape": "dot", "size": 16}, {"color": "royalblue", "id": "EP300", "label": "EP300", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "FOS", "label": "FOS", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "FYN", "label": "FYN", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "GRB2", "label": "GRB2", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "GSK3B", "label": "GSK3B", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "HSP90B1", "label": "HSP90B1", "shape": "dot", "size": 16}, {"color": "royalblue", "id": "HSPA5", "label": "HSPA5", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "ITGB1", "label": "ITGB1", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "JUN", "label": "JUN", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "MAPK1", "label": "MAPK1", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "MAPT", "label": "MAPT", "shape": "dot", "size": 16}, {"color": "royalblue", "id": "MDM2", "label": "MDM2", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "NEFL", "label": "NEFL", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "PIK3R1", "label": "PIK3R1", "shape": "dot", "size": 18}, {"color": "royalblue", "id": "PRKACB", "label": "PRKACB", "shape": "dot", "size": 18}, {"color": "royalblue", "id": "PRNP", "label": "PRNP", "shape": "dot", "size": 16}, {"color": "royalblue", "id": "PSEN1", "label": "PSEN1", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "RAC1", "label": "RAC1", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "RNF11", "label": "RNF11", "shape": "dot", "size": 18}, {"color": "royalblue", "id": "SQSTM1", "label": "SQSTM1", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "STAT3", "label": "STAT3", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "TARDBP", "label": "TARDBP", "shape": "dot", "size": 19}, {"color": "royalblue", "id": "UTP14A", "label": "UTP14A", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "KIF1B", "label": "KIF1B", "shape": "dot", "size": 18}, {"color": "royalblue", "id": "KRAS", "label": "KRAS", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "RAF1", "label": "RAF1", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "ATXN3", "label": "ATXN3", "shape": "dot", "size": 18}, {"color": "royalblue", "id": "RBBP4", "label": "RBBP4", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "RBPJ", "label": "RBPJ", "shape": "dot", "size": 16}, {"color": "royalblue", "id": "RNF2", "label": "RNF2", "shape": "dot", "size": 16}, {"color": "royalblue", "id": "RYBP", "label": "RYBP", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "TRAF2", "label": "TRAF2", "shape": "dot", "size": 16}, {"color": "royalblue", "id": "TSC1", "label": "TSC1", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "VCP", "label": "VCP", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "PIAS1", "label": "PIAS1", "shape": "dot", "size": 16}, {"color": "royalblue", "id": "PIK3CA", "label": "PIK3CA", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "PLRG1", "label": "PLRG1", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "FMR1", "label": "FMR1", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "FUS", "label": "FUS", "shape": "dot", "size": 16}, {"color": "royalblue", "id": "GNB2", "label": "GNB2", "shape": "dot", "size": 16}, {"color": "royalblue", "id": "MED19", "label": "MED19", "shape": "dot", "size": 16}, {"color": "royalblue", "id": "OPTN", "label": "OPTN", "shape": "dot", "size": 18}, {"color": "royalblue", "id": "U2AF2", "label": "U2AF2", "shape": "dot", "size": 16}, {"color": "royalblue", "id": "VHL", "label": "VHL", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "FGFR3", "label": "FGFR3", "shape": "dot", "size": 19}, {"color": "royalblue", "id": "AGO2", "label": "AGO2", "shape": "dot", "size": 16}, {"color": "royalblue", "id": "EZH2", "label": "EZH2", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "JAK2", "label": "JAK2", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "SMARCB1", "label": "SMARCB1", "shape": "dot", "size": 16}, {"color": "royalblue", "id": "SRC", "label": "SRC", "shape": "dot", "size": 18}, {"color": "royalblue", "id": "SF3B2", "label": "SF3B2", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "SNW1", "label": "SNW1", "shape": "dot", "size": 18}, {"color": "royalblue", "id": "HDAC1", "label": "HDAC1", "shape": "dot", "size": 18}, {"color": "royalblue", "id": "CREBBP", "label": "CREBBP", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "ESR1", "label": "ESR1", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "HDAC2", "label": "HDAC2", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "KDM1A", "label": "KDM1A", "shape": "dot", "size": 16}, {"color": "royalblue", "id": "MECP2", "label": "MECP2", "shape": "dot", "size": 16}, {"color": "royalblue", "id": "MORF4L1", "label": "MORF4L1", "shape": "dot", "size": 16}, {"color": "royalblue", "id": "NCOR1", "label": "NCOR1", "shape": "dot", "size": 16}, {"color": "royalblue", "id": "RBBP7", "label": "RBBP7", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "SETDB1", "label": "SETDB1", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "SMAD2", "label": "SMAD2", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "SMARCA4", "label": "SMARCA4", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "AKT3", "label": "AKT3", "shape": "dot", "size": 16}, {"color": "royalblue", "id": "IGF1R", "label": "IGF1R", "shape": "dot", "size": 16}, {"color": "royalblue", "id": "MTOR", "label": "MTOR", "shape": "dot", "size": 16}, {"color": "royalblue", "id": "DNM2", "label": "DNM2", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "PTPN11", "label": "PTPN11", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "RAP1B", "label": "RAP1B", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "ZDHHC17", "label": "ZDHHC17", "shape": "dot", "size": 16}, {"color": "royalblue", "id": "IKBKB", "label": "IKBKB", "shape": "dot", "size": 16}, {"color": "royalblue", "id": "MAPK8", "label": "MAPK8", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "MAPK9", "label": "MAPK9", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "MED1", "label": "MED1", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "FOXO1", "label": "FOXO1", "shape": "dot", "size": 16}, {"color": "royalblue", "id": "FOXO3", "label": "FOXO3", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "UBC", "label": "UBC", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "AQR", "label": "AQR", "shape": "dot", "size": 16}, {"color": "royalblue", "id": "BCAS2", "label": "BCAS2", "shape": "dot", "size": 16}, {"color": "royalblue", "id": "CDC40", "label": "CDC40", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "CDC5L", "label": "CDC5L", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "CRNKL1", "label": "CRNKL1", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "CWC15", "label": "CWC15", "shape": "dot", "size": 16}, {"color": "royalblue", "id": "CWC22", "label": "CWC22", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "CWC27", "label": "CWC27", "shape": "dot", "size": 16}, {"color": "royalblue", "id": "DHX15", "label": "DHX15", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "DHX38", "label": "DHX38", "shape": "dot", "size": 16}, {"color": "royalblue", "id": "DHX8", "label": "DHX8", "shape": "dot", "size": 16}, {"color": "royalblue", "id": "EIF4A3", "label": "EIF4A3", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "LMNA", "label": "LMNA", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "NCBP1", "label": "NCBP1", "shape": "dot", "size": 16}, {"color": "royalblue", "id": "PRPF19", "label": "PRPF19", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "PRPF38A", "label": "PRPF38A", "shape": "dot", "size": 16}, {"color": "royalblue", "id": "PRPF40A", "label": "PRPF40A", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "RBM22", "label": "RBM22", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "SF3B1", "label": "SF3B1", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "SH3GLB1", "label": "SH3GLB1", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "SLU7", "label": "SLU7", "shape": "dot", "size": 16}, {"color": "royalblue", "id": "SNRNP200", "label": "SNRNP200", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "SNRPB2", "label": "SNRPB2", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "NF2", "label": "NF2", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "SRRM2", "label": "SRRM2", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "SYF2", "label": "SYF2", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "YWHAG", "label": "YWHAG", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "MAPK14", "label": "MAPK14", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "DNAJB6", "label": "DNAJB6", "shape": "dot", "size": 16}, {"color": "royalblue", "id": "MAP3K7", "label": "MAP3K7", "shape": "dot", "size": 16}, {"color": "royalblue", "id": "PRKCA", "label": "PRKCA", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "NCBP2", "label": "NCBP2", "shape": "dot", "size": 16}, {"color": "royalblue", "id": "PRPF3", "label": "PRPF3", "shape": "dot", "size": 16}, {"color": "royalblue", "id": "SART1", "label": "SART1", "shape": "dot", "size": 16}, {"color": "royalblue", "id": "SRRM1", "label": "SRRM1", "shape": "dot", "size": 16}, {"color": "royalblue", "id": "CHUK", "label": "CHUK", "shape": "dot", "size": 16}, {"color": "royalblue", "id": "GTPBP4", "label": "GTPBP4", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "CEBPZ", "label": "CEBPZ", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "DDX18", "label": "DDX18", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "DKC1", "label": "DKC1", "shape": "dot", "size": 16}, {"color": "royalblue", "id": "FTSJ3", "label": "FTSJ3", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "GNL2", "label": "GNL2", "shape": "dot", "size": 16}, {"color": "royalblue", "id": "GNL3", "label": "GNL3", "shape": "dot", "size": 16}, {"color": "royalblue", "id": "MPHOSPH10", "label": "MPHOSPH10", "shape": "dot", "size": 16}, {"color": "royalblue", "id": "MTREX", "label": "MTREX", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "NOC3L", "label": "NOC3L", "shape": "dot", "size": 16}, {"color": "royalblue", "id": "NOP14", "label": "NOP14", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "NOP56", "label": "NOP56", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "PDCD11", "label": "PDCD11", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "RBM28", "label": "RBM28", "shape": "dot", "size": 16}, {"color": "royalblue", "id": "RPF2", "label": "RPF2", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "RSL24D1", "label": "RSL24D1", "shape": "dot", "size": 16}, {"color": "royalblue", "id": "SDAD1", "label": "SDAD1", "shape": "dot", "size": 16}, {"color": "royalblue", "id": "TSR1", "label": "TSR1", "shape": "dot", "size": 16}, {"color": "royalblue", "id": "WDR3", "label": "WDR3", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "WDR43", "label": "WDR43", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "POLR2A", "label": "POLR2A", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "DDX6", "label": "DDX6", "shape": "dot", "size": 16}, {"color": "royalblue", "id": "MED10", "label": "MED10", "shape": "dot", "size": 16}, {"color": "royalblue", "id": "MED23", "label": "MED23", "shape": "dot", "size": 16}, {"color": "royalblue", "id": "MED28", "label": "MED28", "shape": "dot", "size": 16}, {"color": "royalblue", "id": "MED4", "label": "MED4", "shape": "dot", "size": 16}, {"color": "royalblue", "id": "MED6", "label": "MED6", "shape": "dot", "size": 16}, {"color": "royalblue", "id": "MED7", "label": "MED7", "shape": "dot", "size": 16}, {"color": "royalblue", "id": "POLR2B", "label": "POLR2B", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "POLR2D", "label": "POLR2D", "shape": "dot", "size": 16}, {"color": "royalblue", "id": "ZC3H13", "label": "ZC3H13", "shape": "dot", "size": 16}, {"color": "royalblue", "id": "FBL", "label": "FBL", "shape": "dot", "size": 16}, {"color": "royalblue", "id": "NAT10", "label": "NAT10", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "WDR46", "label": "WDR46", "shape": "dot", "size": 16}, {"color": "royalblue", "id": "NUP58", "label": "NUP58", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "RANBP2", "label": "RANBP2", "shape": "dot", "size": 16}, {"color": "royalblue", "id": "DYNC1H1", "label": "DYNC1H1", "shape": "dot", "size": 16}, {"color": "orangered", "id": "CDK1", "label": "CDK1", "shape": "dot", "size": 17}, {"color": "orangered", "id": "BIRC5", "label": "BIRC5", "shape": "dot", "size": 16}, {"color": "orangered", "id": "BUB1", "label": "BUB1", "shape": "dot", "size": 16}, {"color": "orangered", "id": "CENPE", "label": "CENPE", "shape": "dot", "size": 16}, {"color": "orangered", "id": "CENPF", "label": "CENPF", "shape": "dot", "size": 16}, {"color": "orangered", "id": "KIF2C", "label": "KIF2C", "shape": "dot", "size": 16}, {"color": "royalblue", "id": "ATN1", "label": "ATN1", "shape": "dot", "size": 17.194602975157967}]);
+                  edges = new vis.DataSet([{"color": "#f47832", "from": "APP", "to": "AP2B1", "width": 1}, {"color": "#f47832", "from": "APP", "to": "APP", "width": 1}, {"color": "#f47832", "from": "APP", "to": "ATXN1", "width": 1}, {"color": "#f47832", "from": "APP", "to": "BAG6", "width": 1}, {"color": "#f47832", "from": "APP", "to": "CALR", "width": 1}, {"color": "#f47832", "from": "APP", "to": "DLG4", "width": 1}, {"color": "#f47832", "from": "APP", "to": "DR1", "width": 1}, {"color": "#8eb041", "from": "APP", "to": "EP300", "width": 1}, {"color": "#f47832", "from": "APP", "to": "FOS", "width": 1}, {"color": "#f47832", "from": "APP", "to": "FYN", "width": 1}, {"color": "#8eb041", "from": "APP", "to": "GRB2", "width": 1}, {"color": "#f47832", "from": "APP", "to": "GSK3B", "width": 1}, {"color": "#f47832", "from": "APP", "to": "HSP90B1", "width": 1}, {"color": "#f47832", "from": "APP", "to": "HSPA5", "width": 1}, {"color": "#f47832", "from": "APP", "to": "ITGB1", "width": 1}, {"color": "#f47832", "from": "APP", "to": "JUN", "width": 1}, {"color": "#f47832", "from": "APP", "to": "MAPK1", "width": 1}, {"color": "#8eb041", "from": "APP", "to": "MAPT", "width": 1}, {"color": "#f47832", "from": "APP", "to": "MDM2", "width": 1}, {"color": "#f47832", "from": "APP", "to": "NEFL", "width": 1}, {"color": "#f47832", "from": "APP", "to": "PIK3R1", "width": 1}, {"color": "#f47832", "from": "APP", "to": "PRKACB", "width": 1}, {"color": "#8eb041", "from": "APP", "to": "PRNP", "width": 1}, {"color": "#8eb041", "from": "APP", "to": "PSEN1", "width": 1}, {"color": "#f47832", "from": "APP", "to": "RAC1", "width": 1}, {"color": "#f47832", "from": "APP", "to": "RNF11", "width": 1}, {"color": "#f47832", "from": "APP", "to": "SQSTM1", "width": 1}, {"color": "#f47832", "from": "APP", "to": "STAT3", "width": 1}, {"color": "#f47832", "from": "APP", "to": "TARDBP", "width": 1}, {"color": "#f47832", "from": "APP", "to": "UTP14A", "width": 1}, {"color": "#f47832", "from": "APP", "to": "KIF1B", "width": 1}, {"color": "#f47832", "from": "APP", "to": "KRAS", "width": 1}, {"color": "#f47832", "from": "APP", "to": "RAF1", "width": 1}, {"color": "#f47832", "from": "ATXN1", "to": "AP2B1", "width": 1}, {"color": "#8eb041", "from": "ATXN1", "to": "ATXN3", "width": 1}, {"color": "#f47832", "from": "ATXN1", "to": "RBBP4", "width": 1}, {"color": "#8eb041", "from": "ATXN1", "to": "RBPJ", "width": 1}, {"color": "#f47832", "from": "ATXN1", "to": "RNF2", "width": 1}, {"color": "#f47832", "from": "ATXN1", "to": "RYBP", "width": 1}, {"color": "#f47832", "from": "ATXN1", "to": "SQSTM1", "width": 1}, {"color": "#f47832", "from": "ATXN1", "to": "TRAF2", "width": 1}, {"color": "#f47832", "from": "ATXN1", "to": "TSC1", "width": 1}, {"color": "#f47832", "from": "ATXN1", "to": "VCP", "width": 1}, {"color": "#f47832", "from": "ATXN1", "to": "FYN", "width": 1}, {"color": "#f47832", "from": "ATXN1", "to": "PIAS1", "width": 1}, {"color": "#f47832", "from": "ATXN1", "to": "PIK3CA", "width": 1}, {"color": "#f47832", "from": "ATXN1", "to": "PLRG1", "width": 1}, {"color": "#f47832", "from": "TARDBP", "to": "AP2B1", "width": 1}, {"color": "#f47832", "from": "TARDBP", "to": "BAG6", "width": 1}, {"color": "#8eb041", "from": "TARDBP", "to": "FMR1", "width": 1}, {"color": "#8eb041", "from": "TARDBP", "to": "FUS", "width": 1}, {"color": "#f47832", "from": "TARDBP", "to": "GNB2", "width": 1}, {"color": "#f47832", "from": "TARDBP", "to": "MAPT", "width": 1}, {"color": "#f47832", "from": "TARDBP", "to": "MED19", "width": 1}, {"color": "#8eb041", "from": "TARDBP", "to": "OPTN", "width": 1}, {"color": "#f47832", "from": "TARDBP", "to": "RBBP4", "width": 1}, {"color": "#8eb041", "from": "TARDBP", "to": "SQSTM1", "width": 1}, {"color": "#f47832", "from": "TARDBP", "to": "RYBP", "width": 1}, {"color": "#8eb041", "from": "TARDBP", "to": "U2AF2", "width": 1}, {"color": "#8eb041", "from": "TARDBP", "to": "VCP", "width": 1}, {"color": "#f47832", "from": "TARDBP", "to": "VHL", "width": 1}, {"color": "#f47832", "from": "FGFR3", "to": "AGO2", "width": 1}, {"color": "#f47832", "from": "FGFR3", "to": "EZH2", "width": 1}, {"color": "#8eb041", "from": "FGFR3", "to": "GRB2", "width": 1}, {"color": "#f47832", "from": "FGFR3", "to": "JAK2", "width": 1}, {"color": "#f47832", "from": "FGFR3", "to": "KRAS", "width": 1}, {"color": "#f47832", "from": "FGFR3", "to": "PIK3CA", "width": 1}, {"color": "#f47832", "from": "FGFR3", "to": "SMARCB1", "width": 1}, {"color": "#8eb041", "from": "FGFR3", "to": "SRC", "width": 1}, {"color": "#f47832", "from": "FGFR3", "to": "JUN", "width": 1}, {"color": "#f47832", "from": "FGFR3", "to": "SF3B2", "width": 1}, {"color": "#f47832", "from": "FGFR3", "to": "SNW1", "width": 1}, {"color": "#f47832", "from": "KIF1B", "to": "BAG6", "width": 1}, {"color": "#f47832", "from": "KIF1B", "to": "FMR1", "width": 1}, {"color": "#f47832", "from": "KIF1B", "to": "PIAS1", "width": 1}, {"color": "#f47832", "from": "KIF1B", "to": "NEFL", "width": 1}, {"color": "#f47832", "from": "KIF1B", "to": "RYBP", "width": 1}, {"color": "#f47832", "from": "KIF1B", "to": "SNW1", "width": 1}, {"color": "#f47832", "from": "KIF1B", "to": "TSC1", "width": 1}, {"color": "#f47832", "from": "KIF1B", "to": "VHL", "width": 1}, {"color": "#8eb041", "from": "HDAC1", "to": "CREBBP", "width": 1}, {"color": "#8eb041", "from": "HDAC1", "to": "EP300", "width": 1}, {"color": "#f47832", "from": "HDAC1", "to": "ESR1", "width": 1}, {"color": "#8eb041", "from": "HDAC1", "to": "EZH2", "width": 1}, {"color": "#f47832", "from": "HDAC1", "to": "HDAC1", "width": 1}, {"color": "#8eb041", "from": "HDAC1", "to": "HDAC2", "width": 1}, {"color": "#8eb041", "from": "HDAC1", "to": "JUN", "width": 1}, {"color": "#8eb041", "from": "HDAC1", "to": "KDM1A", "width": 1}, {"color": "#8eb041", "from": "HDAC1", "to": "MDM2", "width": 1}, {"color": "#8eb041", "from": "HDAC1", "to": "MECP2", "width": 1}, {"color": "#8eb041", "from": "HDAC1", "to": "MORF4L1", "width": 1}, {"color": "#8eb041", "from": "HDAC1", "to": "NCOR1", "width": 1}, {"color": "#8eb041", "from": "HDAC1", "to": "RBBP4", "width": 1}, {"color": "#8eb041", "from": "HDAC1", "to": "RBBP7", "width": 1}, {"color": "#8eb041", "from": "HDAC1", "to": "RBPJ", "width": 1}, {"color": "#8eb041", "from": "HDAC1", "to": "SETDB1", "width": 1}, {"color": "#8eb041", "from": "HDAC1", "to": "SMAD2", "width": 1}, {"color": "#8eb041", "from": "HDAC1", "to": "SMARCA4", "width": 1}, {"color": "#8eb041", "from": "HDAC1", "to": "SMARCB1", "width": 1}, {"color": "#8eb041", "from": "HDAC1", "to": "STAT3", "width": 1}, {"color": "#f47832", "from": "RNF11", "to": "BAG6", "width": 1}, {"color": "#f47832", "from": "RNF11", "to": "GNB2", "width": 1}, {"color": "#f47832", "from": "RNF11", "to": "RYBP", "width": 1}, {"color": "#f47832", "from": "RNF11", "to": "SNW1", "width": 1}, {"color": "#f47832", "from": "RNF11", "to": "TSC1", "width": 1}, {"color": "#f47832", "from": "RNF11", "to": "VHL", "width": 1}, {"color": "#8eb041", "from": "PIK3R1", "to": "AKT3", "width": 1}, {"color": "#f47832", "from": "PIK3R1", "to": "EP300", "width": 1}, {"color": "#8eb041", "from": "PIK3R1", "to": "ESR1", "width": 1}, {"color": "#8eb041", "from": "PIK3R1", "to": "FYN", "width": 1}, {"color": "#8eb041", "from": "PIK3R1", "to": "GRB2", "width": 1}, {"color": "#8eb041", "from": "PIK3R1", "to": "IGF1R", "width": 1}, {"color": "#8eb041", "from": "PIK3R1", "to": "ITGB1", "width": 1}, {"color": "#8eb041", "from": "PIK3R1", "to": "JAK2", "width": 1}, {"color": "#8eb041", "from": "PIK3R1", "to": "KRAS", "width": 1}, {"color": "#8eb041", "from": "PIK3R1", "to": "MTOR", "width": 1}, {"color": "#8eb041", "from": "PIK3R1", "to": "PIK3CA", "width": 1}, {"color": "#f47832", "from": "PIK3R1", "to": "DNM2", "width": 1}, {"color": "#f47832", "from": "PIK3R1", "to": "FOS", "width": 1}, {"color": "#f47832", "from": "PIK3R1", "to": "JUN", "width": 1}, {"color": "#8eb041", "from": "PIK3R1", "to": "PTPN11", "width": 1}, {"color": "#f47832", "from": "PIK3R1", "to": "RAC1", "width": 1}, {"color": "#8eb041", "from": "PIK3R1", "to": "RAF1", "width": 1}, {"color": "#8eb041", "from": "PIK3R1", "to": "RAP1B", "width": 1}, {"color": "#8eb041", "from": "PIK3R1", "to": "SRC", "width": 1}, {"color": "#8eb041", "from": "PIK3R1", "to": "STAT3", "width": 1}, {"color": "#8eb041", "from": "PIK3R1", "to": "TRAF2", "width": 1}, {"color": "#f47832", "from": "PIK3R1", "to": "ZDHHC17", "width": 1}, {"color": "#8eb041", "from": "SRC", "to": "CREBBP", "width": 1}, {"color": "#8eb041", "from": "SRC", "to": "DLG4", "width": 1}, {"color": "#8eb041", "from": "SRC", "to": "DNM2", "width": 1}, {"color": "#8eb041", "from": "SRC", "to": "EP300", "width": 1}, {"color": "#8eb041", "from": "SRC", "to": "ESR1", "width": 1}, {"color": "#8eb041", "from": "SRC", "to": "FOS", "width": 1}, {"color": "#8eb041", "from": "SRC", "to": "FYN", "width": 1}, {"color": "#8eb041", "from": "SRC", "to": "GRB2", "width": 1}, {"color": "#8eb041", "from": "SRC", "to": "IGF1R", "width": 1}, {"color": "#8eb041", "from": "SRC", "to": "IKBKB", "width": 1}, {"color": "#8eb041", "from": "SRC", "to": "ITGB1", "width": 1}, {"color": "#8eb041", "from": "SRC", "to": "JAK2", "width": 1}, {"color": "#8eb041", "from": "SRC", "to": "JUN", "width": 1}, {"color": "#8eb041", "from": "SRC", "to": "KRAS", "width": 1}, {"color": "#8eb041", "from": "SRC", "to": "MAPK1", "width": 1}, {"color": "#8eb041", "from": "SRC", "to": "MAPK8", "width": 1}, {"color": "#8eb041", "from": "SRC", "to": "MAPK9", "width": 1}, {"color": "#8eb041", "from": "SRC", "to": "MED1", "width": 1}, {"color": "#8eb041", "from": "SRC", "to": "PIK3CA", "width": 1}, {"color": "#8eb041", "from": "SRC", "to": "PTPN11", "width": 1}, {"color": "#8eb041", "from": "SRC", "to": "RAC1", "width": 1}, {"color": "#8eb041", "from": "SRC", "to": "RAF1", "width": 1}, {"color": "#8eb041", "from": "SRC", "to": "RAP1B", "width": 1}, {"color": "#f47832", "from": "SRC", "to": "SRC", "width": 1}, {"color": "#8eb041", "from": "SRC", "to": "STAT3", "width": 1}, {"color": "#8eb041", "from": "PRKACB", "to": "CREBBP", "width": 1}, {"color": "#8eb041", "from": "PRKACB", "to": "EP300", "width": 1}, {"color": "#8eb041", "from": "PRKACB", "to": "ESR1", "width": 1}, {"color": "#f47832", "from": "PRKACB", "to": "FOS", "width": 1}, {"color": "#8eb041", "from": "PRKACB", "to": "FOXO1", "width": 1}, {"color": "#8eb041", "from": "PRKACB", "to": "FOXO3", "width": 1}, {"color": "#8eb041", "from": "PRKACB", "to": "GSK3B", "width": 1}, {"color": "#8eb041", "from": "PRKACB", "to": "IGF1R", "width": 1}, {"color": "#8eb041", "from": "PRKACB", "to": "ITGB1", "width": 1}, {"color": "#f47832", "from": "PRKACB", "to": "JUN", "width": 1}, {"color": "#8eb041", "from": "PRKACB", "to": "MAPK1", "width": 1}, {"color": "#8eb041", "from": "PRKACB", "to": "MED1", "width": 1}, {"color": "#8eb041", "from": "PRKACB", "to": "PSEN1", "width": 1}, {"color": "#8eb041", "from": "PRKACB", "to": "RAF1", "width": 1}, {"color": "#8eb041", "from": "PRKACB", "to": "RAP1B", "width": 1}, {"color": "#f47832", "from": "ATXN3", "to": "UBC", "width": 1}, {"color": "#8eb041", "from": "ATXN3", "to": "VCP", "width": 1}, {"color": "#f47832", "from": "ATXN3", "to": "DNM2", "width": 1}, {"color": "#f47832", "from": "ATXN3", "to": "FYN", "width": 1}, {"color": "#f47832", "from": "ATXN3", "to": "PIAS1", "width": 1}, {"color": "#f47832", "from": "ATXN3", "to": "PIK3CA", "width": 1}, {"color": "#8eb041", "from": "OPTN", "to": "FUS", "width": 1}, {"color": "#f47832", "from": "OPTN", "to": "DNM2", "width": 1}, {"color": "#f47832", "from": "OPTN", "to": "MECP2", "width": 1}, {"color": "#f47832", "from": "OPTN", "to": "OPTN", "width": 1}, {"color": "#8eb041", "from": "OPTN", "to": "SQSTM1", "width": 1}, {"color": "#8eb041", "from": "OPTN", "to": "UBC", "width": 1}, {"color": "#f47832", "from": "OPTN", "to": "ZDHHC17", "width": 1}, {"color": "#f47832", "from": "OPTN", "to": "SNW1", "width": 1}, {"color": "#8eb041", "from": "SNW1", "to": "AQR", "width": 1}, {"color": "#8eb041", "from": "SNW1", "to": "BCAS2", "width": 1}, {"color": "#8eb041", "from": "SNW1", "to": "CDC40", "width": 1}, {"color": "#8eb041", "from": "SNW1", "to": "CDC5L", "width": 1}, {"color": "#8eb041", "from": "SNW1", "to": "CRNKL1", "width": 1}, {"color": "#8eb041", "from": "SNW1", "to": "CWC15", "width": 1}, {"color": "#8eb041", "from": "SNW1", "to": "CWC22", "width": 1}, {"color": "#8eb041", "from": "SNW1", "to": "CWC27", "width": 1}, {"color": "#8eb041", "from": "SNW1", "to": "DHX15", "width": 1}, {"color": "#8eb041", "from": "SNW1", "to": "DHX38", "width": 1}, {"color": "#8eb041", "from": "SNW1", "to": "DHX8", "width": 1}, {"color": "#8eb041", "from": "SNW1", "to": "EIF4A3", "width": 1}, {"color": "#8eb041", "from": "SNW1", "to": "EP300", "width": 1}, {"color": "#f47832", "from": "SNW1", "to": "LMNA", "width": 1}, {"color": "#8eb041", "from": "SNW1", "to": "NCBP1", "width": 1}, {"color": "#8eb041", "from": "SNW1", "to": "PLRG1", "width": 1}, {"color": "#8eb041", "from": "SNW1", "to": "PRPF19", "width": 1}, {"color": "#8eb041", "from": "SNW1", "to": "PRPF38A", "width": 1}, {"color": "#f47832", "from": "SNW1", "to": "PRPF40A", "width": 1}, {"color": "#8eb041", "from": "SNW1", "to": "RBM22", "width": 1}, {"color": "#8eb041", "from": "SNW1", "to": "RBPJ", "width": 1}, {"color": "#8eb041", "from": "SNW1", "to": "SF3B1", "width": 1}, {"color": "#8eb041", "from": "SNW1", "to": "SF3B2", "width": 1}, {"color": "#f47832", "from": "SNW1", "to": "SH3GLB1", "width": 1}, {"color": "#8eb041", "from": "SNW1", "to": "SLU7", "width": 1}, {"color": "#8eb041", "from": "SNW1", "to": "SMAD2", "width": 1}, {"color": "#8eb041", "from": "SNW1", "to": "SNRNP200", "width": 1}, {"color": "#8eb041", "from": "SNW1", "to": "SNRPB2", "width": 1}, {"color": "#f47832", "from": "SNW1", "to": "HSPA5", "width": 1}, {"color": "#f47832", "from": "SNW1", "to": "NEFL", "width": 1}, {"color": "#f47832", "from": "SNW1", "to": "NF2", "width": 1}, {"color": "#f47832", "from": "SNW1", "to": "SETDB1", "width": 1}, {"color": "#8eb041", "from": "SNW1", "to": "SRRM2", "width": 1}, {"color": "#8eb041", "from": "SNW1", "to": "SYF2", "width": 1}, {"color": "#f47832", "from": "SNW1", "to": "YWHAG", "width": 1}, {"color": "#f47832", "from": "SNW1", "to": "ZDHHC17", "width": 1}, {"color": "#f47832", "from": "FYN", "to": "BAG6", "width": 1}, {"color": "#8eb041", "from": "FYN", "to": "DLG4", "width": 1}, {"color": "#f47832", "from": "FYN", "to": "DNM2", "width": 1}, {"color": "#8eb041", "from": "FYN", "to": "GRB2", "width": 1}, {"color": "#8eb041", "from": "FYN", "to": "ITGB1", "width": 1}, {"color": "#8eb041", "from": "FYN", "to": "MAPT", "width": 1}, {"color": "#8eb041", "from": "FYN", "to": "PIK3CA", "width": 1}, {"color": "#8eb041", "from": "FYN", "to": "PRNP", "width": 1}, {"color": "#8eb041", "from": "FYN", "to": "PTPN11", "width": 1}, {"color": "#8eb041", "from": "FYN", "to": "RAC1", "width": 1}, {"color": "#8eb041", "from": "FYN", "to": "TRAF2", "width": 1}, {"color": "#f47832", "from": "SETDB1", "to": "MED19", "width": 1}, {"color": "#f47832", "from": "SETDB1", "to": "ZDHHC17", "width": 1}, {"color": "#8eb041", "from": "NEFL", "to": "MAPK14", "width": 1}, {"color": "#f47832", "from": "NEFL", "to": "MECP2", "width": 1}, {"color": "#f47832", "from": "NEFL", "to": "DNAJB6", "width": 1}, {"color": "#f47832", "from": "NEFL", "to": "JUN", "width": 1}, {"color": "#f47832", "from": "NEFL", "to": "NCOR1", "width": 1}, {"color": "#f47832", "from": "NEFL", "to": "TSC1", "width": 1}, {"color": "#f47832", "from": "NEFL", "to": "YWHAG", "width": 1}, {"color": "#f47832", "from": "NEFL", "to": "RYBP", "width": 1}, {"color": "#f47832", "from": "YWHAG", "to": "FOXO1", "width": 1}, {"color": "#8eb041", "from": "YWHAG", "to": "FOXO3", "width": 1}, {"color": "#f47832", "from": "YWHAG", "to": "MAPT", "width": 1}, {"color": "#8eb041", "from": "YWHAG", "to": "RAF1", "width": 1}, {"color": "#f47832", "from": "YWHAG", "to": "MED19", "width": 1}, {"color": "#8eb041", "from": "DNM2", "to": "GRB2", "width": 1}, {"color": "#f47832", "from": "DNM2", "to": "SMARCB1", "width": 1}, {"color": "#f47832", "from": "DNM2", "to": "ZDHHC17", "width": 1}, {"color": "#8eb041", "from": "MAPK1", "to": "AKT3", "width": 1}, {"color": "#f47832", "from": "MAPK1", "to": "ESR1", "width": 1}, {"color": "#8eb041", "from": "MAPK1", "to": "FOS", "width": 1}, {"color": "#8eb041", "from": "MAPK1", "to": "FOXO1", "width": 1}, {"color": "#8eb041", "from": "MAPK1", "to": "FOXO3", "width": 1}, {"color": "#8eb041", "from": "MAPK1", "to": "GRB2", "width": 1}, {"color": "#8eb041", "from": "MAPK1", "to": "JUN", "width": 1}, {"color": "#8eb041", "from": "MAPK1", "to": "KRAS", "width": 1}, {"color": "#8eb041", "from": "MAPK1", "to": "MAP3K7", "width": 1}, {"color": "#f47832", "from": "MAPK1", "to": "MAPK1", "width": 1}, {"color": "#8eb041", "from": "MAPK1", "to": "MAPK14", "width": 1}, {"color": "#8eb041", "from": "MAPK1", "to": "MAPT", "width": 1}, {"color": "#8eb041", "from": "MAPK1", "to": "PRKCA", "width": 1}, {"color": "#8eb041", "from": "MAPK1", "to": "PTPN11", "width": 1}, {"color": "#8eb041", "from": "MAPK1", "to": "RAC1", "width": 1}, {"color": "#8eb041", "from": "MAPK1", "to": "RAF1", "width": 1}, {"color": "#8eb041", "from": "MAPK1", "to": "SMAD2", "width": 1}, {"color": "#8eb041", "from": "MAPK1", "to": "STAT3", "width": 1}, {"color": "#8eb041", "from": "MAPK1", "to": "TSC1", "width": 1}, {"color": "#8eb041", "from": "SF3B1", "to": "AQR", "width": 1}, {"color": "#8eb041", "from": "SF3B1", "to": "BCAS2", "width": 1}, {"color": "#8eb041", "from": "SF3B1", "to": "CDC40", "width": 1}, {"color": "#8eb041", "from": "SF3B1", "to": "CDC5L", "width": 1}, {"color": "#8eb041", "from": "SF3B1", "to": "CRNKL1", "width": 1}, {"color": "#8eb041", "from": "SF3B1", "to": "CWC15", "width": 1}, {"color": "#8eb041", "from": "SF3B1", "to": "CWC22", "width": 1}, {"color": "#8eb041", "from": "SF3B1", "to": "CWC27", "width": 1}, {"color": "#8eb041", "from": "SF3B1", "to": "DHX15", "width": 1}, {"color": "#f47832", "from": "SF3B1", "to": "FMR1", "width": 1}, {"color": "#8eb041", "from": "SF3B1", "to": "NCBP1", "width": 1}, {"color": "#8eb041", "from": "SF3B1", "to": "NCBP2", "width": 1}, {"color": "#8eb041", "from": "SF3B1", "to": "PLRG1", "width": 1}, {"color": "#8eb041", "from": "SF3B1", "to": "PRPF19", "width": 1}, {"color": "#8eb041", "from": "SF3B1", "to": "PRPF3", "width": 1}, {"color": "#8eb041", "from": "SF3B1", "to": "PRPF38A", "width": 1}, {"color": "#8eb041", "from": "SF3B1", "to": "RBM22", "width": 1}, {"color": "#8eb041", "from": "SF3B1", "to": "SART1", "width": 1}, {"color": "#8eb041", "from": "SF3B1", "to": "SF3B2", "width": 1}, {"color": "#8eb041", "from": "SF3B1", "to": "SNRNP200", "width": 1}, {"color": "#8eb041", "from": "SF3B1", "to": "SNRPB2", "width": 1}, {"color": "#8eb041", "from": "SF3B1", "to": "SRRM1", "width": 1}, {"color": "#8eb041", "from": "SF3B1", "to": "SRRM2", "width": 1}, {"color": "#8eb041", "from": "SF3B1", "to": "U2AF2", "width": 1}, {"color": "#f47832", "from": "BAG6", "to": "DR1", "width": 1}, {"color": "#f47832", "from": "BAG6", "to": "FUS", "width": 1}, {"color": "#f47832", "from": "BAG6", "to": "LMNA", "width": 1}, {"color": "#f47832", "from": "BAG6", "to": "TSC1", "width": 1}, {"color": "#8eb041", "from": "SMAD2", "to": "CHUK", "width": 1}, {"color": "#8eb041", "from": "SMAD2", "to": "CREBBP", "width": 1}, {"color": "#8eb041", "from": "SMAD2", "to": "EP300", "width": 1}, {"color": "#f47832", "from": "SMAD2", "to": "FOXO1", "width": 1}, {"color": "#8eb041", "from": "SMAD2", "to": "FOXO3", "width": 1}, {"color": "#f47832", "from": "SMAD2", "to": "JUN", "width": 1}, {"color": "#f47832", "from": "SMAD2", "to": "SF3B2", "width": 1}, {"color": "#f47832", "from": "SMAD2", "to": "FOS", "width": 1}, {"color": "#f47832", "from": "SMAD2", "to": "HDAC2", "width": 1}, {"color": "#f47832", "from": "SMAD2", "to": "UBC", "width": 1}, {"color": "#f47832", "from": "SMAD2", "to": "SNRNP200", "width": 1}, {"color": "#8eb041", "from": "GTPBP4", "to": "CEBPZ", "width": 1}, {"color": "#8eb041", "from": "GTPBP4", "to": "DDX18", "width": 1}, {"color": "#8eb041", "from": "GTPBP4", "to": "DHX15", "width": 1}, {"color": "#8eb041", "from": "GTPBP4", "to": "DKC1", "width": 1}, {"color": "#8eb041", "from": "GTPBP4", "to": "FTSJ3", "width": 1}, {"color": "#8eb041", "from": "GTPBP4", "to": "GNL2", "width": 1}, {"color": "#8eb041", "from": "GTPBP4", "to": "GNL3", "width": 1}, {"color": "#8eb041", "from": "GTPBP4", "to": "MPHOSPH10", "width": 1}, {"color": "#8eb041", "from": "GTPBP4", "to": "MTREX", "width": 1}, {"color": "#8eb041", "from": "GTPBP4", "to": "NOC3L", "width": 1}, {"color": "#8eb041", "from": "GTPBP4", "to": "NOP14", "width": 1}, {"color": "#8eb041", "from": "GTPBP4", "to": "NOP56", "width": 1}, {"color": "#8eb041", "from": "GTPBP4", "to": "PDCD11", "width": 1}, {"color": "#8eb041", "from": "GTPBP4", "to": "RBM28", "width": 1}, {"color": "#8eb041", "from": "GTPBP4", "to": "RPF2", "width": 1}, {"color": "#8eb041", "from": "GTPBP4", "to": "RSL24D1", "width": 1}, {"color": "#8eb041", "from": "GTPBP4", "to": "SDAD1", "width": 1}, {"color": "#8eb041", "from": "GTPBP4", "to": "TSR1", "width": 1}, {"color": "#8eb041", "from": "GTPBP4", "to": "UTP14A", "width": 1}, {"color": "#8eb041", "from": "GTPBP4", "to": "WDR3", "width": 1}, {"color": "#8eb041", "from": "GTPBP4", "to": "WDR43", "width": 1}, {"color": "#f47832", "from": "GTPBP4", "to": "NF2", "width": 1}, {"color": "#8eb041", "from": "PRPF40A", "to": "SRRM1", "width": 1}, {"color": "#8eb041", "from": "PRPF40A", "to": "SRRM2", "width": 1}, {"color": "#8eb041", "from": "RBBP4", "to": "EZH2", "width": 1}, {"color": "#8eb041", "from": "RBBP4", "to": "HDAC2", "width": 1}, {"color": "#8eb041", "from": "RBBP4", "to": "KDM1A", "width": 1}, {"color": "#8eb041", "from": "RBBP4", "to": "MORF4L1", "width": 1}, {"color": "#8eb041", "from": "RBBP4", "to": "NCOR1", "width": 1}, {"color": "#8eb041", "from": "RBBP4", "to": "RBBP7", "width": 1}, {"color": "#8eb041", "from": "RBBP4", "to": "RNF2", "width": 1}, {"color": "#f47832", "from": "RBBP4", "to": "SH3GLB1", "width": 1}, {"color": "#8eb041", "from": "PIK3CA", "to": "AKT3", "width": 1}, {"color": "#f47832", "from": "PIK3CA", "to": "ESR1", "width": 1}, {"color": "#f47832", "from": "PIK3CA", "to": "FOS", "width": 1}, {"color": "#f47832", "from": "PIK3CA", "to": "GRB2", "width": 1}, {"color": "#8eb041", "from": "PIK3CA", "to": "IGF1R", "width": 1}, {"color": "#8eb041", "from": "PIK3CA", "to": "ITGB1", "width": 1}, {"color": "#8eb041", "from": "PIK3CA", "to": "JAK2", "width": 1}, {"color": "#8eb041", "from": "PIK3CA", "to": "KRAS", "width": 1}, {"color": "#8eb041", "from": "PIK3CA", "to": "MTOR", "width": 1}, {"color": "#8eb041", "from": "PIK3CA", "to": "PTPN11", "width": 1}, {"color": "#8eb041", "from": "PIK3CA", "to": "RAC1", "width": 1}, {"color": "#8eb041", "from": "PIK3CA", "to": "RAF1", "width": 1}, {"color": "#8eb041", "from": "PIK3CA", "to": "RAP1B", "width": 1}, {"color": "#8eb041", "from": "PIK3CA", "to": "TRAF2", "width": 1}, {"color": "#8eb041", "from": "EP300", "to": "CREBBP", "width": 1}, {"color": "#f47832", "from": "EP300", "to": "ESR1", "width": 1}, {"color": "#8eb041", "from": "EP300", "to": "EZH2", "width": 1}, {"color": "#8eb041", "from": "EP300", "to": "FOS", "width": 1}, {"color": "#8eb041", "from": "EP300", "to": "FOXO1", "width": 1}, {"color": "#8eb041", "from": "EP300", "to": "FOXO3", "width": 1}, {"color": "#8eb041", "from": "EP300", "to": "HDAC2", "width": 1}, {"color": "#8eb041", "from": "EP300", "to": "JUN", "width": 1}, {"color": "#8eb041", "from": "EP300", "to": "MDM2", "width": 1}, {"color": "#8eb041", "from": "EP300", "to": "MED1", "width": 1}, {"color": "#8eb041", "from": "EP300", "to": "NCOR1", "width": 1}, {"color": "#8eb041", "from": "EP300", "to": "RBPJ", "width": 1}, {"color": "#8eb041", "from": "EP300", "to": "SMARCA4", "width": 1}, {"color": "#8eb041", "from": "EP300", "to": "STAT3", "width": 1}, {"color": "#8eb041", "from": "HDAC2", "to": "CREBBP", "width": 1}, {"color": "#f47832", "from": "HDAC2", "to": "ESR1", "width": 1}, {"color": "#8eb041", "from": "HDAC2", "to": "EZH2", "width": 1}, {"color": "#8eb041", "from": "HDAC2", "to": "FOXO3", "width": 1}, {"color": "#8eb041", "from": "HDAC2", "to": "KDM1A", "width": 1}, {"color": "#8eb041", "from": "HDAC2", "to": "MECP2", "width": 1}, {"color": "#8eb041", "from": "HDAC2", "to": "MORF4L1", "width": 1}, {"color": "#8eb041", "from": "HDAC2", "to": "NCOR1", "width": 1}, {"color": "#8eb041", "from": "HDAC2", "to": "RBBP7", "width": 1}, {"color": "#8eb041", "from": "HDAC2", "to": "RBPJ", "width": 1}, {"color": "#8eb041", "from": "HDAC2", "to": "RNF2", "width": 1}, {"color": "#8eb041", "from": "HDAC2", "to": "SMARCA4", "width": 1}, {"color": "#8eb041", "from": "HDAC2", "to": "STAT3", "width": 1}, {"color": "#8eb041", "from": "CREBBP", "to": "ESR1", "width": 1}, {"color": "#8eb041", "from": "CREBBP", "to": "FOS", "width": 1}, {"color": "#8eb041", "from": "CREBBP", "to": "FOXO1", "width": 1}, {"color": "#8eb041", "from": "CREBBP", "to": "FOXO3", "width": 1}, {"color": "#f47832", "from": "CREBBP", "to": "IKBKB", "width": 1}, {"color": "#8eb041", "from": "CREBBP", "to": "JUN", "width": 1}, {"color": "#8eb041", "from": "CREBBP", "to": "MDM2", "width": 1}, {"color": "#8eb041", "from": "CREBBP", "to": "MED1", "width": 1}, {"color": "#8eb041", "from": "CREBBP", "to": "NCOR1", "width": 1}, {"color": "#8eb041", "from": "CREBBP", "to": "RBPJ", "width": 1}, {"color": "#8eb041", "from": "CREBBP", "to": "SMARCA4", "width": 1}, {"color": "#8eb041", "from": "CREBBP", "to": "STAT3", "width": 1}, {"color": "#8eb041", "from": "POLR2A", "to": "DDX6", "width": 1}, {"color": "#8eb041", "from": "POLR2A", "to": "MED1", "width": 1}, {"color": "#8eb041", "from": "POLR2A", "to": "MED10", "width": 1}, {"color": "#f47832", "from": "POLR2A", "to": "MED19", "width": 1}, {"color": "#8eb041", "from": "POLR2A", "to": "MED23", "width": 1}, {"color": "#f47832", "from": "POLR2A", "to": "MED28", "width": 1}, {"color": "#8eb041", "from": "POLR2A", "to": "MED4", "width": 1}, {"color": "#8eb041", "from": "POLR2A", "to": "MED6", "width": 1}, {"color": "#f47832", "from": "POLR2A", "to": "MED7", "width": 1}, {"color": "#8eb041", "from": "POLR2A", "to": "POLR2B", "width": 1}, {"color": "#8eb041", "from": "POLR2A", "to": "POLR2D", "width": 1}, {"color": "#8eb041", "from": "POLR2A", "to": "SMARCA4", "width": 1}, {"color": "#8eb041", "from": "POLR2A", "to": "ZC3H13", "width": 1}, {"color": "#8eb041", "from": "UBC", "to": "MDM2", "width": 1}, {"color": "#f47832", "from": "UBC", "to": "MTOR", "width": 1}, {"color": "#8eb041", "from": "UBC", "to": "SQSTM1", "width": 1}, {"color": "#8eb041", "from": "UBC", "to": "VCP", "width": 1}, {"color": "#f47832", "from": "GRB2", "to": "GRB2", "width": 1}, {"color": "#8eb041", "from": "GRB2", "to": "IGF1R", "width": 1}, {"color": "#8eb041", "from": "GRB2", "to": "JAK2", "width": 1}, {"color": "#8eb041", "from": "GRB2", "to": "KRAS", "width": 1}, {"color": "#8eb041", "from": "GRB2", "to": "PSEN1", "width": 1}, {"color": "#8eb041", "from": "GRB2", "to": "PTPN11", "width": 1}, {"color": "#8eb041", "from": "PDCD11", "to": "CEBPZ", "width": 1}, {"color": "#8eb041", "from": "PDCD11", "to": "DDX18", "width": 1}, {"color": "#8eb041", "from": "PDCD11", "to": "DHX15", "width": 1}, {"color": "#8eb041", "from": "PDCD11", "to": "DKC1", "width": 1}, {"color": "#8eb041", "from": "PDCD11", "to": "FBL", "width": 1}, {"color": "#8eb041", "from": "PDCD11", "to": "FTSJ3", "width": 1}, {"color": "#8eb041", "from": "PDCD11", "to": "MED1", "width": 1}, {"color": "#8eb041", "from": "PDCD11", "to": "MPHOSPH10", "width": 1}, {"color": "#8eb041", "from": "PDCD11", "to": "MTREX", "width": 1}, {"color": "#8eb041", "from": "PDCD11", "to": "NAT10", "width": 1}, {"color": "#8eb041", "from": "PDCD11", "to": "NOC3L", "width": 1}, {"color": "#8eb041", "from": "PDCD11", "to": "NOP14", "width": 1}, {"color": "#8eb041", "from": "PDCD11", "to": "NOP56", "width": 1}, {"color": "#8eb041", "from": "PDCD11", "to": "POLR2B", "width": 1}, {"color": "#8eb041", "from": "PDCD11", "to": "RBM28", "width": 1}, {"color": "#8eb041", "from": "PDCD11", "to": "RPF2", "width": 1}, {"color": "#8eb041", "from": "PDCD11", "to": "SDAD1", "width": 1}, {"color": "#8eb041", "from": "PDCD11", "to": "TSR1", "width": 1}, {"color": "#8eb041", "from": "PDCD11", "to": "UTP14A", "width": 1}, {"color": "#8eb041", "from": "PDCD11", "to": "WDR3", "width": 1}, {"color": "#8eb041", "from": "PDCD11", "to": "WDR43", "width": 1}, {"color": "#8eb041", "from": "PDCD11", "to": "WDR46", "width": 1}, {"color": "#8eb041", "from": "RPF2", "to": "CEBPZ", "width": 1}, {"color": "#8eb041", "from": "RPF2", "to": "DDX18", "width": 1}, {"color": "#8eb041", "from": "RPF2", "to": "DHX15", "width": 1}, {"color": "#8eb041", "from": "RPF2", "to": "DKC1", "width": 1}, {"color": "#8eb041", "from": "RPF2", "to": "FTSJ3", "width": 1}, {"color": "#8eb041", "from": "RPF2", "to": "GNL2", "width": 1}, {"color": "#8eb041", "from": "RPF2", "to": "GNL3", "width": 1}, {"color": "#8eb041", "from": "RPF2", "to": "MTREX", "width": 1}, {"color": "#8eb041", "from": "RPF2", "to": "NAT10", "width": 1}, {"color": "#8eb041", "from": "RPF2", "to": "NOC3L", "width": 1}, {"color": "#8eb041", "from": "RPF2", "to": "NOP56", "width": 1}, {"color": "#8eb041", "from": "RPF2", "to": "RBM28", "width": 1}, {"color": "#8eb041", "from": "RPF2", "to": "RSL24D1", "width": 1}, {"color": "#8eb041", "from": "RPF2", "to": "SDAD1", "width": 1}, {"color": "#8eb041", "from": "RPF2", "to": "TSR1", "width": 1}, {"color": "#8eb041", "from": "RPF2", "to": "UTP14A", "width": 1}, {"color": "#8eb041", "from": "RPF2", "to": "WDR3", "width": 1}, {"color": "#8eb041", "from": "RPF2", "to": "WDR43", "width": 1}, {"color": "#8eb041", "from": "CDC5L", "to": "AQR", "width": 1}, {"color": "#8eb041", "from": "CDC5L", "to": "BCAS2", "width": 1}, {"color": "#8eb041", "from": "CDC5L", "to": "CDC40", "width": 1}, {"color": "#8eb041", "from": "CDC5L", "to": "CRNKL1", "width": 1}, {"color": "#8eb041", "from": "CDC5L", "to": "CWC15", "width": 1}, {"color": "#8eb041", "from": "CDC5L", "to": "CWC22", "width": 1}, {"color": "#8eb041", "from": "CDC5L", "to": "CWC27", "width": 1}, {"color": "#8eb041", "from": "CDC5L", "to": "DHX15", "width": 1}, {"color": "#8eb041", "from": "CDC5L", "to": "DHX38", "width": 1}, {"color": "#8eb041", "from": "CDC5L", "to": "DHX8", "width": 1}, {"color": "#8eb041", "from": "CDC5L", "to": "EIF4A3", "width": 1}, {"color": "#f47832", "from": "CDC5L", "to": "KDM1A", "width": 1}, {"color": "#8eb041", "from": "CDC5L", "to": "NCBP1", "width": 1}, {"color": "#8eb041", "from": "CDC5L", "to": "NCBP2", "width": 1}, {"color": "#8eb041", "from": "CDC5L", "to": "PLRG1", "width": 1}, {"color": "#8eb041", "from": "CDC5L", "to": "PRPF19", "width": 1}, {"color": "#8eb041", "from": "CDC5L", "to": "PRPF38A", "width": 1}, {"color": "#8eb041", "from": "CDC5L", "to": "RBM22", "width": 1}, {"color": "#8eb041", "from": "CDC5L", "to": "SART1", "width": 1}, {"color": "#8eb041", "from": "CDC5L", "to": "SF3B2", "width": 1}, {"color": "#8eb041", "from": "CDC5L", "to": "SLU7", "width": 1}, {"color": "#8eb041", "from": "CDC5L", "to": "SNRNP200", "width": 1}, {"color": "#8eb041", "from": "CDC5L", "to": "SNRPB2", "width": 1}, {"color": "#8eb041", "from": "CDC5L", "to": "SRRM1", "width": 1}, {"color": "#8eb041", "from": "CDC5L", "to": "SRRM2", "width": 1}, {"color": "#8eb041", "from": "CDC5L", "to": "SYF2", "width": 1}, {"color": "#8eb041", "from": "CDC5L", "to": "U2AF2", "width": 1}, {"color": "#8eb041", "from": "CDC5L", "to": "ZC3H13", "width": 1}, {"color": "#8eb041", "from": "CDC40", "to": "AQR", "width": 1}, {"color": "#8eb041", "from": "CDC40", "to": "BCAS2", "width": 1}, {"color": "#8eb041", "from": "CDC40", "to": "CRNKL1", "width": 1}, {"color": "#8eb041", "from": "CDC40", "to": "CWC15", "width": 1}, {"color": "#8eb041", "from": "CDC40", "to": "CWC22", "width": 1}, {"color": "#8eb041", "from": "CDC40", "to": "CWC27", "width": 1}, {"color": "#8eb041", "from": "CDC40", "to": "DHX15", "width": 1}, {"color": "#8eb041", "from": "CDC40", "to": "DHX38", "width": 1}, {"color": "#8eb041", "from": "CDC40", "to": "DHX8", "width": 1}, {"color": "#8eb041", "from": "CDC40", "to": "EIF4A3", "width": 1}, {"color": "#8eb041", "from": "CDC40", "to": "NCBP1", "width": 1}, {"color": "#8eb041", "from": "CDC40", "to": "NCBP2", "width": 1}, {"color": "#8eb041", "from": "CDC40", "to": "PLRG1", "width": 1}, {"color": "#8eb041", "from": "CDC40", "to": "PRPF19", "width": 1}, {"color": "#8eb041", "from": "CDC40", "to": "PRPF38A", "width": 1}, {"color": "#8eb041", "from": "CDC40", "to": "RBM22", "width": 1}, {"color": "#8eb041", "from": "CDC40", "to": "SF3B2", "width": 1}, {"color": "#8eb041", "from": "CDC40", "to": "SLU7", "width": 1}, {"color": "#8eb041", "from": "CDC40", "to": "SNRNP200", "width": 1}, {"color": "#8eb041", "from": "CDC40", "to": "SNRPB2", "width": 1}, {"color": "#8eb041", "from": "CDC40", "to": "SRRM1", "width": 1}, {"color": "#8eb041", "from": "CDC40", "to": "SRRM2", "width": 1}, {"color": "#8eb041", "from": "CDC40", "to": "SYF2", "width": 1}, {"color": "#8eb041", "from": "DLG4", "to": "FMR1", "width": 1}, {"color": "#f47832", "from": "DLG4", "to": "MDM2", "width": 1}, {"color": "#8eb041", "from": "DLG4", "to": "PRKCA", "width": 1}, {"color": "#f47832", "from": "DLG4", "to": "RAC1", "width": 1}, {"color": "#8eb041", "from": "GSK3B", "to": "AKT3", "width": 1}, {"color": "#f47832", "from": "GSK3B", "to": "FOXO1", "width": 1}, {"color": "#f47832", "from": "GSK3B", "to": "FUS", "width": 1}, {"color": "#f47832", "from": "GSK3B", "to": "GSK3B", "width": 1}, {"color": "#8eb041", "from": "GSK3B", "to": "JUN", "width": 1}, {"color": "#8eb041", "from": "GSK3B", "to": "MAP3K7", "width": 1}, {"color": "#8eb041", "from": "GSK3B", "to": "MAPT", "width": 1}, {"color": "#8eb041", "from": "GSK3B", "to": "PRNP", "width": 1}, {"color": "#8eb041", "from": "GSK3B", "to": "PSEN1", "width": 1}, {"color": "#8eb041", "from": "GSK3B", "to": "RAF1", "width": 1}, {"color": "#8eb041", "from": "GSK3B", "to": "TSC1", "width": 1}, {"color": "#8eb041", "from": "SNRNP200", "to": "AQR", "width": 1}, {"color": "#8eb041", "from": "SNRNP200", "to": "BCAS2", "width": 1}, {"color": "#8eb041", "from": "SNRNP200", "to": "CRNKL1", "width": 1}, {"color": "#8eb041", "from": "SNRNP200", "to": "CWC15", "width": 1}, {"color": "#8eb041", "from": "SNRNP200", "to": "CWC22", "width": 1}, {"color": "#8eb041", "from": "SNRNP200", "to": "CWC27", "width": 1}, {"color": "#8eb041", "from": "SNRNP200", "to": "DHX15", "width": 1}, {"color": "#8eb041", "from": "SNRNP200", "to": "DHX38", "width": 1}, {"color": "#8eb041", "from": "SNRNP200", "to": "DHX8", "width": 1}, {"color": "#8eb041", "from": "SNRNP200", "to": "EIF4A3", "width": 1}, {"color": "#8eb041", "from": "SNRNP200", "to": "NCBP1", "width": 1}, {"color": "#8eb041", "from": "SNRNP200", "to": "NCBP2", "width": 1}, {"color": "#8eb041", "from": "SNRNP200", "to": "PLRG1", "width": 1}, {"color": "#8eb041", "from": "SNRNP200", "to": "PRPF19", "width": 1}, {"color": "#8eb041", "from": "SNRNP200", "to": "PRPF3", "width": 1}, {"color": "#8eb041", "from": "SNRNP200", "to": "PRPF38A", "width": 1}, {"color": "#8eb041", "from": "SNRNP200", "to": "RBM22", "width": 1}, {"color": "#8eb041", "from": "SNRNP200", "to": "SART1", "width": 1}, {"color": "#8eb041", "from": "SNRNP200", "to": "SF3B2", "width": 1}, {"color": "#8eb041", "from": "SNRNP200", "to": "SLU7", "width": 1}, {"color": "#8eb041", "from": "SNRNP200", "to": "SNRPB2", "width": 1}, {"color": "#8eb041", "from": "SNRNP200", "to": "SRRM2", "width": 1}, {"color": "#8eb041", "from": "SNRNP200", "to": "SYF2", "width": 1}, {"color": "#8eb041", "from": "FOS", "to": "ESR1", "width": 1}, {"color": "#ad9d31", "from": "FOS", "to": "FOXO3", "width": 1}, {"color": "#f47832", "from": "FOS", "to": "GNL2", "width": 1}, {"color": "#8eb041", "from": "FOS", "to": "JUN", "width": 1}, {"color": "#8eb041", "from": "FOS", "to": "MAPK14", "width": 1}, {"color": "#8eb041", "from": "FOS", "to": "MAPK8", "width": 1}, {"color": "#8eb041", "from": "FOS", "to": "MAPK9", "width": 1}, {"color": "#f47832", "from": "FOS", "to": "MED1", "width": 1}, {"color": "#8eb041", "from": "FOS", "to": "PRKCA", "width": 1}, {"color": "#8eb041", "from": "FOS", "to": "STAT3", "width": 1}, {"color": "#f47832", "from": "FOS", "to": "HSP90B1", "width": 1}, {"color": "#8eb041", "from": "VCP", "to": "HSPA5", "width": 1}, {"color": "#8eb041", "from": "MED1", "to": "ESR1", "width": 1}, {"color": "#8eb041", "from": "MED1", "to": "JUN", "width": 1}, {"color": "#8eb041", "from": "MED1", "to": "MAPK14", "width": 1}, {"color": "#8eb041", "from": "MED1", "to": "MAPK8", "width": 1}, {"color": "#8eb041", "from": "MED1", "to": "MAPK9", "width": 1}, {"color": "#8eb041", "from": "MED1", "to": "MED10", "width": 1}, {"color": "#8eb041", "from": "MED1", "to": "MED19", "width": 1}, {"color": "#8eb041", "from": "MED1", "to": "MED23", "width": 1}, {"color": "#8eb041", "from": "MED1", "to": "MED28", "width": 1}, {"color": "#8eb041", "from": "MED1", "to": "MED4", "width": 1}, {"color": "#8eb041", "from": "MED1", "to": "MED6", "width": 1}, {"color": "#f47832", "from": "MED1", "to": "MED7", "width": 1}, {"color": "#8eb041", "from": "MED1", "to": "POLR2B", "width": 1}, {"color": "#8eb041", "from": "MED1", "to": "ZC3H13", "width": 1}, {"color": "#8eb041", "from": "POLR2B", "to": "MED10", "width": 1}, {"color": "#f47832", "from": "POLR2B", "to": "MED19", "width": 1}, {"color": "#8eb041", "from": "POLR2B", "to": "MED28", "width": 1}, {"color": "#8eb041", "from": "POLR2B", "to": "MED6", "width": 1}, {"color": "#8eb041", "from": "POLR2B", "to": "MED7", "width": 1}, {"color": "#8eb041", "from": "POLR2B", "to": "POLR2D", "width": 1}, {"color": "#8eb041", "from": "POLR2B", "to": "ZC3H13", "width": 1}, {"color": "#8eb041", "from": "TSC1", "to": "AKT3", "width": 1}, {"color": "#8eb041", "from": "TSC1", "to": "IKBKB", "width": 1}, {"color": "#8eb041", "from": "TSC1", "to": "MTOR", "width": 1}, {"color": "#f47832", "from": "TSC1", "to": "NUP58", "width": 1}, {"color": "#8eb041", "from": "HSPA5", "to": "CALR", "width": 1}, {"color": "#f47832", "from": "HSPA5", "to": "FMR1", "width": 1}, {"color": "#8eb041", "from": "HSPA5", "to": "HSP90B1", "width": 1}, {"color": "#8eb041", "from": "HSPA5", "to": "PRNP", "width": 1}, {"color": "#f47832", "from": "HSPA5", "to": "RAF1", "width": 1}, {"color": "#8eb041", "from": "HSPA5", "to": "SQSTM1", "width": 1}, {"color": "#8eb041", "from": "FTSJ3", "to": "CEBPZ", "width": 1}, {"color": "#8eb041", "from": "FTSJ3", "to": "DDX18", "width": 1}, {"color": "#8eb041", "from": "FTSJ3", "to": "DKC1", "width": 1}, {"color": "#8eb041", "from": "FTSJ3", "to": "FBL", "width": 1}, {"color": "#8eb041", "from": "FTSJ3", "to": "GNL2", "width": 1}, {"color": "#8eb041", "from": "FTSJ3", "to": "GNL3", "width": 1}, {"color": "#8eb041", "from": "FTSJ3", "to": "MPHOSPH10", "width": 1}, {"color": "#8eb041", "from": "FTSJ3", "to": "NAT10", "width": 1}, {"color": "#8eb041", "from": "FTSJ3", "to": "NOC3L", "width": 1}, {"color": "#8eb041", "from": "FTSJ3", "to": "NOP14", "width": 1}, {"color": "#8eb041", "from": "FTSJ3", "to": "NOP56", "width": 1}, {"color": "#8eb041", "from": "FTSJ3", "to": "RBM28", "width": 1}, {"color": "#8eb041", "from": "FTSJ3", "to": "RSL24D1", "width": 1}, {"color": "#8eb041", "from": "FTSJ3", "to": "SDAD1", "width": 1}, {"color": "#8eb041", "from": "FTSJ3", "to": "TSR1", "width": 1}, {"color": "#8eb041", "from": "FTSJ3", "to": "UTP14A", "width": 1}, {"color": "#8eb041", "from": "FTSJ3", "to": "WDR43", "width": 1}, {"color": "#8eb041", "from": "FTSJ3", "to": "WDR46", "width": 1}, {"color": "#8eb041", "from": "JUN", "to": "AKT3", "width": 1}, {"color": "#f47832", "from": "JUN", "to": "ESR1", "width": 1}, {"color": "#ad9d31", "from": "JUN", "to": "FOXO3", "width": 1}, {"color": "#8eb041", "from": "JUN", "to": "MAPK14", "width": 1}, {"color": "#8eb041", "from": "JUN", "to": "MAPK8", "width": 1}, {"color": "#8eb041", "from": "JUN", "to": "MAPK9", "width": 1}, {"color": "#f47832", "from": "JUN", "to": "MDM2", "width": 1}, {"color": "#8eb041", "from": "JUN", "to": "STAT3", "width": 1}, {"color": "#f47832", "from": "JUN", "to": "RAC1", "width": 1}, {"color": "#8eb041", "from": "PRKCA", "to": "ITGB1", "width": 1}, {"color": "#8eb041", "from": "PRKCA", "to": "KRAS", "width": 1}, {"color": "#8eb041", "from": "PRKCA", "to": "MTOR", "width": 1}, {"color": "#f47832", "from": "PRKCA", "to": "MED19", "width": 1}, {"color": "#8eb041", "from": "PRKCA", "to": "RAF1", "width": 1}, {"color": "#8eb041", "from": "VHL", "to": "SMARCA4", "width": 1}, {"color": "#f47832", "from": "VHL", "to": "DR1", "width": 1}, {"color": "#f47832", "from": "VHL", "to": "GNB2", "width": 1}, {"color": "#f47832", "from": "VHL", "to": "NF2", "width": 1}, {"color": "#8eb041", "from": "PRPF19", "to": "AQR", "width": 1}, {"color": "#8eb041", "from": "PRPF19", "to": "BCAS2", "width": 1}, {"color": "#8eb041", "from": "PRPF19", "to": "CRNKL1", "width": 1}, {"color": "#8eb041", "from": "PRPF19", "to": "CWC15", "width": 1}, {"color": "#8eb041", "from": "PRPF19", "to": "CWC22", "width": 1}, {"color": "#8eb041", "from": "PRPF19", "to": "CWC27", "width": 1}, {"color": "#8eb041", "from": "PRPF19", "to": "DHX15", "width": 1}, {"color": "#8eb041", "from": "PRPF19", "to": "DHX38", "width": 1}, {"color": "#8eb041", "from": "PRPF19", "to": "DHX8", "width": 1}, {"color": "#8eb041", "from": "PRPF19", "to": "EIF4A3", "width": 1}, {"color": "#f47832", "from": "PRPF19", "to": "FMR1", "width": 1}, {"color": "#8eb041", "from": "PRPF19", "to": "PLRG1", "width": 1}, {"color": "#8eb041", "from": "PRPF19", "to": "PTPN11", "width": 1}, {"color": "#8eb041", "from": "PRPF19", "to": "RBM22", "width": 1}, {"color": "#8eb041", "from": "PRPF19", "to": "SART1", "width": 1}, {"color": "#8eb041", "from": "PRPF19", "to": "SF3B2", "width": 1}, {"color": "#8eb041", "from": "PRPF19", "to": "SLU7", "width": 1}, {"color": "#8eb041", "from": "PRPF19", "to": "SNRPB2", "width": 1}, {"color": "#8eb041", "from": "PRPF19", "to": "SRRM2", "width": 1}, {"color": "#8eb041", "from": "PRPF19", "to": "SYF2", "width": 1}, {"color": "#8eb041", "from": "PRPF19", "to": "U2AF2", "width": 1}, {"color": "#8eb041", "from": "ITGB1", "to": "RAP1B", "width": 1}, {"color": "#8eb041", "from": "DDX18", "to": "CEBPZ", "width": 1}, {"color": "#8eb041", "from": "DDX18", "to": "DHX15", "width": 1}, {"color": "#8eb041", "from": "DDX18", "to": "DKC1", "width": 1}, {"color": "#8eb041", "from": "DDX18", "to": "GNL2", "width": 1}, {"color": "#8eb041", "from": "DDX18", "to": "GNL3", "width": 1}, {"color": "#8eb041", "from": "DDX18", "to": "MPHOSPH10", "width": 1}, {"color": "#8eb041", "from": "DDX18", "to": "NAT10", "width": 1}, {"color": "#8eb041", "from": "DDX18", "to": "NOC3L", "width": 1}, {"color": "#8eb041", "from": "DDX18", "to": "NOP14", "width": 1}, {"color": "#8eb041", "from": "DDX18", "to": "NOP56", "width": 1}, {"color": "#8eb041", "from": "DDX18", "to": "RBM28", "width": 1}, {"color": "#8eb041", "from": "DDX18", "to": "RSL24D1", "width": 1}, {"color": "#8eb041", "from": "DDX18", "to": "SDAD1", "width": 1}, {"color": "#8eb041", "from": "DDX18", "to": "TSR1", "width": 1}, {"color": "#8eb041", "from": "DDX18", "to": "UTP14A", "width": 1}, {"color": "#8eb041", "from": "DDX18", "to": "WDR3", "width": 1}, {"color": "#8eb041", "from": "DDX18", "to": "WDR43", "width": 1}, {"color": "#f47832", "from": "NUP58", "to": "BCAS2", "width": 1}, {"color": "#8eb041", "from": "NUP58", "to": "RANBP2", "width": 1}, {"color": "#8eb041", "from": "NAT10", "to": "CEBPZ", "width": 1}, {"color": "#8eb041", "from": "NAT10", "to": "DHX15", "width": 1}, {"color": "#8eb041", "from": "NAT10", "to": "DKC1", "width": 1}, {"color": "#8eb041", "from": "NAT10", "to": "FBL", "width": 1}, {"color": "#8eb041", "from": "NAT10", "to": "MPHOSPH10", "width": 1}, {"color": "#8eb041", "from": "NAT10", "to": "MTREX", "width": 1}, {"color": "#8eb041", "from": "NAT10", "to": "NOP14", "width": 1}, {"color": "#8eb041", "from": "NAT10", "to": "NOP56", "width": 1}, {"color": "#8eb041", "from": "NAT10", "to": "RBM28", "width": 1}, {"color": "#8eb041", "from": "NAT10", "to": "SDAD1", "width": 1}, {"color": "#8eb041", "from": "NAT10", "to": "TSR1", "width": 1}, {"color": "#8eb041", "from": "NAT10", "to": "UTP14A", "width": 1}, {"color": "#8eb041", "from": "NAT10", "to": "WDR3", "width": 1}, {"color": "#8eb041", "from": "NAT10", "to": "WDR43", "width": 1}, {"color": "#8eb041", "from": "NAT10", "to": "WDR46", "width": 1}, {"color": "#8eb041", "from": "SF3B2", "to": "CRNKL1", "width": 1}, {"color": "#8eb041", "from": "SF3B2", "to": "CWC15", "width": 1}, {"color": "#8eb041", "from": "SF3B2", "to": "CWC22", "width": 1}, {"color": "#8eb041", "from": "SF3B2", "to": "CWC27", "width": 1}, {"color": "#8eb041", "from": "SF3B2", "to": "DHX15", "width": 1}, {"color": "#8eb041", "from": "SF3B2", "to": "NCBP1", "width": 1}, {"color": "#8eb041", "from": "SF3B2", "to": "NCBP2", "width": 1}, {"color": "#8eb041", "from": "SF3B2", "to": "PLRG1", "width": 1}, {"color": "#8eb041", "from": "SF3B2", "to": "PRPF3", "width": 1}, {"color": "#8eb041", "from": "SF3B2", "to": "PRPF38A", "width": 1}, {"color": "#8eb041", "from": "SF3B2", "to": "RBM22", "width": 1}, {"color": "#8eb041", "from": "SF3B2", "to": "SART1", "width": 1}, {"color": "#8eb041", "from": "SF3B2", "to": "SLU7", "width": 1}, {"color": "#8eb041", "from": "SF3B2", "to": "SNRPB2", "width": 1}, {"color": "#8eb041", "from": "SF3B2", "to": "SRRM1", "width": 1}, {"color": "#8eb041", "from": "SF3B2", "to": "SRRM2", "width": 1}, {"color": "#8eb041", "from": "SF3B2", "to": "U2AF2", "width": 1}, {"color": "#8eb041", "from": "NOP56", "to": "CEBPZ", "width": 1}, {"color": "#8eb041", "from": "NOP56", "to": "DHX15", "width": 1}, {"color": "#8eb041", "from": "NOP56", "to": "DKC1", "width": 1}, {"color": "#8eb041", "from": "NOP56", "to": "FBL", "width": 1}, {"color": "#8eb041", "from": "NOP56", "to": "GNL3", "width": 1}, {"color": "#8eb041", "from": "NOP56", "to": "MPHOSPH10", "width": 1}, {"color": "#8eb041", "from": "NOP56", "to": "NOP14", "width": 1}, {"color": "#8eb041", "from": "NOP56", "to": "RBM28", "width": 1}, {"color": "#8eb041", "from": "NOP56", "to": "UTP14A", "width": 1}, {"color": "#8eb041", "from": "NOP56", "to": "WDR3", "width": 1}, {"color": "#8eb041", "from": "NOP56", "to": "WDR43", "width": 1}, {"color": "#8eb041", "from": "NOP56", "to": "WDR46", "width": 1}, {"color": "#f47832", "from": "PSEN1", "to": "AP2B1", "width": 1}, {"color": "#f47832", "from": "PSEN1", "to": "CALR", "width": 1}, {"color": "#f47832", "from": "PSEN1", "to": "FMR1", "width": 1}, {"color": "#f47832", "from": "PSEN1", "to": "MAPT", "width": 1}, {"color": "#f47832", "from": "PSEN1", "to": "RYBP", "width": 1}, {"color": "#8eb041", "from": "SNRPB2", "to": "AQR", "width": 1}, {"color": "#8eb041", "from": "SNRPB2", "to": "BCAS2", "width": 1}, {"color": "#8eb041", "from": "SNRPB2", "to": "CRNKL1", "width": 1}, {"color": "#8eb041", "from": "SNRPB2", "to": "CWC15", "width": 1}, {"color": "#8eb041", "from": "SNRPB2", "to": "CWC22", "width": 1}, {"color": "#8eb041", "from": "SNRPB2", "to": "CWC27", "width": 1}, {"color": "#8eb041", "from": "SNRPB2", "to": "DHX15", "width": 1}, {"color": "#8eb041", "from": "SNRPB2", "to": "DHX38", "width": 1}, {"color": "#8eb041", "from": "SNRPB2", "to": "DHX8", "width": 1}, {"color": "#8eb041", "from": "SNRPB2", "to": "EIF4A3", "width": 1}, {"color": "#8eb041", "from": "SNRPB2", "to": "NCBP2", "width": 1}, {"color": "#8eb041", "from": "SNRPB2", "to": "PLRG1", "width": 1}, {"color": "#8eb041", "from": "SNRPB2", "to": "PRPF3", "width": 1}, {"color": "#8eb041", "from": "SNRPB2", "to": "PRPF38A", "width": 1}, {"color": "#8eb041", "from": "SNRPB2", "to": "RBM22", "width": 1}, {"color": "#8eb041", "from": "SNRPB2", "to": "SART1", "width": 1}, {"color": "#8eb041", "from": "SNRPB2", "to": "SLU7", "width": 1}, {"color": "#8eb041", "from": "SNRPB2", "to": "SRRM2", "width": 1}, {"color": "#8eb041", "from": "SNRPB2", "to": "SYF2", "width": 1}, {"color": "#8eb041", "from": "NOP14", "to": "CEBPZ", "width": 1}, {"color": "#8eb041", "from": "NOP14", "to": "FBL", "width": 1}, {"color": "#8eb041", "from": "NOP14", "to": "GNL2", "width": 1}, {"color": "#8eb041", "from": "NOP14", "to": "MPHOSPH10", "width": 1}, {"color": "#8eb041", "from": "NOP14", "to": "RBM28", "width": 1}, {"color": "#8eb041", "from": "NOP14", "to": "RSL24D1", "width": 1}, {"color": "#8eb041", "from": "NOP14", "to": "SDAD1", "width": 1}, {"color": "#8eb041", "from": "NOP14", "to": "TSR1", "width": 1}, {"color": "#8eb041", "from": "NOP14", "to": "UTP14A", "width": 1}, {"color": "#8eb041", "from": "NOP14", "to": "WDR3", "width": 1}, {"color": "#8eb041", "from": "NOP14", "to": "WDR43", "width": 1}, {"color": "#8eb041", "from": "NOP14", "to": "WDR46", "width": 1}, {"color": "#8eb041", "from": "CALR", "to": "HSP90B1", "width": 1}, {"color": "#f47832", "from": "CALR", "to": "RAP1B", "width": 1}, {"color": "#8eb041", "from": "SRRM2", "to": "AQR", "width": 1}, {"color": "#8eb041", "from": "SRRM2", "to": "BCAS2", "width": 1}, {"color": "#8eb041", "from": "SRRM2", "to": "CRNKL1", "width": 1}, {"color": "#8eb041", "from": "SRRM2", "to": "CWC15", "width": 1}, {"color": "#8eb041", "from": "SRRM2", "to": "CWC22", "width": 1}, {"color": "#8eb041", "from": "SRRM2", "to": "CWC27", "width": 1}, {"color": "#8eb041", "from": "SRRM2", "to": "DHX38", "width": 1}, {"color": "#8eb041", "from": "SRRM2", "to": "DHX8", "width": 1}, {"color": "#8eb041", "from": "SRRM2", "to": "EIF4A3", "width": 1}, {"color": "#8eb041", "from": "SRRM2", "to": "PLRG1", "width": 1}, {"color": "#8eb041", "from": "SRRM2", "to": "PRPF3", "width": 1}, {"color": "#8eb041", "from": "SRRM2", "to": "PRPF38A", "width": 1}, {"color": "#8eb041", "from": "SRRM2", "to": "RBM22", "width": 1}, {"color": "#8eb041", "from": "SRRM2", "to": "SART1", "width": 1}, {"color": "#8eb041", "from": "SRRM2", "to": "SLU7", "width": 1}, {"color": "#8eb041", "from": "SRRM2", "to": "SRRM1", "width": 1}, {"color": "#8eb041", "from": "SRRM2", "to": "SYF2", "width": 1}, {"color": "#8eb041", "from": "MAPK8", "to": "ESR1", "width": 1}, {"color": "#8eb041", "from": "MAPK8", "to": "FOXO1", "width": 1}, {"color": "#8eb041", "from": "MAPK8", "to": "FOXO3", "width": 1}, {"color": "#8eb041", "from": "MAPK8", "to": "KRAS", "width": 1}, {"color": "#8eb041", "from": "MAPK8", "to": "MAP3K7", "width": 1}, {"color": "#8eb041", "from": "MAPK8", "to": "MAPK14", "width": 1}, {"color": "#8eb041", "from": "MAPK8", "to": "MAPK9", "width": 1}, {"color": "#8eb041", "from": "MAPK8", "to": "RAC1", "width": 1}, {"color": "#8eb041", "from": "MAPK8", "to": "RAP1B", "width": 1}, {"color": "#8eb041", "from": "MAPK8", "to": "STAT3", "width": 1}, {"color": "#8eb041", "from": "MDM2", "to": "AKT3", "width": 1}, {"color": "#8eb041", "from": "MDM2", "to": "ESR1", "width": 1}, {"color": "#8eb041", "from": "MDM2", "to": "EZH2", "width": 1}, {"color": "#8eb041", "from": "MDM2", "to": "FOXO3", "width": 1}, {"color": "#8eb041", "from": "MDM2", "to": "GNL3", "width": 1}, {"color": "#8eb041", "from": "MDM2", "to": "IGF1R", "width": 1}, {"color": "#f47832", "from": "MDM2", "to": "GNL2", "width": 1}, {"color": "#f47832", "from": "MDM2", "to": "HSP90B1", "width": 1}, {"color": "#f47832", "from": "MDM2", "to": "MDM2", "width": 1}, {"color": "#8eb041", "from": "UTP14A", "to": "CEBPZ", "width": 1}, {"color": "#8eb041", "from": "UTP14A", "to": "FBL", "width": 1}, {"color": "#8eb041", "from": "UTP14A", "to": "MPHOSPH10", "width": 1}, {"color": "#8eb041", "from": "UTP14A", "to": "MTREX", "width": 1}, {"color": "#f47832", "from": "UTP14A", "to": "RAC1", "width": 1}, {"color": "#8eb041", "from": "UTP14A", "to": "RBM28", "width": 1}, {"color": "#8eb041", "from": "UTP14A", "to": "TSR1", "width": 1}, {"color": "#8eb041", "from": "UTP14A", "to": "WDR3", "width": 1}, {"color": "#8eb041", "from": "UTP14A", "to": "WDR43", "width": 1}, {"color": "#8eb041", "from": "UTP14A", "to": "WDR46", "width": 1}, {"color": "#8eb041", "from": "FMR1", "to": "AGO2", "width": 1}, {"color": "#f47832", "from": "FMR1", "to": "DYNC1H1", "width": 1}, {"color": "#f47832", "from": "FMR1", "to": "FMR1", "width": 1}, {"color": "#8eb041", "from": "FMR1", "to": "MECP2", "width": 1}, {"color": "#f47832", "from": "FMR1", "to": "MORF4L1", "width": 1}, {"color": "#f47832", "from": "FMR1", "to": "NCOR1", "width": 1}, {"color": "#f47832", "from": "FMR1", "to": "PIAS1", "width": 1}, {"color": "#f47832", "from": "FMR1", "to": "RYBP", "width": 1}, {"color": "#f47832", "from": "FMR1", "to": "SMARCA4", "width": 1}, {"color": "#8eb041", "from": "EZH2", "to": "ESR1", "width": 1}, {"color": "#8eb041", "from": "EZH2", "to": "KDM1A", "width": 1}, {"color": "#8eb041", "from": "EZH2", "to": "RBBP7", "width": 1}, {"color": "#8eb041", "from": "EZH2", "to": "RNF2", "width": 1}, {"color": "#8eb041", "from": "EZH2", "to": "SMARCA4", "width": 1}, {"color": "#8eb041", "from": "EZH2", "to": "STAT3", "width": 1}, {"color": "#8eb041", "from": "DHX15", "to": "AQR", "width": 1}, {"color": "#8eb041", "from": "DHX15", "to": "CEBPZ", "width": 1}, {"color": "#8eb041", "from": "DHX15", "to": "CRNKL1", "width": 1}, {"color": "#8eb041", "from": "DHX15", "to": "CWC15", "width": 1}, {"color": "#8eb041", "from": "DHX15", "to": "DHX8", "width": 1}, {"color": "#8eb041", "from": "DHX15", "to": "DKC1", "width": 1}, {"color": "#8eb041", "from": "DHX15", "to": "EIF4A3", "width": 1}, {"color": "#8eb041", "from": "DHX15", "to": "FBL", "width": 1}, {"color": "#8eb041", "from": "DHX15", "to": "MTREX", "width": 1}, {"color": "#8eb041", "from": "DHX15", "to": "PLRG1", "width": 1}, {"color": "#8eb041", "from": "DHX15", "to": "RBM22", "width": 1}, {"color": "#8eb041", "from": "DHX15", "to": "SART1", "width": 1}, {"color": "#8eb041", "from": "DHX15", "to": "SYF2", "width": 1}, {"color": "#8eb041", "from": "DHX15", "to": "TSR1", "width": 1}, {"color": "#8eb041", "from": "DHX15", "to": "WDR3", "width": 1}, {"color": "#8eb041", "from": "DHX15", "to": "WDR43", "width": 1}, {"color": "#8eb041", "from": "PLRG1", "to": "AQR", "width": 1}, {"color": "#8eb041", "from": "PLRG1", "to": "BCAS2", "width": 1}, {"color": "#8eb041", "from": "PLRG1", "to": "CRNKL1", "width": 1}, {"color": "#8eb041", "from": "PLRG1", "to": "CWC15", "width": 1}, {"color": "#8eb041", "from": "PLRG1", "to": "CWC22", "width": 1}, {"color": "#8eb041", "from": "PLRG1", "to": "CWC27", "width": 1}, {"color": "#8eb041", "from": "PLRG1", "to": "DHX38", "width": 1}, {"color": "#8eb041", "from": "PLRG1", "to": "DHX8", "width": 1}, {"color": "#8eb041", "from": "PLRG1", "to": "EIF4A3", "width": 1}, {"color": "#8eb041", "from": "PLRG1", "to": "NCBP2", "width": 1}, {"color": "#8eb041", "from": "PLRG1", "to": "PRPF38A", "width": 1}, {"color": "#8eb041", "from": "PLRG1", "to": "RBM22", "width": 1}, {"color": "#8eb041", "from": "PLRG1", "to": "SLU7", "width": 1}, {"color": "#8eb041", "from": "PLRG1", "to": "SYF2", "width": 1}, {"color": "#f47832", "from": "SMARCA4", "to": "KDM1A", "width": 1}, {"color": "#f47832", "from": "SMARCA4", "to": "SMARCA4", "width": 1}, {"color": "#8eb041", "from": "SMARCA4", "to": "SMARCB1", "width": 1}, {"color": "#8eb041", "from": "CWC22", "to": "AQR", "width": 1}, {"color": "#8eb041", "from": "CWC22", "to": "BCAS2", "width": 1}, {"color": "#8eb041", "from": "CWC22", "to": "CRNKL1", "width": 1}, {"color": "#8eb041", "from": "CWC22", "to": "CWC15", "width": 1}, {"color": "#8eb041", "from": "CWC22", "to": "CWC27", "width": 1}, {"color": "#8eb041", "from": "CWC22", "to": "DHX38", "width": 1}, {"color": "#8eb041", "from": "CWC22", "to": "DHX8", "width": 1}, {"color": "#8eb041", "from": "CWC22", "to": "EIF4A3", "width": 1}, {"color": "#8eb041", "from": "CWC22", "to": "PRPF3", "width": 1}, {"color": "#8eb041", "from": "CWC22", "to": "PRPF38A", "width": 1}, {"color": "#8eb041", "from": "CWC22", "to": "RBM22", "width": 1}, {"color": "#8eb041", "from": "CWC22", "to": "SART1", "width": 1}, {"color": "#8eb041", "from": "CWC22", "to": "SLU7", "width": 1}, {"color": "#8eb041", "from": "CWC22", "to": "SRRM1", "width": 1}, {"color": "#8eb041", "from": "CWC22", "to": "SYF2", "width": 1}, {"color": "#8eb041", "from": "STAT3", "to": "ESR1", "width": 1}, {"color": "#8eb041", "from": "STAT3", "to": "FOXO1", "width": 1}, {"color": "#8eb041", "from": "STAT3", "to": "FOXO3", "width": 1}, {"color": "#8eb041", "from": "STAT3", "to": "IGF1R", "width": 1}, {"color": "#8eb041", "from": "STAT3", "to": "JAK2", "width": 1}, {"color": "#f47832", "from": "STAT3", "to": "MAPK9", "width": 1}, {"color": "#8eb041", "from": "STAT3", "to": "MTOR", "width": 1}, {"color": "#8eb041", "from": "STAT3", "to": "PIAS1", "width": 1}, {"color": "#8eb041", "from": "STAT3", "to": "PTPN11", "width": 1}, {"color": "#f47832", "from": "ESR1", "to": "ESR1", "width": 1}, {"color": "#8eb041", "from": "ESR1", "to": "FOXO1", "width": 1}, {"color": "#8eb041", "from": "ESR1", "to": "IGF1R", "width": 1}, {"color": "#f47832", "from": "ESR1", "to": "KDM1A", "width": 1}, {"color": "#f47832", "from": "ESR1", "to": "MAPK14", "width": 1}, {"color": "#8eb041", "from": "ESR1", "to": "MAPK9", "width": 1}, {"color": "#8eb041", "from": "ESR1", "to": "NCOR1", "width": 1}, {"color": "#8eb041", "from": "KRAS", "to": "IGF1R", "width": 1}, {"color": "#8eb041", "from": "KRAS", "to": "JAK2", "width": 1}, {"color": "#8eb041", "from": "KRAS", "to": "MAPK9", "width": 1}, {"color": "#8eb041", "from": "KRAS", "to": "PTPN11", "width": 1}, {"color": "#8eb041", "from": "KRAS", "to": "RAF1", "width": 1}, {"color": "#f47832", "from": "KRAS", "to": "ZDHHC17", "width": 1}, {"color": "#8eb041", "from": "MTREX", "to": "CWC27", "width": 1}, {"color": "#8eb041", "from": "MTREX", "to": "EIF4A3", "width": 1}, {"color": "#8eb041", "from": "MTREX", "to": "GNL2", "width": 1}, {"color": "#8eb041", "from": "MTREX", "to": "NCBP1", "width": 1}, {"color": "#8eb041", "from": "MTREX", "to": "NCBP2", "width": 1}, {"color": "#8eb041", "from": "MTREX", "to": "RSL24D1", "width": 1}, {"color": "#8eb041", "from": "MTREX", "to": "WDR3", "width": 1}, {"color": "#8eb041", "from": "MTREX", "to": "WDR46", "width": 1}, {"color": "#8eb041", "from": "WDR3", "to": "CEBPZ", "width": 1}, {"color": "#8eb041", "from": "WDR3", "to": "FBL", "width": 1}, {"color": "#8eb041", "from": "WDR3", "to": "MPHOSPH10", "width": 1}, {"color": "#8eb041", "from": "WDR3", "to": "RBM28", "width": 1}, {"color": "#8eb041", "from": "WDR3", "to": "SDAD1", "width": 1}, {"color": "#8eb041", "from": "WDR3", "to": "TSR1", "width": 1}, {"color": "#8eb041", "from": "WDR3", "to": "WDR43", "width": 1}, {"color": "#8eb041", "from": "WDR3", "to": "WDR46", "width": 1}, {"color": "#f47832", "from": "LMNA", "to": "PIAS1", "width": 1}, {"color": "#f47832", "from": "LMNA", "to": "RYBP", "width": 1}, {"color": "#8eb041", "from": "CRNKL1", "to": "AQR", "width": 1}, {"color": "#8eb041", "from": "CRNKL1", "to": "BCAS2", "width": 1}, {"color": "#8eb041", "from": "CRNKL1", "to": "CWC15", "width": 1}, {"color": "#8eb041", "from": "CRNKL1", "to": "CWC27", "width": 1}, {"color": "#8eb041", "from": "CRNKL1", "to": "DHX38", "width": 1}, {"color": "#8eb041", "from": "CRNKL1", "to": "DHX8", "width": 1}, {"color": "#8eb041", "from": "CRNKL1", "to": "EIF4A3", "width": 1}, {"color": "#8eb041", "from": "CRNKL1", "to": "PRPF38A", "width": 1}, {"color": "#8eb041", "from": "CRNKL1", "to": "RBM22", "width": 1}, {"color": "#8eb041", "from": "CRNKL1", "to": "SART1", "width": 1}, {"color": "#8eb041", "from": "CRNKL1", "to": "SLU7", "width": 1}, {"color": "#8eb041", "from": "CRNKL1", "to": "SYF2", "width": 1}, {"color": "#8eb041", "from": "CEBPZ", "to": "DKC1", "width": 1}, {"color": "#8eb041", "from": "CEBPZ", "to": "GNL2", "width": 1}, {"color": "#8eb041", "from": "CEBPZ", "to": "GNL3", "width": 1}, {"color": "#8eb041", "from": "CEBPZ", "to": "MPHOSPH10", "width": 1}, {"color": "#8eb041", "from": "CEBPZ", "to": "NOC3L", "width": 1}, {"color": "#8eb041", "from": "CEBPZ", "to": "RBM28", "width": 1}, {"color": "#8eb041", "from": "CEBPZ", "to": "SDAD1", "width": 1}, {"color": "#8eb041", "from": "CEBPZ", "to": "WDR43", "width": 1}, {"color": "#8eb041", "from": "CEBPZ", "to": "WDR46", "width": 1}, {"color": "#8eb041", "from": "SQSTM1", "to": "MTOR", "width": 1}, {"color": "#8eb041", "from": "SQSTM1", "to": "TRAF2", "width": 1}, {"color": "#8eb041", "from": "RAF1", "to": "AKT3", "width": 1}, {"color": "#f47832", "from": "RAF1", "to": "RAF1", "width": 1}, {"color": "#8eb041", "from": "RAF1", "to": "RAP1B", "width": 1}, {"color": "#8eb041", "from": "CDK1", "to": "BIRC5", "width": 1}, {"color": "#8eb041", "from": "CDK1", "to": "BUB1", "width": 1}, {"color": "#8eb041", "from": "CDK1", "to": "CENPE", "width": 1}, {"color": "#8eb041", "from": "CDK1", "to": "CENPF", "width": 1}, {"color": "#8eb041", "from": "CDK1", "to": "KIF2C", "width": 1}, {"color": "#8eb041", "from": "RAP1B", "to": "MAPK9", "width": 1}, {"color": "#f47832", "from": "RAP1B", "to": "ZDHHC17", "width": 1}, {"color": "#f47832", "from": "MAPK9", "to": "FOXO1", "width": 1}, {"color": "#8eb041", "from": "MAPK9", "to": "FOXO3", "width": 1}, {"color": "#8eb041", "from": "MAPK9", "to": "MAP3K7", "width": 1}, {"color": "#8eb041", "from": "MAPK9", "to": "MAPK14", "width": 1}, {"color": "#8eb041", "from": "MAPK9", "to": "RAC1", "width": 1}, {"color": "#f47832", "from": "MAPK9", "to": "TRAF2", "width": 1}, {"color": "#8eb041", "from": "RBM22", "to": "AQR", "width": 1}, {"color": "#8eb041", "from": "RBM22", "to": "BCAS2", "width": 1}, {"color": "#8eb041", "from": "RBM22", "to": "CWC15", "width": 1}, {"color": "#8eb041", "from": "RBM22", "to": "CWC27", "width": 1}, {"color": "#8eb041", "from": "RBM22", "to": "DHX38", "width": 1}, {"color": "#8eb041", "from": "RBM22", "to": "DHX8", "width": 1}, {"color": "#8eb041", "from": "RBM22", "to": "EIF4A3", "width": 1}, {"color": "#8eb041", "from": "RBM22", "to": "PRPF38A", "width": 1}, {"color": "#8eb041", "from": "RBM22", "to": "SART1", "width": 1}, {"color": "#8eb041", "from": "RBM22", "to": "SLU7", "width": 1}, {"color": "#8eb041", "from": "RBM22", "to": "SYF2", "width": 1}, {"color": "#8eb041", "from": "EIF4A3", "to": "AQR", "width": 1}, {"color": "#8eb041", "from": "EIF4A3", "to": "BCAS2", "width": 1}, {"color": "#8eb041", "from": "EIF4A3", "to": "CWC15", "width": 1}, {"color": "#8eb041", "from": "EIF4A3", "to": "CWC27", "width": 1}, {"color": "#8eb041", "from": "EIF4A3", "to": "DHX38", "width": 1}, {"color": "#8eb041", "from": "EIF4A3", "to": "DHX8", "width": 1}, {"color": "#8eb041", "from": "EIF4A3", "to": "FUS", "width": 1}, {"color": "#8eb041", "from": "EIF4A3", "to": "NCBP1", "width": 1}, {"color": "#8eb041", "from": "EIF4A3", "to": "NCBP2", "width": 1}, {"color": "#8eb041", "from": "EIF4A3", "to": "SLU7", "width": 1}, {"color": "#8eb041", "from": "EIF4A3", "to": "SRRM1", "width": 1}, {"color": "#8eb041", "from": "MAPK14", "to": "AKT3", "width": 1}, {"color": "#8eb041", "from": "MAPK14", "to": "FOXO1", "width": 1}, {"color": "#8eb041", "from": "MAPK14", "to": "FOXO3", "width": 1}, {"color": "#8eb041", "from": "MAPK14", "to": "MAP3K7", "width": 1}, {"color": "#f47832", "from": "AP2B1", "to": "MECP2", "width": 1}, {"color": "#8eb041", "from": "PTPN11", "to": "IGF1R", "width": 1}, {"color": "#8eb041", "from": "PTPN11", "to": "JAK2", "width": 1}, {"color": "#8eb041", "from": "WDR43", "to": "FBL", "width": 1}, {"color": "#8eb041", "from": "WDR43", "to": "GNL3", "width": 1}, {"color": "#8eb041", "from": "WDR43", "to": "MPHOSPH10", "width": 1}, {"color": "#8eb041", "from": "WDR43", "to": "NOC3L", "width": 1}, {"color": "#8eb041", "from": "WDR43", "to": "SDAD1", "width": 1}, {"color": "#8eb041", "from": "WDR43", "to": "TSR1", "width": 1}, {"color": "#8eb041", "from": "WDR43", "to": "WDR46", "width": 1}, {"color": "#8eb041", "from": "RBBP7", "to": "KDM1A", "width": 1}, {"color": "#8eb041", "from": "RBBP7", "to": "MORF4L1", "width": 1}, {"color": "#8eb041", "from": "RBBP7", "to": "NCOR1", "width": 1}, {"color": "#8eb041", "from": "RBBP7", "to": "RNF2", "width": 1}, {"color": "#8eb041", "from": "SYF2", "to": "AQR", "width": 1}, {"color": "#8eb041", "from": "SYF2", "to": "BCAS2", "width": 1}, {"color": "#8eb041", "from": "SYF2", "to": "CWC15", "width": 1}, {"color": "#8eb041", "from": "SYF2", "to": "DHX38", "width": 1}, {"color": "#8eb041", "from": "SYF2", "to": "DHX8", "width": 1}, {"color": "#8eb041", "from": "SYF2", "to": "SLU7", "width": 1}, {"color": "#8eb041", "from": "FOXO3", "to": "AKT3", "width": 1}, {"color": "#8eb041", "from": "FOXO3", "to": "CHUK", "width": 1}, {"color": "#8eb041", "from": "FOXO3", "to": "FOXO1", "width": 1}, {"color": "#ad9d31", "from": "FOXO3", "to": "FOXO3", "width": 1}, {"color": "#8eb041", "from": "FOXO3", "to": "IKBKB", "width": 1}, {"color": "#8eb041", "from": "JAK2", "to": "IGF1R", "width": 1}, {"color": "#f47832", "from": "NF2", "to": "KDM1A", "width": 1}, {"color": "#f47832", "from": "NF2", "to": "NF2", "width": 1}, {"color": "#f47832", "from": "NF2", "to": "PIAS1", "width": 1}, {"color": "#f47832", "from": "NF2", "to": "RYBP", "width": 1}, {"color": "#f47832", "from": "RYBP", "to": "FUS", "width": 1}, {"color": "#8eb041", "from": "RYBP", "to": "RNF2", "width": 1}, {"color": "#f47832", "from": "RYBP", "to": "DR1", "width": 1}, {"color": "#8eb041", "from": "GNL2", "to": "GNL3", "width": 1}, {"color": "#8eb041", "from": "GNL2", "to": "NOC3L", "width": 1}, {"color": "#8eb041", "from": "GNL2", "to": "RBM28", "width": 1}, {"color": "#8eb041", "from": "GNL2", "to": "RSL24D1", "width": 1}, {"color": "#8eb041", "from": "GNL2", "to": "SDAD1", "width": 1}, {"color": "#8eb041", "from": "GNL2", "to": "TSR1", "width": 1}, {"color": "#8eb041", "from": "GNL2", "to": "WDR46", "width": 1}, {"color": "#8eb041", "from": "POLR2D", "to": "MED10", "width": 1}, {"color": "#8eb041", "from": "POLR2D", "to": "MED19", "width": 1}, {"color": "#8eb041", "from": "POLR2D", "to": "MED28", "width": 1}, {"color": "#8eb041", "from": "POLR2D", "to": "MED4", "width": 1}, {"color": "#8eb041", "from": "POLR2D", "to": "MED6", "width": 1}, {"color": "#8eb041", "from": "POLR2D", "to": "MED7", "width": 1}, {"color": "#8eb041", "from": "SDAD1", "to": "GNL3", "width": 1}, {"color": "#f67089", "from": "SDAD1", "to": "MPHOSPH10", "width": 1}, {"color": "#8eb041", "from": "SDAD1", "to": "NOC3L", "width": 1}, {"color": "#8eb041", "from": "SDAD1", "to": "RBM28", "width": 1}, {"color": "#8eb041", "from": "SDAD1", "to": "RSL24D1", "width": 1}, {"color": "#8eb041", "from": "SDAD1", "to": "TSR1", "width": 1}, {"color": "#f47832", "from": "FUS", "to": "MAPT", "width": 1}, {"color": "#8eb041", "from": "CWC15", "to": "AQR", "width": 1}, {"color": "#8eb041", "from": "CWC15", "to": "BCAS2", "width": 1}, {"color": "#8eb041", "from": "CWC15", "to": "CWC27", "width": 1}, {"color": "#8eb041", "from": "CWC15", "to": "DHX38", "width": 1}, {"color": "#8eb041", "from": "CWC15", "to": "DHX8", "width": 1}, {"color": "#8eb041", "from": "CWC15", "to": "PRPF38A", "width": 1}, {"color": "#8eb041", "from": "CWC15", "to": "SLU7", "width": 1}, {"color": "#8eb041", "from": "CWC15", "to": "SRRM1", "width": 1}, {"color": "#f47832", "from": "SMARCB1", "to": "MECP2", "width": 1}, {"color": "#f47832", "from": "SMARCB1", "to": "SMARCB1", "width": 1}, {"color": "#f47832", "from": "SMARCB1", "to": "ZDHHC17", "width": 1}, {"color": "#8eb041", "from": "NCOR1", "to": "MECP2", "width": 1}, {"color": "#8eb041", "from": "NCOR1", "to": "RBPJ", "width": 1}, {"color": "#f47832", "from": "RNF2", "to": "KDM1A", "width": 1}, {"color": "#8eb041", "from": "MPHOSPH10", "to": "FBL", "width": 1}, {"color": "#8eb041", "from": "MPHOSPH10", "to": "RBM28", "width": 1}, {"color": "#8eb041", "from": "MPHOSPH10", "to": "WDR46", "width": 1}, {"color": "#8eb041", "from": "SART1", "to": "CWC27", "width": 1}, {"color": "#8eb041", "from": "SART1", "to": "NCBP1", "width": 1}, {"color": "#8eb041", "from": "SART1", "to": "PRPF3", "width": 1}, {"color": "#8eb041", "from": "SART1", "to": "PRPF38A", "width": 1}, {"color": "#8eb041", "from": "RBM28", "to": "DKC1", "width": 1}, {"color": "#8eb041", "from": "RBM28", "to": "WDR46", "width": 1}, {"color": "#8eb041", "from": "SLU7", "to": "AQR", "width": 1}, {"color": "#8eb041", "from": "SLU7", "to": "DHX38", "width": 1}, {"color": "#8eb041", "from": "SLU7", "to": "DHX8", "width": 1}, {"color": "#8eb041", "from": "SLU7", "to": "NCBP2", "width": 1}, {"color": "#8eb041", "from": "SLU7", "to": "PRPF3", "width": 1}, {"color": "#8eb041", "from": "SLU7", "to": "U2AF2", "width": 1}, {"color": "#f47832", "from": "MECP2", "to": "PIAS1", "width": 1}, {"color": "#f47832", "from": "MAPT", "to": "HSP90B1", "width": 1}, {"color": "#f47832", "from": "MAPT", "to": "MAPT", "width": 1}, {"color": "#f47832", "from": "MAPT", "to": "PRNP", "width": 1}, {"color": "#8eb041", "from": "MED6", "to": "MED10", "width": 1}, {"color": "#8eb041", "from": "MED6", "to": "MED19", "width": 1}, {"color": "#8eb041", "from": "MED6", "to": "MED23", "width": 1}, {"color": "#8eb041", "from": "MED6", "to": "MED28", "width": 1}, {"color": "#8eb041", "from": "MED6", "to": "MED4", "width": 1}, {"color": "#8eb041", "from": "MED6", "to": "MED7", "width": 1}, {"color": "#8eb041", "from": "MED6", "to": "ZC3H13", "width": 1}, {"color": "#8eb041", "from": "MED19", "to": "MED10", "width": 1}, {"color": "#8eb041", "from": "MED19", "to": "MED23", "width": 1}, {"color": "#8eb041", "from": "MED19", "to": "MED28", "width": 1}, {"color": "#8eb041", "from": "MED19", "to": "MED4", "width": 1}, {"color": "#8eb041", "from": "MED19", "to": "MED7", "width": 1}, {"color": "#8eb041", "from": "MED19", "to": "ZC3H13", "width": 1}, {"color": "#8eb041", "from": "BUB1", "to": "BIRC5", "width": 1}, {"color": "#8eb041", "from": "BUB1", "to": "CENPE", "width": 1}, {"color": "#8eb041", "from": "BUB1", "to": "CENPF", "width": 1}, {"color": "#8eb041", "from": "BUB1", "to": "KIF2C", "width": 1}, {"color": "#8eb041", "from": "DHX38", "to": "CWC27", "width": 1}, {"color": "#8eb041", "from": "DHX38", "to": "DHX8", "width": 1}, {"color": "#8eb041", "from": "DHX38", "to": "NCBP1", "width": 1}, {"color": "#8eb041", "from": "DHX38", "to": "U2AF2", "width": 1}, {"color": "#8eb041", "from": "NCBP1", "to": "AGO2", "width": 1}, {"color": "#8eb041", "from": "NCBP1", "to": "AQR", "width": 1}, {"color": "#8eb041", "from": "NCBP1", "to": "NCBP2", "width": 1}, {"color": "#8eb041", "from": "NCBP1", "to": "SRRM1", "width": 1}, {"color": "#f47832", "from": "NCBP1", "to": "ZDHHC17", "width": 1}, {"color": "#8eb041", "from": "WDR46", "to": "FBL", "width": 1}, {"color": "#8eb041", "from": "WDR46", "to": "TSR1", "width": 1}, {"color": "#8eb041", "from": "AKT3", "to": "CHUK", "width": 1}, {"color": "#f47832", "from": "AKT3", "to": "FOXO1", "width": 1}, {"color": "#f47832", "from": "AKT3", "to": "HSP90B1", "width": 1}, {"color": "#8eb041", "from": "AKT3", "to": "IKBKB", "width": 1}, {"color": "#8eb041", "from": "AKT3", "to": "MTOR", "width": 1}, {"color": "#f47832", "from": "BIRC5", "to": "BIRC5", "width": 1}, {"color": "#8eb041", "from": "BIRC5", "to": "CENPE", "width": 1}, {"color": "#8eb041", "from": "BIRC5", "to": "CENPF", "width": 1}, {"color": "#8eb041", "from": "BIRC5", "to": "KIF2C", "width": 1}, {"color": "#8eb041", "from": "FOXO1", "to": "CHUK", "width": 1}, {"color": "#ad9d31", "from": "FOXO1", "to": "FOXO1", "width": 1}, {"color": "#8eb041", "from": "FOXO1", "to": "IKBKB", "width": 1}, {"color": "#f47832", "from": "ZDHHC17", "to": "DR1", "width": 1}, {"color": "#f47832", "from": "ZDHHC17", "to": "ZDHHC17", "width": 1}, {"color": "#8eb041", "from": "AGO2", "to": "DDX6", "width": 1}, {"color": "#8eb041", "from": "AGO2", "to": "NCBP2", "width": 1}, {"color": "#8eb041", "from": "TRAF2", "to": "CHUK", "width": 1}, {"color": "#8eb041", "from": "TRAF2", "to": "IKBKB", "width": 1}, {"color": "#8eb041", "from": "TRAF2", "to": "MAP3K7", "width": 1}, {"color": "#f47832", "from": "TRAF2", "to": "MTOR", "width": 1}, {"color": "#8eb041", "from": "NOC3L", "to": "GNL3", "width": 1}, {"color": "#8eb041", "from": "NOC3L", "to": "RSL24D1", "width": 1}, {"color": "#f67089", "from": "NOC3L", "to": "TSR1", "width": 1}, {"color": "#8eb041", "from": "MED10", "to": "MED23", "width": 1}, {"color": "#8eb041", "from": "MED10", "to": "MED28", "width": 1}, {"color": "#8eb041", "from": "MED10", "to": "MED4", "width": 1}, {"color": "#8eb041", "from": "MED10", "to": "MED7", "width": 1}, {"color": "#8eb041", "from": "DKC1", "to": "FBL", "width": 1}, {"color": "#8eb041", "from": "DKC1", "to": "GNL3", "width": 1}, {"color": "#8eb041", "from": "MED4", "to": "MED23", "width": 1}, {"color": "#8eb041", "from": "MED4", "to": "MED28", "width": 1}, {"color": "#8eb041", "from": "MED4", "to": "MED7", "width": 1}, {"color": "#8eb041", "from": "MED4", "to": "ZC3H13", "width": 1}, {"color": "#8eb041", "from": "RSL24D1", "to": "GNL3", "width": 1}, {"color": "#8eb041", "from": "MAP3K7", "to": "CHUK", "width": 1}, {"color": "#8eb041", "from": "MAP3K7", "to": "IKBKB", "width": 1}, {"color": "#8eb041", "from": "DHX8", "to": "AQR", "width": 1}, {"color": "#8eb041", "from": "DHX8", "to": "BCAS2", "width": 1}, {"color": "#8eb041", "from": "DHX8", "to": "PRPF3", "width": 1}, {"color": "#8eb041", "from": "ZC3H13", "to": "MED23", "width": 1}, {"color": "#8eb041", "from": "ZC3H13", "to": "MED28", "width": 1}, {"color": "#8eb041", "from": "CENPF", "to": "CENPE", "width": 1}, {"color": "#8eb041", "from": "CENPF", "to": "KIF2C", "width": 1}, {"color": "#8eb041", "from": "IKBKB", "to": "CHUK", "width": 1}, {"color": "#f47832", "from": "IKBKB", "to": "IKBKB", "width": 1}, {"color": "#8eb041", "from": "GNL3", "to": "TSR1", "width": 1}, {"color": "#8eb041", "from": "AQR", "to": "BCAS2", "width": 1}, {"color": "#8eb041", "from": "AQR", "to": "PRPF38A", "width": 1}, {"color": "#8eb041", "from": "AQR", "to": "SRRM1", "width": 1}, {"color": "#8eb041", "from": "MED23", "to": "MED28", "width": 1}, {"color": "#8eb041", "from": "MED23", "to": "MED7", "width": 1}, {"color": "#8eb041", "from": "MTOR", "to": "CHUK", "width": 1}, {"color": "#8eb041", "from": "PRPF38A", "to": "CWC27", "width": 1}, {"color": "#8eb041", "from": "PRPF38A", "to": "PRPF3", "width": 1}, {"color": "#8eb041", "from": "PRPF38A", "to": "SRRM1", "width": 1}, {"color": "#8eb041", "from": "MED7", "to": "MED28", "width": 1}, {"color": "#8eb041", "from": "KIF2C", "to": "CENPE", "width": 1}, {"color": "#f47832", "from": "PRNP", "to": "PRNP", "width": 1}, {"color": "#8eb041", "from": "PRPF3", "to": "CWC27", "width": 1}, {"color": "#8eb041", "from": "PRPF3", "to": "U2AF2", "width": 1}, {"color": "#f47832", "from": "IGF1R", "to": "IGF1R", "width": 1}, {"color": "#8eb041", "from": "SRRM1", "to": "NCBP2", "width": 1}, {"color": "#8eb041", "from": "SRRM1", "to": "U2AF2", "width": 1}, {"color": "#8eb041", "from": "U2AF2", "to": "NCBP2", "width": 1}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "repulsion": {
+            "centralGravity": 0.2,
+            "damping": 0.09,
+            "nodeDistance": 150,
+            "springConstant": 0.05,
+            "springLength": 200
+        },
+        "solver": "repulsion",
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+                      network.on("stabilizationProgress", function(params) {
+                          document.getElementById('loadingBar').removeAttribute("style");
+                          var maxWidth = 496;
+                          var minWidth = 20;
+                          var widthFactor = params.iterations/params.total;
+                          var width = Math.max(minWidth,maxWidth * widthFactor);
+                          document.getElementById('bar').style.width = width + 'px';
+                          document.getElementById('text').innerHTML = Math.round(widthFactor*100) + '%';
+                      });
+                      network.once("stabilizationIterationsDone", function() {
+                          document.getElementById('text').innerHTML = '100%';
+                          document.getElementById('bar').style.width = '496px';
+                          document.getElementById('loadingBar').style.opacity = 0;
+                          // really clean the dom element
+                          setTimeout(function () {document.getElementById('loadingBar').style.display = 'none';}, 500);
+                      });
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+        <script type="text/javascript">
+        
+            let selectedNodes = [];
+            let previousStyles = {}; 
+            let undoStack = [];
+    
+            function saveNetworkState() {
+                const nodes = network.body.data.nodes.get();
+                const edges = network.body.data.edges.get();
+                const styles = {};
+            
+                nodes.forEach(node => {
+                    styles[node.id] = {
+                        color: previousStyles[node.id]?.color || node.color || null
+                    };
+                });
+            
+                undoStack.push(JSON.stringify({ nodes, edges, styles }));
+            }
+            
+            
+            function removeSelectedNodes() {
+                if (selectedNodes.length > 0) {
+                    saveNetworkState();
+            
+                    network.body.data.nodes.remove(selectedNodes.map(id => ({ id })));
+                    selectedNodes = [];
+                } else {
+                    alert("No nodes selected.");
+                }
+            }
+            
+            function undo() {
+                if (undoStack.length > 0) {
+                    const previousState = JSON.parse(undoStack.pop());
+            
+                    network.body.data.nodes.clear();
+                    network.body.data.edges.clear();
+                    network.body.data.nodes.add(previousState.nodes);
+                    network.body.data.edges.add(previousState.edges);
+            
+                    Object.keys(previousState.styles).forEach(nodeId => {
+                        network.body.data.nodes.update({
+                            id: nodeId,
+                            ...previousState.styles[nodeId]
+                        });
+                    });
+            
+                    selectedNodes = [];
+                    previousStyles = previousState.styles;
+                } else {
+                    alert("Nothing to undo.");
+                }
+            }
+            
+            network.on("selectNode", function (params) {
+                if (event.ctrlKey) {
+                    selectedNodes = [...new Set([...selectedNodes, ...params.nodes])];
+                } else {
+                    selectedNodes.forEach(nodeId => {
+                        if (previousStyles[nodeId]) {
+                            network.body.data.nodes.update({
+                                id: nodeId,
+                                ...previousStyles[nodeId]
+                            });
+                        }
+                    });
+                    selectedNodes = params.nodes;
+                }
+            
+                params.nodes.forEach(nodeId => {
+                    const nodeData = network.body.data.nodes.get(nodeId);
+                    if (!previousStyles[nodeId]) {
+                        previousStyles[nodeId] = {
+                            color: nodeData.color || null
+                        };
+                    }
+                    network.body.data.nodes.update({
+                        id: nodeId,
+                        color: "black"
+                    });
+                });
+            });
+            
+            network.on("deselectNode", function (params) {
+                if (!event.ctrlKey) {
+                    selectedNodes.forEach(nodeId => {
+                        if (previousStyles[nodeId]) {
+                            network.body.data.nodes.update({
+                                id: nodeId,
+                                ...previousStyles[nodeId]
+                            });
+                        }
+                    });
+                    selectedNodes = [];
+                } else {
+                    params.nodes.forEach(nodeId => {
+                        if (previousStyles[nodeId]) {
+                            network.body.data.nodes.update({
+                                id: nodeId,
+                                ...previousStyles[nodeId]
+                            });
+                        }
+                    });
+                }
+            });
+                    
+                    
+            
+            
+            
+            function changePhysics(value) {
+                network.setOptions({
+                    physics: {
+                        solver: 'repulsion',
+                        repulsion: {
+                            nodeDistance: parseInt(value),
+                        },
+                    },
+                });
+            }
+            
+            
+            
+            
+            
+                            
+            let originalNodeSizes = {};
+            
+            function initializeOriginalNodeSizes() {
+                network.body.data.nodes.get().forEach(node => {
+                    if (!originalNodeSizes[node.id]) {
+                        originalNodeSizes[node.id] = node.size || 1; 
+                    }
+                });
+            }
+            
+            function scaleNetworkSize(scaleFactor) {
+                initializeOriginalNodeSizes(); 
+            
+                network.body.data.nodes.update(
+                    network.body.data.nodes.get().map(node => ({
+                        id: node.id,
+                        size: originalNodeSizes[node.id] * scaleFactor 
+                    }))
+                );
+            }
+                            
+                        
+            
+            function changeFontSize(size) {
+                network.body.data.nodes.update(
+                    network.body.data.nodes.get().map(node => ({
+                        id: node.id,
+                        font: { size: size }
+                    }))
+                );
+            }
+            
+            
+            let physicsEnabled = true;
+            
+            function togglePhysics() {
+                physicsEnabled = !physicsEnabled;
+            
+                network.setOptions({
+                    physics: physicsEnabled
+                });
+            
+
+                document.getElementById("togglePhysicsButton").innerText = physicsEnabled
+                    ? "Disable Physics"
+                    : "Enable Physics";
+            }
+
+
+
+            function downloadFile(blob, filename) {
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = filename;
+                link.click();
+    
+                URL.revokeObjectURL(link.href);
+            }
+
+
+            function saveGraph(format, resolution = 96) {
+                
+                if (format === "svg") {
+
+                    const positions = network.getPositions();
+
+                    const nodes = network.body.data.nodes.get();
+                    const edges = network.body.data.edges.get();
+                
+                    let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+                    Object.values(positions).forEach(pos => {
+                        minX = Math.min(minX, pos.x);
+                        maxX = Math.max(maxX, pos.x);
+                        minY = Math.min(minY, pos.y);
+                        maxY = Math.max(maxY, pos.y);
+                    });
+                
+                    const margin = 600; 
+                    const width = maxX - minX + margin * 2.5; 
+                    const height = maxY - minY + margin * 1.5; 
+                
+                    const offsetX = margin - minX; 
+                    const offsetY = margin - minY; 
+                
+                    let svgContent = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">`;
+                
+                    edges.forEach((edge) => {
+                        const from = positions[edge.from];
+                        const to = positions[edge.to];
+                        if (from && to) {
+                            const controlX = (from.x + to.x) / 2; 
+                            const controlY = (from.y + to.y) / 2 - 50; 
+                    
+                            const pathData = `M${from.x + offsetX},${from.y + offsetY} C${controlX + offsetX},${controlY + offsetY} ${controlX + offsetX},${controlY + offsetY} ${to.x + offsetX},${to.y + offsetY}`;
+                            const color = edge.color || "black"; 
+                            const width = edge.width || 2; 
+                            svgContent += `<path d="${pathData}" stroke="${color}" stroke-width="${width}" fill="none"/>`;
+                        }
+                    });
+                
+
+                    nodes.forEach((node) => {
+                        const pos = positions[node.id];
+                        if (pos) {
+                            const size = (node.size || 10); 
+                            const color = node.color || "blue"; 
+                            svgContent += `<circle cx="${pos.x + offsetX}" cy="${pos.y + offsetY}" r="${size}" fill="${color}" />`;
+                
+                            const labelColor = node.font?.color || "black"; 
+                            const labelFontSize = node.font?.size || 12; 
+                            svgContent += `<text x="${pos.x + offsetX + size + 5}" y="${pos.y + offsetY}" font-size="${labelFontSize}" fill="${labelColor}">${node.label || node.id}</text>`;
+                        }
+                    });
+                
+                    svgContent += `</svg>`;
+                
+                    const blob = new Blob([svgContent], { type: "image/svg+xml;charset=utf-8" });
+                    const link = document.createElement("a");
+                    link.href = URL.createObjectURL(blob);
+                    link.download = "graph.svg";
+                    link.click();
+                                            
+                    
+                } else {
+                    
+                    const positions = network.getPositions();
+
+                    const nodes = network.body.data.nodes.get();
+                    const edges = network.body.data.edges.get();
+                
+                    let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+                    Object.values(positions).forEach(pos => {
+                        minX = Math.min(minX, pos.x);
+                        maxX = Math.max(maxX, pos.x);
+                        minY = Math.min(minY, pos.y);
+                        maxY = Math.max(maxY, pos.y);
+                    });
+                
+                    const margin = 600;  
+                    const width = maxX - minX + margin * 2.5; 
+                    const height = maxY - minY + margin * 1.5; 
+                
+                    const offsetX = margin - minX; 
+                    const offsetY = margin - minY; 
+                
+                    let svgContent = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">`;
+                
+                    edges.forEach((edge) => {
+                        const from = positions[edge.from];
+                        const to = positions[edge.to];
+                        if (from && to) {
+                            const controlX = (from.x + to.x) / 2; 
+                            const controlY = (from.y + to.y) / 2 - 50; 
+                    
+                            const pathData = `M${from.x + offsetX},${from.y + offsetY} C${controlX + offsetX},${controlY + offsetY} ${controlX + offsetX},${controlY + offsetY} ${to.x + offsetX},${to.y + offsetY}`;
+                            const color = edge.color || "black"; 
+                            const width = edge.width || 2; 
+                            svgContent += `<path d="${pathData}" stroke="${color}" stroke-width="${width}" fill="none"/>`;
+                        }
+                    });
+                
+                    nodes.forEach((node) => {
+                        const pos = positions[node.id];
+                        if (pos) {
+                            const size = (node.size || 10); 
+                            const color = node.color || "blue"; 
+                            svgContent += `<circle cx="${pos.x + offsetX}" cy="${pos.y + offsetY}" r="${size}" fill="${color}" />`;
+                
+                            const labelColor = node.font?.color || "black"; 
+                            const labelFontSize = node.font?.size || 12; 
+                            svgContent += `<text x="${pos.x + offsetX + size + 5}" y="${pos.y + offsetY}" font-size="${labelFontSize}" fill="${labelColor}">${node.label || node.id}</text>`;
+                        }
+                    });
+                
+                    svgContent += `</svg>`;
+                    
+                    const svgBlob = new Blob([svgContent], { type: 'image/svg+xml' });
+                    const svgUrl = URL.createObjectURL(svgBlob);
+                    
+                    const getScaleFactor = (resolution = 300) => {
+                        const defaultDPI = 96;
+                        return resolution / defaultDPI;
+                    };
+                    
+                    const scaleFactor = getScaleFactor(resolution || 300);
+                    
+                    const canvas = document.createElement('canvas');
+                    const context = canvas.getContext('2d');
+                    const img = new Image();
+                    
+                    img.onload = () => {
+                        try {
+                            canvas.width = width * scaleFactor;
+                            canvas.height = height * scaleFactor;
+                    
+                            context.setTransform(scaleFactor, 0, 0, scaleFactor, 0, 0);
+                    
+                            if (format === 'jpeg' || format === 'jpg') {
+                                context.fillStyle = 'white';
+                                context.fillRect(0, 0, canvas.width, canvas.height);
+                            }
+                    
+                            context.drawImage(img, 0, 0, width, height);
+                    
+                            canvas.toBlob((blob) => {
+                                if (blob) {
+                                    downloadFile(blob, `image.${format}`);
+                                } else {
+                                    console.error('Błąd: Blob jest pusty!');
+                                }
+                            }, `image/${format}`);
+                        } catch (error) {
+                            console.error('Błąd podczas rysowania na canvasie:', error);
+                        }
+                    };
+                    
+                    img.onerror = (error) => {
+                        console.error('Nie udało się załadować obrazu SVG jako źródła:', error);
+                    };
+                    
+                    img.src = svgUrl;
+                    
+
+                        
+                        
+                }
+            }
+                        
+                        
+                        
+    
+    
+            document.body.insertAdjacentHTML('beforeend', `
+                <div style="position: fixed; top: 0; left: 0; width: 100%; background: #353834; padding: 10px; z-index: 1000; display: flex; gap: 10px; align-items: center; border-bottom: 1px solid #ddd;">
+                    <button onclick="removeSelectedNodes()">
+                        <i class="fa-solid fa-eraser"></i>
+                    </button>
+                    
+                    
+
+                    
+                    
+                    <button onclick="undo()">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </button>
+                    
+
+                    <label for="formatSelect" style="color: white;">Save As:</label>
+                    <select id="formatSelect">
+                        <option value="png">PNG</option>
+                        <option value="jpg">JPEG</option>
+                        <option value="svg">SVG</option>
+
+                    </select>
+                    
+                    <label for="resolutionSelect" style="color: white;">Resolution (DPI):</label>
+                    <select id="resolutionSelect">
+                        <option value="200">300 DPI</option>
+                        <option value="300">300 DPI</option>
+                        <option value="600">600 DPI</option>
+
+                    </select>
+                    
+                    <button onclick="saveGraph(
+                        document.getElementById('formatSelect').value,
+                        parseInt(document.getElementById('resolutionSelect').value)
+                    )">
+                        Export Graph
+                    </button>
+                    
+
+        
+                    <label style="color: white;">Font Size:</label>
+                    <input type="range" min="10" max="50" value="14" onchange="changeFontSize(this.value)">
+                    <label style="color: white;">Node Size:</label>
+                    <input type="range" min="0.1" max="10" value="0.1" onchange="scaleNetworkSize(this.value)">
+                    
+                    <button id="togglePhysicsButton" onclick="togglePhysics()">Disable Physics</button>
+
+                    <label style="color: white;">Physics:</label>
+                    <input type="range" min="50" max="500" value="200" step="10" onchange="changePhysics(this.value)">
+               
+                </div>
+            `);
+        </script>
+        </body>
+</html>

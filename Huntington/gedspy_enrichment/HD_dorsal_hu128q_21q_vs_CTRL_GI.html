@@ -1,0 +1,674 @@
+<html>
+    <head>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 1900px;
+                 height: 864px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+             #loadingBar {
+                 position:absolute;
+                 top:0px;
+                 left:0px;
+                 width: 1900px;
+                 height: 864px;
+                 background-color:rgba(200,200,200,0.8);
+                 -webkit-transition: all 0.5s ease;
+                 -moz-transition: all 0.5s ease;
+                 -ms-transition: all 0.5s ease;
+                 -o-transition: all 0.5s ease;
+                 transition: all 0.5s ease;
+                 opacity:1;
+             }
+
+             #bar {
+                 position:absolute;
+                 top:0px;
+                 left:0px;
+                 width:20px;
+                 height:20px;
+                 margin:auto auto auto auto;
+                 border-radius:11px;
+                 border:2px solid rgba(30,30,30,0.05);
+                 background: rgb(0, 173, 246); /* Old browsers */
+                 box-shadow: 2px 0px 4px rgba(0,0,0,0.4);
+             }
+
+             #border {
+                 position:absolute;
+                 top:10px;
+                 left:10px;
+                 width:500px;
+                 height:23px;
+                 margin:auto auto auto auto;
+                 box-shadow: 0px 0px 4px rgba(0,0,0,0.2);
+                 border-radius:10px;
+             }
+
+             #text {
+                 position:absolute;
+                 top:8px;
+                 left:530px;
+                 width:30px;
+                 height:50px;
+                 margin:auto auto auto auto;
+                 font-size:22px;
+                 color: #000000;
+             }
+
+             div.outerBorder {
+                 position:relative;
+                 top:400px;
+                 width:600px;
+                 height:44px;
+                 margin:auto auto auto auto;
+                 border:8px solid rgba(0,0,0,0.1);
+                 background: rgb(252,252,252); /* Old browsers */
+                 background: -moz-linear-gradient(top,  rgba(252,252,252,1) 0%, rgba(237,237,237,1) 100%); /* FF3.6+ */
+                 background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(252,252,252,1)), color-stop(100%,rgba(237,237,237,1))); /* Chrome,Safari4+ */
+                 background: -webkit-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Chrome10+,Safari5.1+ */
+                 background: -o-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Opera 11.10+ */
+                 background: -ms-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* IE10+ */
+                 background: linear-gradient(to bottom,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* W3C */
+                 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfcfc', endColorstr='#ededed',GradientType=0 ); /* IE6-9 */
+                 border-radius:72px;
+                 box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+             }
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+            <div id="loadingBar">
+              <div class="outerBorder">
+                <div id="text">0%</div>
+                <div id="border">
+                  <div id="bar"></div>
+                </div>
+              </div>
+            </div>
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "royalblue", "id": "App", "label": "App", "shape": "dot", "size": 18}, {"color": "royalblue", "id": "Aplp2", "label": "Aplp2", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Bcl2", "label": "Bcl2", "shape": "dot", "size": 15}, {"color": "royalblue", "id": "Calm1", "label": "Calm1", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Casp3", "label": "Casp3", "shape": "dot", "size": 15}, {"color": "royalblue", "id": "Cbfb", "label": "Cbfb", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Dlg4", "label": "Dlg4", "shape": "dot", "size": 15}, {"color": "royalblue", "id": "Eif2s2", "label": "Eif2s2", "shape": "dot", "size": 15}, {"color": "royalblue", "id": "Gsk3b", "label": "Gsk3b", "shape": "dot", "size": 16}, {"color": "royalblue", "id": "Hsp90b1", "label": "Hsp90b1", "shape": "dot", "size": 15}, {"color": "royalblue", "id": "Hspa5", "label": "Hspa5", "shape": "dot", "size": 15}, {"color": "royalblue", "id": "Hspa8", "label": "Hspa8", "shape": "dot", "size": 15}, {"color": "royalblue", "id": "Hspd1", "label": "Hspd1", "shape": "dot", "size": 15}, {"color": "royalblue", "id": "Nae1", "label": "Nae1", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Park7", "label": "Park7", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Ppp2ca", "label": "Ppp2ca", "shape": "dot", "size": 15}, {"color": "royalblue", "id": "Prkaca", "label": "Prkaca", "shape": "dot", "size": 16}, {"color": "royalblue", "id": "Prkacb", "label": "Prkacb", "shape": "dot", "size": 16}, {"color": "royalblue", "id": "Rnf111", "label": "Rnf111", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Septin2", "label": "Septin2", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Supt16", "label": "Supt16", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Syp", "label": "Syp", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Ttc3", "label": "Ttc3", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Ttr", "label": "Ttr", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Uba3", "label": "Uba3", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Atp1b1", "label": "Atp1b1", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Dync1i1", "label": "Dync1i1", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Kif1b", "label": "Kif1b", "shape": "dot", "size": 16}, {"color": "royalblue", "id": "Kras", "label": "Kras", "shape": "dot", "size": 15}, {"color": "royalblue", "id": "Sf3b1", "label": "Sf3b1", "shape": "dot", "size": 16}, {"color": "royalblue", "id": "Ddx46", "label": "Ddx46", "shape": "dot", "size": 15}, {"color": "royalblue", "id": "Dek", "label": "Dek", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Htatsf1", "label": "Htatsf1", "shape": "dot", "size": 15}, {"color": "royalblue", "id": "Lsm6", "label": "Lsm6", "shape": "dot", "size": 15}, {"color": "royalblue", "id": "Prpf3", "label": "Prpf3", "shape": "dot", "size": 15}, {"color": "royalblue", "id": "Prpf39", "label": "Prpf39", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Prpf4b", "label": "Prpf4b", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Rbm25", "label": "Rbm25", "shape": "dot", "size": 15}, {"color": "royalblue", "id": "Rbm39", "label": "Rbm39", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Sart1", "label": "Sart1", "shape": "dot", "size": 15}, {"color": "royalblue", "id": "Sf3a3", "label": "Sf3a3", "shape": "dot", "size": 16}, {"color": "royalblue", "id": "Sf3b2", "label": "Sf3b2", "shape": "dot", "size": 16}, {"color": "royalblue", "id": "Smarca5", "label": "Smarca5", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Snrnp48", "label": "Snrnp48", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Snrpb2", "label": "Snrpb2", "shape": "dot", "size": 15}, {"color": "royalblue", "id": "Snrpd3", "label": "Snrpd3", "shape": "dot", "size": 16}, {"color": "royalblue", "id": "Snrpe", "label": "Snrpe", "shape": "dot", "size": 16}, {"color": "royalblue", "id": "Snrpf", "label": "Snrpf", "shape": "dot", "size": 16}, {"color": "royalblue", "id": "Srrm1", "label": "Srrm1", "shape": "dot", "size": 15}, {"color": "royalblue", "id": "Srrm2", "label": "Srrm2", "shape": "dot", "size": 15}, {"color": "royalblue", "id": "Srsf2", "label": "Srsf2", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "U2af1", "label": "U2af1", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Ybx1", "label": "Ybx1", "shape": "dot", "size": 15}, {"color": "royalblue", "id": "Brwd1", "label": "Brwd1", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Nsmce2", "label": "Nsmce2", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Tdg", "label": "Tdg", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Sh3kbp1", "label": "Sh3kbp1", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Ten1", "label": "Ten1", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Vdac2", "label": "Vdac2", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Alyref", "label": "Alyref", "shape": "dot", "size": 15}, {"color": "royalblue", "id": "Magoh", "label": "Magoh", "shape": "dot", "size": 15}, {"color": "royalblue", "id": "Prpf40b", "label": "Prpf40b", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Slu7", "label": "Slu7", "shape": "dot", "size": 15}, {"color": "royalblue", "id": "Akt3", "label": "Akt3", "shape": "dot", "size": 15}, {"color": "royalblue", "id": "Apc", "label": "Apc", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Braf", "label": "Braf", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Creb3", "label": "Creb3", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Hsp90ab1", "label": "Hsp90ab1", "shape": "dot", "size": 15}, {"color": "royalblue", "id": "Kif5b", "label": "Kif5b", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Kif5c", "label": "Kif5c", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Lrp6", "label": "Lrp6", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Pard6a", "label": "Pard6a", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Ppp3ca", "label": "Ppp3ca", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Pten", "label": "Pten", "shape": "dot", "size": 16}, {"color": "royalblue", "id": "Atf2", "label": "Atf2", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Atp2b1", "label": "Atp2b1", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Foxo3", "label": "Foxo3", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Gria2", "label": "Gria2", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Idh1", "label": "Idh1", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Igf1r", "label": "Igf1r", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Pbx1", "label": "Pbx1", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Pde3b", "label": "Pde3b", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Pde4d", "label": "Pde4d", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Scn1a", "label": "Scn1a", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Lamp2", "label": "Lamp2", "shape": "dot", "size": 16}, {"color": "royalblue", "id": "Adal", "label": "Adal", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Arl6ip4", "label": "Arl6ip4", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Smg6", "label": "Smg6", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Syncrip", "label": "Syncrip", "shape": "dot", "size": 15}, {"color": "royalblue", "id": "Hnrnpc", "label": "Hnrnpc", "shape": "dot", "size": 15}, {"color": "royalblue", "id": "Csnk2a2", "label": "Csnk2a2", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Magi1", "label": "Magi1", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Nedd4", "label": "Nedd4", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Pi4ka", "label": "Pi4ka", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Pik3c2a", "label": "Pik3c2a", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Pik3c2b", "label": "Pik3c2b", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Prkci", "label": "Prkci", "shape": "dot", "size": 15}, {"color": "royalblue", "id": "Sacm1l", "label": "Sacm1l", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Synj1", "label": "Synj1", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Ube3a", "label": "Ube3a", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Dhx9", "label": "Dhx9", "shape": "dot", "size": 15}, {"color": "royalblue", "id": "Srsf4", "label": "Srsf4", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Hnrnpu", "label": "Hnrnpu", "shape": "dot", "size": 15}, {"color": "royalblue", "id": "Hnrnpa1", "label": "Hnrnpa1", "shape": "dot", "size": 15}, {"color": "royalblue", "id": "Hnrnpa3", "label": "Hnrnpa3", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Hnrnpf", "label": "Hnrnpf", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Ncl", "label": "Ncl", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Rbmxl1", "label": "Rbmxl1", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Sfpq", "label": "Sfpq", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Hspa4", "label": "Hspa4", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Ptges3", "label": "Ptges3", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Rsf1", "label": "Rsf1", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Vcp", "label": "Vcp", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Atf6", "label": "Atf6", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Derl1", "label": "Derl1", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Os9", "label": "Os9", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Eif4g1", "label": "Eif4g1", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Snap25", "label": "Snap25", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Lmo3", "label": "Lmo3", "shape": "dot", "size": 15}, {"color": "royalblue", "id": "Itsn1", "label": "Itsn1", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Ldb1", "label": "Ldb1", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Eif3e", "label": "Eif3e", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Mapk11", "label": "Mapk11", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Sdhc", "label": "Sdhc", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Strn3", "label": "Strn3", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Tcf4", "label": "Tcf4", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Rnps1", "label": "Rnps1", "shape": "dot", "size": 15}, {"color": "royalblue", "id": "Top1", "label": "Top1", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Upf1", "label": "Upf1", "shape": "dot", "size": 15}, {"color": "royalblue", "id": "Upf3a", "label": "Upf3a", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Ppp2r1a", "label": "Ppp2r1a", "shape": "dot", "size": 15}, {"color": "royalblue", "id": "Ppp2r2d", "label": "Ppp2r2d", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Stk3", "label": "Stk3", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Mphosph10", "label": "Mphosph10", "shape": "dot", "size": 15}, {"color": "royalblue", "id": "Bms1", "label": "Bms1", "shape": "dot", "size": 15}, {"color": "royalblue", "id": "Esf1", "label": "Esf1", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Ngdn", "label": "Ngdn", "shape": "dot", "size": 15}, {"color": "royalblue", "id": "Nifk", "label": "Nifk", "shape": "dot", "size": 15}, {"color": "royalblue", "id": "Nol11", "label": "Nol11", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Nom1", "label": "Nom1", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Nop56", "label": "Nop56", "shape": "dot", "size": 15}, {"color": "royalblue", "id": "Nop58", "label": "Nop58", "shape": "dot", "size": 15}, {"color": "royalblue", "id": "Pwp2", "label": "Pwp2", "shape": "dot", "size": 15}, {"color": "royalblue", "id": "Ddx27", "label": "Ddx27", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Gnl2", "label": "Gnl2", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Mak16", "label": "Mak16", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Nedd4l", "label": "Nedd4l", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Gnl3", "label": "Gnl3", "shape": "dot", "size": 15}, {"color": "royalblue", "id": "Casc3", "label": "Casc3", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Alk", "label": "Alk", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Jak2", "label": "Jak2", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Sos1", "label": "Sos1", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Parp1", "label": "Parp1", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Xrcc5", "label": "Xrcc5", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Efnb3", "label": "Efnb3", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Lrp8", "label": "Lrp8", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Eprs", "label": "Eprs", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Ube2k", "label": "Ube2k", "shape": "dot", "size": 15}, {"color": "royalblue", "id": "Stk4", "label": "Stk4", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Rbm34", "label": "Rbm34", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Ube2i", "label": "Ube2i", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Amotl2", "label": "Amotl2", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Cdkn1b", "label": "Cdkn1b", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Eif3a", "label": "Eif3a", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Eif3m", "label": "Eif3m", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Cdh2", "label": "Cdh2", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Nsf", "label": "Nsf", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Ndufb10", "label": "Ndufb10", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Cox7c", "label": "Cox7c", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Ndufs4", "label": "Ndufs4", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Palb2", "label": "Palb2", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Rnf4", "label": "Rnf4", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Smc5", "label": "Smc5", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Sumo1", "label": "Sumo1", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Psma3", "label": "Psma3", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Pomp", "label": "Pomp", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Psma4", "label": "Psma4", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Psmc6", "label": "Psmc6", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Psme4", "label": "Psme4", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Brd4", "label": "Brd4", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Exoc1", "label": "Exoc1", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Cblb", "label": "Cblb", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Top2a", "label": "Top2a", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Morf4l1", "label": "Morf4l1", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Rbbp8", "label": "Rbbp8", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Socs2", "label": "Socs2", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Stam", "label": "Stam", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Mrps10", "label": "Mrps10", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Mrps23", "label": "Mrps23", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Mrps24", "label": "Mrps24", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Epc2", "label": "Epc2", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Ing3", "label": "Ing3", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Elob", "label": "Elob", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Cul5", "label": "Cul5", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Nelfa", "label": "Nelfa", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Supt4a", "label": "Supt4a", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Got2", "label": "Got2", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Chd4", "label": "Chd4", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Gatad2a", "label": "Gatad2a", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Gatad2b", "label": "Gatad2b", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Bmpr2", "label": "Bmpr2", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Acvr1", "label": "Acvr1", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Acvr2a", "label": "Acvr2a", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Bmpr1a", "label": "Bmpr1a", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Polr2g", "label": "Polr2g", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Gtf2a2", "label": "Gtf2a2", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Tbpl1", "label": "Tbpl1", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Rbpj", "label": "Rbpj", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Adk", "label": "Adk", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Atp6v1h", "label": "Atp6v1h", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Atp6v0a1", "label": "Atp6v0a1", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Atp6v1g1", "label": "Atp6v1g1", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Tubb2b", "label": "Tubb2b", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Fzd3", "label": "Fzd3", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Mad2l1", "label": "Mad2l1", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Cdc16", "label": "Cdc16", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Tpr", "label": "Tpr", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Nup210", "label": "Nup210", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Psip1", "label": "Psip1", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Kmt2a", "label": "Kmt2a", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Kmt2c", "label": "Kmt2c", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Erg28", "label": "Erg28", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Msmo1", "label": "Msmo1", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Sc5d", "label": "Sc5d", "shape": "dot", "size": 13}, {"color": "orangered", "id": "Timm17b", "label": "Timm17b", "shape": "dot", "size": 13}, {"color": "orangered", "id": "Atn1", "label": "Atn1", "shape": "dot", "size": 13}, {"color": "orangered", "id": "Timm50", "label": "Timm50", "shape": "dot", "size": 13}, {"color": "orangered", "id": "Anapc7", "label": "Anapc7", "shape": "dot", "size": 13}, {"color": "orangered", "id": "Anapc2", "label": "Anapc2", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Setd1b", "label": "Setd1b", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Acss2", "label": "Acss2", "shape": "dot", "size": 13.77313920671969}, {"color": "orangered", "id": "Psmc2", "label": "Psmc2", "shape": "dot", "size": 13.550746785383243}, {"color": "royalblue", "id": "Rb1cc1", "label": "Rb1cc1", "shape": "dot", "size": 13.425215903299383}, {"color": "royalblue", "id": "Ank2", "label": "Ank2", "shape": "dot", "size": 13.287712379549449}, {"color": "royalblue", "id": "Depdc5", "label": "Depdc5", "shape": "dot", "size": 13.287712379549449}, {"color": "royalblue", "id": "Pdss2", "label": "Pdss2", "shape": "dot", "size": 13.287712379549449}]);
+                  edges = new vis.DataSet([{"color": "#f47832", "from": "App", "to": "Aplp2", "width": 1}, {"color": "#f47832", "from": "App", "to": "App", "width": 1}, {"color": "#f47832", "from": "App", "to": "Bcl2", "width": 1}, {"color": "black", "from": "App", "to": "Calm1", "width": 1}, {"color": "#8eb041", "from": "App", "to": "Casp3", "width": 1}, {"color": "#f47832", "from": "App", "to": "Cbfb", "width": 1}, {"color": "#f47832", "from": "App", "to": "Dlg4", "width": 1}, {"color": "#f47832", "from": "App", "to": "Eif2s2", "width": 1}, {"color": "#f47832", "from": "App", "to": "Gsk3b", "width": 1}, {"color": "#f47832", "from": "App", "to": "Hsp90b1", "width": 1}, {"color": "#f47832", "from": "App", "to": "Hspa5", "width": 1}, {"color": "#f47832", "from": "App", "to": "Hspa8", "width": 1}, {"color": "#8eb041", "from": "App", "to": "Hspd1", "width": 1}, {"color": "#8eb041", "from": "App", "to": "Nae1", "width": 1}, {"color": "#f47832", "from": "App", "to": "Park7", "width": 1}, {"color": "#f47832", "from": "App", "to": "Ppp2ca", "width": 1}, {"color": "#f47832", "from": "App", "to": "Prkaca", "width": 1}, {"color": "#f47832", "from": "App", "to": "Prkacb", "width": 1}, {"color": "#f47832", "from": "App", "to": "Rnf111", "width": 1}, {"color": "#f47832", "from": "App", "to": "Septin2", "width": 1}, {"color": "#f47832", "from": "App", "to": "Supt16", "width": 1}, {"color": "#f47832", "from": "App", "to": "Syp", "width": 1}, {"color": "#f47832", "from": "App", "to": "Ttc3", "width": 1}, {"color": "#8eb041", "from": "App", "to": "Ttr", "width": 1}, {"color": "#f47832", "from": "App", "to": "Uba3", "width": 1}, {"color": "#f47832", "from": "App", "to": "Atp1b1", "width": 1}, {"color": "#f47832", "from": "App", "to": "Dync1i1", "width": 1}, {"color": "#f47832", "from": "App", "to": "Kif1b", "width": 1}, {"color": "#f47832", "from": "App", "to": "Kras", "width": 1}, {"color": "#8eb041", "from": "Sf3b1", "to": "Ddx46", "width": 1}, {"color": "#8eb041", "from": "Sf3b1", "to": "Dek", "width": 1}, {"color": "#8eb041", "from": "Sf3b1", "to": "Htatsf1", "width": 1}, {"color": "#8eb041", "from": "Sf3b1", "to": "Lsm6", "width": 1}, {"color": "#8eb041", "from": "Sf3b1", "to": "Prpf3", "width": 1}, {"color": "#8eb041", "from": "Sf3b1", "to": "Prpf39", "width": 1}, {"color": "#8eb041", "from": "Sf3b1", "to": "Prpf4b", "width": 1}, {"color": "#8eb041", "from": "Sf3b1", "to": "Rbm25", "width": 1}, {"color": "#8eb041", "from": "Sf3b1", "to": "Rbm39", "width": 1}, {"color": "#8eb041", "from": "Sf3b1", "to": "Sart1", "width": 1}, {"color": "#8eb041", "from": "Sf3b1", "to": "Sf3a3", "width": 1}, {"color": "#8eb041", "from": "Sf3b1", "to": "Sf3b2", "width": 1}, {"color": "#8eb041", "from": "Sf3b1", "to": "Smarca5", "width": 1}, {"color": "#8eb041", "from": "Sf3b1", "to": "Snrnp48", "width": 1}, {"color": "#8eb041", "from": "Sf3b1", "to": "Snrpb2", "width": 1}, {"color": "#8eb041", "from": "Sf3b1", "to": "Snrpd3", "width": 1}, {"color": "#8eb041", "from": "Sf3b1", "to": "Snrpe", "width": 1}, {"color": "#8eb041", "from": "Sf3b1", "to": "Snrpf", "width": 1}, {"color": "#8eb041", "from": "Sf3b1", "to": "Srrm1", "width": 1}, {"color": "#8eb041", "from": "Sf3b1", "to": "Srrm2", "width": 1}, {"color": "#8eb041", "from": "Sf3b1", "to": "Srsf2", "width": 1}, {"color": "#8eb041", "from": "Sf3b1", "to": "U2af1", "width": 1}, {"color": "#8eb041", "from": "Sf3b1", "to": "Ybx1", "width": 1}, {"color": "#f47832", "from": "Kif1b", "to": "Brwd1", "width": 1}, {"color": "#f47832", "from": "Kif1b", "to": "Nsmce2", "width": 1}, {"color": "#f47832", "from": "Kif1b", "to": "Tdg", "width": 1}, {"color": "#f47832", "from": "Kif1b", "to": "Sh3kbp1", "width": 1}, {"color": "#f47832", "from": "Kif1b", "to": "Ten1", "width": 1}, {"color": "#f47832", "from": "Kif1b", "to": "Vdac2", "width": 1}, {"color": "#8eb041", "from": "Snrpf", "to": "Alyref", "width": 1}, {"color": "#8eb041", "from": "Snrpf", "to": "Ddx46", "width": 1}, {"color": "#8eb041", "from": "Snrpf", "to": "Htatsf1", "width": 1}, {"color": "#8eb041", "from": "Snrpf", "to": "Lsm6", "width": 1}, {"color": "#8eb041", "from": "Snrpf", "to": "Magoh", "width": 1}, {"color": "#8eb041", "from": "Snrpf", "to": "Prpf3", "width": 1}, {"color": "#8eb041", "from": "Snrpf", "to": "Prpf39", "width": 1}, {"color": "#f47832", "from": "Snrpf", "to": "Prpf40b", "width": 1}, {"color": "#8eb041", "from": "Snrpf", "to": "Prpf4b", "width": 1}, {"color": "#8eb041", "from": "Snrpf", "to": "Rbm25", "width": 1}, {"color": "#8eb041", "from": "Snrpf", "to": "Sart1", "width": 1}, {"color": "#8eb041", "from": "Snrpf", "to": "Sf3a3", "width": 1}, {"color": "#8eb041", "from": "Snrpf", "to": "Sf3b2", "width": 1}, {"color": "#8eb041", "from": "Snrpf", "to": "Slu7", "width": 1}, {"color": "#8eb041", "from": "Snrpf", "to": "Snrnp48", "width": 1}, {"color": "#8eb041", "from": "Snrpf", "to": "Snrpb2", "width": 1}, {"color": "#8eb041", "from": "Snrpf", "to": "Snrpd3", "width": 1}, {"color": "#8eb041", "from": "Snrpf", "to": "Snrpe", "width": 1}, {"color": "#8eb041", "from": "Snrpf", "to": "Srrm2", "width": 1}, {"color": "#8eb041", "from": "Snrpf", "to": "Ybx1", "width": 1}, {"color": "#8eb041", "from": "Gsk3b", "to": "Akt3", "width": 1}, {"color": "#8eb041", "from": "Gsk3b", "to": "Apc", "width": 1}, {"color": "#8eb041", "from": "Gsk3b", "to": "Braf", "width": 1}, {"color": "#8eb041", "from": "Gsk3b", "to": "Creb3", "width": 1}, {"color": "#f47832", "from": "Gsk3b", "to": "Gsk3b", "width": 1}, {"color": "#8eb041", "from": "Gsk3b", "to": "Hsp90ab1", "width": 1}, {"color": "#8eb041", "from": "Gsk3b", "to": "Kif5b", "width": 1}, {"color": "#8eb041", "from": "Gsk3b", "to": "Kif5c", "width": 1}, {"color": "#8eb041", "from": "Gsk3b", "to": "Lrp6", "width": 1}, {"color": "#8eb041", "from": "Gsk3b", "to": "Pard6a", "width": 1}, {"color": "#8eb041", "from": "Gsk3b", "to": "Ppp3ca", "width": 1}, {"color": "#8eb041", "from": "Gsk3b", "to": "Prkaca", "width": 1}, {"color": "#8eb041", "from": "Gsk3b", "to": "Prkacb", "width": 1}, {"color": "#8eb041", "from": "Gsk3b", "to": "Pten", "width": 1}, {"color": "#8eb041", "from": "Sf3b2", "to": "Ddx46", "width": 1}, {"color": "#8eb041", "from": "Sf3b2", "to": "Htatsf1", "width": 1}, {"color": "#8eb041", "from": "Sf3b2", "to": "Lsm6", "width": 1}, {"color": "#8eb041", "from": "Sf3b2", "to": "Prpf3", "width": 1}, {"color": "#8eb041", "from": "Sf3b2", "to": "Sart1", "width": 1}, {"color": "#8eb041", "from": "Sf3b2", "to": "Sf3a3", "width": 1}, {"color": "#8eb041", "from": "Sf3b2", "to": "Slu7", "width": 1}, {"color": "#8eb041", "from": "Sf3b2", "to": "Snrnp48", "width": 1}, {"color": "#8eb041", "from": "Sf3b2", "to": "Snrpb2", "width": 1}, {"color": "#8eb041", "from": "Sf3b2", "to": "Snrpd3", "width": 1}, {"color": "#8eb041", "from": "Sf3b2", "to": "Snrpe", "width": 1}, {"color": "#8eb041", "from": "Sf3b2", "to": "Srrm1", "width": 1}, {"color": "#8eb041", "from": "Sf3b2", "to": "Srrm2", "width": 1}, {"color": "#8eb041", "from": "Sf3b2", "to": "Ybx1", "width": 1}, {"color": "#8eb041", "from": "Prkaca", "to": "Atf2", "width": 1}, {"color": "#8eb041", "from": "Prkaca", "to": "Atp1b1", "width": 1}, {"color": "#8eb041", "from": "Prkaca", "to": "Atp2b1", "width": 1}, {"color": "#8eb041", "from": "Prkaca", "to": "Braf", "width": 1}, {"color": "#f47832", "from": "Prkaca", "to": "Creb3", "width": 1}, {"color": "#8eb041", "from": "Prkaca", "to": "Foxo3", "width": 1}, {"color": "#f47832", "from": "Prkaca", "to": "Gria2", "width": 1}, {"color": "#f47832", "from": "Prkaca", "to": "Idh1", "width": 1}, {"color": "#8eb041", "from": "Prkaca", "to": "Igf1r", "width": 1}, {"color": "#f47832", "from": "Prkaca", "to": "Pbx1", "width": 1}, {"color": "#8eb041", "from": "Prkaca", "to": "Pde3b", "width": 1}, {"color": "#8eb041", "from": "Prkaca", "to": "Pde4d", "width": 1}, {"color": "#8eb041", "from": "Prkaca", "to": "Prkacb", "width": 1}, {"color": "#8eb041", "from": "Prkaca", "to": "Scn1a", "width": 1}, {"color": "#8eb041", "from": "Prkacb", "to": "Atf2", "width": 1}, {"color": "#8eb041", "from": "Prkacb", "to": "Atp1b1", "width": 1}, {"color": "#8eb041", "from": "Prkacb", "to": "Atp2b1", "width": 1}, {"color": "#8eb041", "from": "Prkacb", "to": "Braf", "width": 1}, {"color": "#f47832", "from": "Prkacb", "to": "Cbfb", "width": 1}, {"color": "#8eb041", "from": "Prkacb", "to": "Creb3", "width": 1}, {"color": "#8eb041", "from": "Prkacb", "to": "Foxo3", "width": 1}, {"color": "#8eb041", "from": "Prkacb", "to": "Gria2", "width": 1}, {"color": "#8eb041", "from": "Prkacb", "to": "Igf1r", "width": 1}, {"color": "#8eb041", "from": "Prkacb", "to": "Pbx1", "width": 1}, {"color": "#8eb041", "from": "Prkacb", "to": "Pde3b", "width": 1}, {"color": "#8eb041", "from": "Prkacb", "to": "Pde4d", "width": 1}, {"color": "#8eb041", "from": "Prkacb", "to": "Scn1a", "width": 1}, {"color": "#f47832", "from": "Lamp2", "to": "Adal", "width": 1}, {"color": "#f47832", "from": "Lamp2", "to": "Brwd1", "width": 1}, {"color": "#8eb041", "from": "Lamp2", "to": "Hsp90ab1", "width": 1}, {"color": "#8eb041", "from": "Lamp2", "to": "Hspa8", "width": 1}, {"color": "#f47832", "from": "Lamp2", "to": "Arl6ip4", "width": 1}, {"color": "#f47832", "from": "Lamp2", "to": "Rbm39", "width": 1}, {"color": "#f47832", "from": "Lamp2", "to": "Smg6", "width": 1}, {"color": "#f47832", "from": "Lamp2", "to": "Syncrip", "width": 1}, {"color": "#f47832", "from": "Lamp2", "to": "Syp", "width": 1}, {"color": "#f47832", "from": "Lamp2", "to": "Ten1", "width": 1}, {"color": "#8eb041", "from": "Snrpd3", "to": "Ddx46", "width": 1}, {"color": "#8eb041", "from": "Snrpd3", "to": "Hnrnpc", "width": 1}, {"color": "#8eb041", "from": "Snrpd3", "to": "Htatsf1", "width": 1}, {"color": "#8eb041", "from": "Snrpd3", "to": "Lsm6", "width": 1}, {"color": "#8eb041", "from": "Snrpd3", "to": "Magoh", "width": 1}, {"color": "#8eb041", "from": "Snrpd3", "to": "Prpf3", "width": 1}, {"color": "#8eb041", "from": "Snrpd3", "to": "Sart1", "width": 1}, {"color": "#8eb041", "from": "Snrpd3", "to": "Sf3a3", "width": 1}, {"color": "#8eb041", "from": "Snrpd3", "to": "Slu7", "width": 1}, {"color": "#8eb041", "from": "Snrpd3", "to": "Snrnp48", "width": 1}, {"color": "#8eb041", "from": "Snrpd3", "to": "Snrpb2", "width": 1}, {"color": "#8eb041", "from": "Snrpd3", "to": "Snrpe", "width": 1}, {"color": "#8eb041", "from": "Snrpd3", "to": "Srrm2", "width": 1}, {"color": "#8eb041", "from": "Snrpd3", "to": "Ybx1", "width": 1}, {"color": "#8eb041", "from": "Pten", "to": "Braf", "width": 1}, {"color": "#8eb041", "from": "Pten", "to": "Csnk2a2", "width": 1}, {"color": "#8eb041", "from": "Pten", "to": "Kras", "width": 1}, {"color": "#8eb041", "from": "Pten", "to": "Magi1", "width": 1}, {"color": "#8eb041", "from": "Pten", "to": "Nedd4", "width": 1}, {"color": "#f47832", "from": "Pten", "to": "Pard6a", "width": 1}, {"color": "#8eb041", "from": "Pten", "to": "Park7", "width": 1}, {"color": "#8eb041", "from": "Pten", "to": "Pi4ka", "width": 1}, {"color": "#8eb041", "from": "Pten", "to": "Pik3c2a", "width": 1}, {"color": "#8eb041", "from": "Pten", "to": "Pik3c2b", "width": 1}, {"color": "#8eb041", "from": "Pten", "to": "Prkci", "width": 1}, {"color": "#f47832", "from": "Pten", "to": "Hspa5", "width": 1}, {"color": "#8eb041", "from": "Pten", "to": "Sacm1l", "width": 1}, {"color": "#8eb041", "from": "Pten", "to": "Synj1", "width": 1}, {"color": "#8eb041", "from": "Pten", "to": "Ube3a", "width": 1}, {"color": "#8eb041", "from": "Sf3a3", "to": "Ddx46", "width": 1}, {"color": "#8eb041", "from": "Sf3a3", "to": "Htatsf1", "width": 1}, {"color": "#8eb041", "from": "Sf3a3", "to": "Lsm6", "width": 1}, {"color": "#8eb041", "from": "Sf3a3", "to": "Prpf3", "width": 1}, {"color": "#8eb041", "from": "Sf3a3", "to": "Sart1", "width": 1}, {"color": "#8eb041", "from": "Sf3a3", "to": "Snrpb2", "width": 1}, {"color": "#8eb041", "from": "Sf3a3", "to": "Snrpe", "width": 1}, {"color": "#8eb041", "from": "Sf3a3", "to": "Srrm1", "width": 1}, {"color": "#8eb041", "from": "Sf3a3", "to": "Srrm2", "width": 1}, {"color": "#8eb041", "from": "Snrpe", "to": "Ddx46", "width": 1}, {"color": "#8eb041", "from": "Snrpe", "to": "Hnrnpc", "width": 1}, {"color": "#8eb041", "from": "Snrpe", "to": "Htatsf1", "width": 1}, {"color": "#8eb041", "from": "Snrpe", "to": "Lsm6", "width": 1}, {"color": "#8eb041", "from": "Snrpe", "to": "Magoh", "width": 1}, {"color": "#8eb041", "from": "Snrpe", "to": "Prpf3", "width": 1}, {"color": "#f47832", "from": "Snrpe", "to": "Prpf40b", "width": 1}, {"color": "#8eb041", "from": "Snrpe", "to": "Sart1", "width": 1}, {"color": "#8eb041", "from": "Snrpe", "to": "Slu7", "width": 1}, {"color": "#8eb041", "from": "Snrpe", "to": "Snrnp48", "width": 1}, {"color": "#8eb041", "from": "Snrpe", "to": "Snrpb2", "width": 1}, {"color": "#8eb041", "from": "Snrpe", "to": "Srrm2", "width": 1}, {"color": "#8eb041", "from": "Snrpe", "to": "Ybx1", "width": 1}, {"color": "#8eb041", "from": "Srrm2", "to": "Dhx9", "width": 1}, {"color": "#8eb041", "from": "Srrm2", "to": "Lsm6", "width": 1}, {"color": "#8eb041", "from": "Srrm2", "to": "Magoh", "width": 1}, {"color": "#8eb041", "from": "Srrm2", "to": "Prpf3", "width": 1}, {"color": "#8eb041", "from": "Srrm2", "to": "Prpf4b", "width": 1}, {"color": "#8eb041", "from": "Srrm2", "to": "Rbm25", "width": 1}, {"color": "#8eb041", "from": "Srrm2", "to": "Rbm39", "width": 1}, {"color": "#8eb041", "from": "Srrm2", "to": "Sart1", "width": 1}, {"color": "#8eb041", "from": "Srrm2", "to": "Slu7", "width": 1}, {"color": "#8eb041", "from": "Srrm2", "to": "Snrpb2", "width": 1}, {"color": "#8eb041", "from": "Srrm2", "to": "Srrm1", "width": 1}, {"color": "#8eb041", "from": "Srrm2", "to": "Srsf4", "width": 1}, {"color": "#8eb041", "from": "Snrpb2", "to": "Ddx46", "width": 1}, {"color": "#8eb041", "from": "Snrpb2", "to": "Htatsf1", "width": 1}, {"color": "#8eb041", "from": "Snrpb2", "to": "Lsm6", "width": 1}, {"color": "#8eb041", "from": "Snrpb2", "to": "Prpf3", "width": 1}, {"color": "#8eb041", "from": "Snrpb2", "to": "Sart1", "width": 1}, {"color": "#8eb041", "from": "Snrpb2", "to": "Slu7", "width": 1}, {"color": "#8eb041", "from": "Prpf3", "to": "Lsm6", "width": 1}, {"color": "#8eb041", "from": "Prpf3", "to": "Prpf4b", "width": 1}, {"color": "#8eb041", "from": "Prpf3", "to": "Sart1", "width": 1}, {"color": "#8eb041", "from": "Prpf3", "to": "Slu7", "width": 1}, {"color": "#8eb041", "from": "Hnrnpu", "to": "Dhx9", "width": 1}, {"color": "#8eb041", "from": "Hnrnpu", "to": "Hnrnpa1", "width": 1}, {"color": "#8eb041", "from": "Hnrnpu", "to": "Hnrnpa3", "width": 1}, {"color": "#8eb041", "from": "Hnrnpu", "to": "Hnrnpc", "width": 1}, {"color": "#8eb041", "from": "Hnrnpu", "to": "Hnrnpf", "width": 1}, {"color": "#8eb041", "from": "Hnrnpu", "to": "Ncl", "width": 1}, {"color": "#8eb041", "from": "Hnrnpu", "to": "Rbmxl1", "width": 1}, {"color": "#8eb041", "from": "Hnrnpu", "to": "Sfpq", "width": 1}, {"color": "#8eb041", "from": "Hnrnpu", "to": "Syncrip", "width": 1}, {"color": "#8eb041", "from": "Hnrnpu", "to": "Ybx1", "width": 1}, {"color": "#8eb041", "from": "Sart1", "to": "Lsm6", "width": 1}, {"color": "#8eb041", "from": "Sart1", "to": "Prpf4b", "width": 1}, {"color": "#8eb041", "from": "Sart1", "to": "Rbm25", "width": 1}, {"color": "#f47832", "from": "Hsp90ab1", "to": "Akt3", "width": 1}, {"color": "#f47832", "from": "Hsp90ab1", "to": "Braf", "width": 1}, {"color": "#8eb041", "from": "Hsp90ab1", "to": "Hsp90b1", "width": 1}, {"color": "#8eb041", "from": "Hsp90ab1", "to": "Hspa4", "width": 1}, {"color": "#8eb041", "from": "Hsp90ab1", "to": "Hspa5", "width": 1}, {"color": "#8eb041", "from": "Hsp90ab1", "to": "Hspa8", "width": 1}, {"color": "#8eb041", "from": "Hsp90ab1", "to": "Hspd1", "width": 1}, {"color": "#8eb041", "from": "Hsp90ab1", "to": "Ptges3", "width": 1}, {"color": "#8eb041", "from": "Hsp90ab1", "to": "Rsf1", "width": 1}, {"color": "#8eb041", "from": "Hsp90ab1", "to": "Vcp", "width": 1}, {"color": "#8eb041", "from": "Hspa5", "to": "Atf6", "width": 1}, {"color": "#8eb041", "from": "Hspa5", "to": "Derl1", "width": 1}, {"color": "#8eb041", "from": "Hspa5", "to": "Hsp90b1", "width": 1}, {"color": "#8eb041", "from": "Hspa5", "to": "Hspa4", "width": 1}, {"color": "#8eb041", "from": "Hspa5", "to": "Hspa8", "width": 1}, {"color": "#8eb041", "from": "Hspa5", "to": "Hspd1", "width": 1}, {"color": "#8eb041", "from": "Hspa5", "to": "Os9", "width": 1}, {"color": "#8eb041", "from": "Hspa5", "to": "Vcp", "width": 1}, {"color": "#8eb041", "from": "Hspa8", "to": "Eif4g1", "width": 1}, {"color": "#8eb041", "from": "Hspa8", "to": "Hspa4", "width": 1}, {"color": "#8eb041", "from": "Hspa8", "to": "Hspd1", "width": 1}, {"color": "#8eb041", "from": "Hspa8", "to": "Ptges3", "width": 1}, {"color": "#8eb041", "from": "Hspa8", "to": "Snap25", "width": 1}, {"color": "#8eb041", "from": "Hspa8", "to": "Vcp", "width": 1}, {"color": "#8eb041", "from": "Hspa8", "to": "Ybx1", "width": 1}, {"color": "#f47832", "from": "Lmo3", "to": "Itsn1", "width": 1}, {"color": "#f47832", "from": "Lmo3", "to": "Ldb1", "width": 1}, {"color": "#f47832", "from": "Lmo3", "to": "Arl6ip4", "width": 1}, {"color": "#f47832", "from": "Lmo3", "to": "Eif3e", "width": 1}, {"color": "#f47832", "from": "Lmo3", "to": "Hnrnpf", "width": 1}, {"color": "#f47832", "from": "Lmo3", "to": "Mapk11", "width": 1}, {"color": "#f47832", "from": "Lmo3", "to": "Sdhc", "width": 1}, {"color": "#f47832", "from": "Lmo3", "to": "Strn3", "width": 1}, {"color": "#f47832", "from": "Lmo3", "to": "Tcf4", "width": 1}, {"color": "#8eb041", "from": "Ddx46", "to": "Htatsf1", "width": 1}, {"color": "#8eb041", "from": "Ddx46", "to": "Rbm25", "width": 1}, {"color": "#8eb041", "from": "Hnrnpa1", "to": "Alyref", "width": 1}, {"color": "#8eb041", "from": "Hnrnpa1", "to": "Dhx9", "width": 1}, {"color": "#8eb041", "from": "Hnrnpa1", "to": "Hnrnpa3", "width": 1}, {"color": "#8eb041", "from": "Hnrnpa1", "to": "Hnrnpc", "width": 1}, {"color": "#8eb041", "from": "Hnrnpa1", "to": "Hnrnpf", "width": 1}, {"color": "#8eb041", "from": "Hnrnpa1", "to": "Rbmxl1", "width": 1}, {"color": "#8eb041", "from": "Hnrnpa1", "to": "Sfpq", "width": 1}, {"color": "#8eb041", "from": "Hnrnpa1", "to": "Syncrip", "width": 1}, {"color": "#8eb041", "from": "Hnrnpa1", "to": "U2af1", "width": 1}, {"color": "#8eb041", "from": "Hnrnpa1", "to": "Ybx1", "width": 1}, {"color": "#8eb041", "from": "Alyref", "to": "Dhx9", "width": 1}, {"color": "#8eb041", "from": "Alyref", "to": "Magoh", "width": 1}, {"color": "#8eb041", "from": "Alyref", "to": "Rbm39", "width": 1}, {"color": "#8eb041", "from": "Alyref", "to": "Rnps1", "width": 1}, {"color": "#8eb041", "from": "Alyref", "to": "Srrm1", "width": 1}, {"color": "#8eb041", "from": "Alyref", "to": "Srsf2", "width": 1}, {"color": "#8eb041", "from": "Alyref", "to": "Top1", "width": 1}, {"color": "#8eb041", "from": "Alyref", "to": "Upf1", "width": 1}, {"color": "#8eb041", "from": "Alyref", "to": "Upf3a", "width": 1}, {"color": "#8eb041", "from": "Ppp2ca", "to": "Bcl2", "width": 1}, {"color": "#8eb041", "from": "Ppp2ca", "to": "Ppp2r1a", "width": 1}, {"color": "#8eb041", "from": "Ppp2ca", "to": "Ppp2r2d", "width": 1}, {"color": "#8eb041", "from": "Ppp2ca", "to": "Ppp3ca", "width": 1}, {"color": "#8eb041", "from": "Ppp2ca", "to": "Prkci", "width": 1}, {"color": "#8eb041", "from": "Ppp2ca", "to": "Stk3", "width": 1}, {"color": "#8eb041", "from": "Ppp2ca", "to": "Strn3", "width": 1}, {"color": "#8eb041", "from": "Srrm1", "to": "Dek", "width": 1}, {"color": "#8eb041", "from": "Srrm1", "to": "Magoh", "width": 1}, {"color": "#8eb041", "from": "Srrm1", "to": "Rbm25", "width": 1}, {"color": "#8eb041", "from": "Srrm1", "to": "Rbm39", "width": 1}, {"color": "#8eb041", "from": "Srrm1", "to": "Rnps1", "width": 1}, {"color": "#8eb041", "from": "Srrm1", "to": "Srsf2", "width": 1}, {"color": "#8eb041", "from": "Srrm1", "to": "Srsf4", "width": 1}, {"color": "#8eb041", "from": "Srrm1", "to": "Upf1", "width": 1}, {"color": "#8eb041", "from": "Srrm1", "to": "Upf3a", "width": 1}, {"color": "#8eb041", "from": "Mphosph10", "to": "Bms1", "width": 1}, {"color": "#8eb041", "from": "Mphosph10", "to": "Esf1", "width": 1}, {"color": "#8eb041", "from": "Mphosph10", "to": "Ngdn", "width": 1}, {"color": "#8eb041", "from": "Mphosph10", "to": "Nifk", "width": 1}, {"color": "#8eb041", "from": "Mphosph10", "to": "Nol11", "width": 1}, {"color": "#8eb041", "from": "Mphosph10", "to": "Nom1", "width": 1}, {"color": "#8eb041", "from": "Mphosph10", "to": "Nop56", "width": 1}, {"color": "#8eb041", "from": "Mphosph10", "to": "Nop58", "width": 1}, {"color": "#8eb041", "from": "Mphosph10", "to": "Pwp2", "width": 1}, {"color": "#8eb041", "from": "Bms1", "to": "Ddx27", "width": 1}, {"color": "#8eb041", "from": "Bms1", "to": "Esf1", "width": 1}, {"color": "#8eb041", "from": "Bms1", "to": "Gnl2", "width": 1}, {"color": "#8eb041", "from": "Bms1", "to": "Mak16", "width": 1}, {"color": "#8eb041", "from": "Bms1", "to": "Ngdn", "width": 1}, {"color": "#8eb041", "from": "Bms1", "to": "Nol11", "width": 1}, {"color": "#8eb041", "from": "Bms1", "to": "Nop56", "width": 1}, {"color": "#8eb041", "from": "Bms1", "to": "Nop58", "width": 1}, {"color": "#8eb041", "from": "Bms1", "to": "Pwp2", "width": 1}, {"color": "#8eb041", "from": "Ybx1", "to": "Dhx9", "width": 1}, {"color": "#8eb041", "from": "Ybx1", "to": "Hnrnpa3", "width": 1}, {"color": "#8eb041", "from": "Ybx1", "to": "Hnrnpc", "width": 1}, {"color": "#8eb041", "from": "Ybx1", "to": "Ncl", "width": 1}, {"color": "#8eb041", "from": "Ybx1", "to": "Nedd4l", "width": 1}, {"color": "#8eb041", "from": "Ybx1", "to": "Syncrip", "width": 1}, {"color": "#8eb041", "from": "Hnrnpc", "to": "Dhx9", "width": 1}, {"color": "#8eb041", "from": "Hnrnpc", "to": "Hnrnpa3", "width": 1}, {"color": "#8eb041", "from": "Hnrnpc", "to": "Hnrnpf", "width": 1}, {"color": "#8eb041", "from": "Hnrnpc", "to": "Rbmxl1", "width": 1}, {"color": "#8eb041", "from": "Hnrnpc", "to": "Sfpq", "width": 1}, {"color": "#8eb041", "from": "Hnrnpc", "to": "Srsf2", "width": 1}, {"color": "#8eb041", "from": "Hnrnpc", "to": "Syncrip", "width": 1}, {"color": "#8eb041", "from": "Hnrnpc", "to": "U2af1", "width": 1}, {"color": "#8eb041", "from": "Nop58", "to": "Gnl3", "width": 1}, {"color": "#8eb041", "from": "Nop58", "to": "Ngdn", "width": 1}, {"color": "#8eb041", "from": "Nop58", "to": "Nifk", "width": 1}, {"color": "#8eb041", "from": "Nop58", "to": "Nol11", "width": 1}, {"color": "#8eb041", "from": "Nop58", "to": "Nop56", "width": 1}, {"color": "#8eb041", "from": "Nop58", "to": "Pwp2", "width": 1}, {"color": "#8eb041", "from": "Nop56", "to": "Ddx27", "width": 1}, {"color": "#8eb041", "from": "Nop56", "to": "Gnl3", "width": 1}, {"color": "#8eb041", "from": "Nop56", "to": "Ncl", "width": 1}, {"color": "#8eb041", "from": "Nop56", "to": "Ngdn", "width": 1}, {"color": "#8eb041", "from": "Nop56", "to": "Nol11", "width": 1}, {"color": "#8eb041", "from": "Nop56", "to": "Pwp2", "width": 1}, {"color": "#8eb041", "from": "Upf1", "to": "Casc3", "width": 1}, {"color": "#8eb041", "from": "Upf1", "to": "Dek", "width": 1}, {"color": "#8eb041", "from": "Upf1", "to": "Eif4g1", "width": 1}, {"color": "#8eb041", "from": "Upf1", "to": "Magoh", "width": 1}, {"color": "#8eb041", "from": "Upf1", "to": "Rnps1", "width": 1}, {"color": "#8eb041", "from": "Upf1", "to": "Smg6", "width": 1}, {"color": "#8eb041", "from": "Upf1", "to": "Upf3a", "width": 1}, {"color": "#8eb041", "from": "Kras", "to": "Alk", "width": 1}, {"color": "#f47832", "from": "Kras", "to": "Bcl2", "width": 1}, {"color": "#8eb041", "from": "Kras", "to": "Braf", "width": 1}, {"color": "#8eb041", "from": "Kras", "to": "Igf1r", "width": 1}, {"color": "#8eb041", "from": "Kras", "to": "Jak2", "width": 1}, {"color": "#8eb041", "from": "Kras", "to": "Sos1", "width": 1}, {"color": "#8eb041", "from": "Bcl2", "to": "Akt3", "width": 1}, {"color": "#f47832", "from": "Bcl2", "to": "Bcl2", "width": 1}, {"color": "#8eb041", "from": "Bcl2", "to": "Casp3", "width": 1}, {"color": "#8eb041", "from": "Bcl2", "to": "Parp1", "width": 1}, {"color": "#8eb041", "from": "Bcl2", "to": "Ppp2r1a", "width": 1}, {"color": "#8eb041", "from": "Bcl2", "to": "Ppp2r2d", "width": 1}, {"color": "#8eb041", "from": "Bcl2", "to": "Vdac2", "width": 1}, {"color": "#8eb041", "from": "Ngdn", "to": "Esf1", "width": 1}, {"color": "#8eb041", "from": "Ngdn", "to": "Nom1", "width": 1}, {"color": "#8eb041", "from": "Ngdn", "to": "Pwp2", "width": 1}, {"color": "#8eb041", "from": "Dhx9", "to": "Rbm39", "width": 1}, {"color": "#8eb041", "from": "Dhx9", "to": "Syncrip", "width": 1}, {"color": "#8eb041", "from": "Dhx9", "to": "Xrcc5", "width": 1}, {"color": "#8eb041", "from": "Rbm25", "to": "Prpf39", "width": 1}, {"color": "#8eb041", "from": "Rbm25", "to": "Prpf40b", "width": 1}, {"color": "#8eb041", "from": "Rbm25", "to": "Prpf4b", "width": 1}, {"color": "#8eb041", "from": "Rbm25", "to": "Rbm39", "width": 1}, {"color": "#f47832", "from": "Dlg4", "to": "Calm1", "width": 1}, {"color": "#8eb041", "from": "Dlg4", "to": "Efnb3", "width": 1}, {"color": "#8eb041", "from": "Dlg4", "to": "Gria2", "width": 1}, {"color": "#f47832", "from": "Dlg4", "to": "Lrp8", "width": 1}, {"color": "#f47832", "from": "Dlg4", "to": "Sacm1l", "width": 1}, {"color": "#8eb041", "from": "Dlg4", "to": "Syp", "width": 1}, {"color": "#f47832", "from": "Magoh", "to": "Casc3", "width": 1}, {"color": "#8eb041", "from": "Magoh", "to": "Rnps1", "width": 1}, {"color": "#8eb041", "from": "Magoh", "to": "Slu7", "width": 1}, {"color": "#f47832", "from": "Magoh", "to": "Smg6", "width": 1}, {"color": "#8eb041", "from": "Magoh", "to": "Upf3a", "width": 1}, {"color": "#8eb041", "from": "Syncrip", "to": "Eprs", "width": 1}, {"color": "#f47832", "from": "Syncrip", "to": "Ube2k", "width": 1}, {"color": "#f47832", "from": "Casp3", "to": "Akt3", "width": 1}, {"color": "#8eb041", "from": "Casp3", "to": "Hspa4", "width": 1}, {"color": "#8eb041", "from": "Casp3", "to": "Parp1", "width": 1}, {"color": "#8eb041", "from": "Casp3", "to": "Stk3", "width": 1}, {"color": "#8eb041", "from": "Casp3", "to": "Stk4", "width": 1}, {"color": "#8eb041", "from": "Nifk", "to": "Ddx27", "width": 1}, {"color": "#8eb041", "from": "Nifk", "to": "Gnl2", "width": 1}, {"color": "#8eb041", "from": "Nifk", "to": "Gnl3", "width": 1}, {"color": "#8eb041", "from": "Nifk", "to": "Mak16", "width": 1}, {"color": "#8eb041", "from": "Nifk", "to": "Rbm34", "width": 1}, {"color": "#8eb041", "from": "Ppp2r1a", "to": "Ppp2r2d", "width": 1}, {"color": "#8eb041", "from": "Ppp2r1a", "to": "Ppp3ca", "width": 1}, {"color": "#8eb041", "from": "Ppp2r1a", "to": "Prkci", "width": 1}, {"color": "#8eb041", "from": "Ppp2r1a", "to": "Stk3", "width": 1}, {"color": "#8eb041", "from": "Ppp2r1a", "to": "Strn3", "width": 1}, {"color": "#f47832", "from": "Hsp90b1", "to": "Akt3", "width": 1}, {"color": "#8eb041", "from": "Hsp90b1", "to": "Atf6", "width": 1}, {"color": "#8eb041", "from": "Hsp90b1", "to": "Hspa4", "width": 1}, {"color": "#8eb041", "from": "Hsp90b1", "to": "Os9", "width": 1}, {"color": "#8eb041", "from": "Rnps1", "to": "Casc3", "width": 1}, {"color": "#8eb041", "from": "Rnps1", "to": "Dek", "width": 1}, {"color": "#8eb041", "from": "Rnps1", "to": "Srsf4", "width": 1}, {"color": "#8eb041", "from": "Rnps1", "to": "Ube2i", "width": 1}, {"color": "#8eb041", "from": "Rnps1", "to": "Upf3a", "width": 1}, {"color": "#8eb041", "from": "Slu7", "to": "Srsf4", "width": 1}, {"color": "#8eb041", "from": "Prkci", "to": "Amotl2", "width": 1}, {"color": "#8eb041", "from": "Prkci", "to": "Magi1", "width": 1}, {"color": "#f47832", "from": "Prkci", "to": "Pard6a", "width": 1}, {"color": "#8eb041", "from": "Prkci", "to": "Ppp2r2d", "width": 1}, {"color": "#8eb041", "from": "Pwp2", "to": "Gnl2", "width": 1}, {"color": "#8eb041", "from": "Pwp2", "to": "Gnl3", "width": 1}, {"color": "#8eb041", "from": "Pwp2", "to": "Nol11", "width": 1}, {"color": "#8eb041", "from": "Gnl3", "to": "Ddx27", "width": 1}, {"color": "#8eb041", "from": "Gnl3", "to": "Gnl2", "width": 1}, {"color": "#8eb041", "from": "Gnl3", "to": "Mak16", "width": 1}, {"color": "#8eb041", "from": "Ube2k", "to": "Nedd4l", "width": 1}, {"color": "#f47832", "from": "Ube2k", "to": "Rnf111", "width": 1}, {"color": "#8eb041", "from": "Ube2k", "to": "Ube2i", "width": 1}, {"color": "#f47832", "from": "Ube2k", "to": "Adal", "width": 1}, {"color": "#8eb041", "from": "Ube2k", "to": "Ube3a", "width": 1}, {"color": "#f47832", "from": "Akt3", "to": "Cdkn1b", "width": 1}, {"color": "#8eb041", "from": "Akt3", "to": "Foxo3", "width": 1}, {"color": "#8eb041", "from": "Akt3", "to": "Mapk11", "width": 1}, {"color": "#8eb041", "from": "Akt3", "to": "Pde3b", "width": 1}, {"color": "#8eb041", "from": "Eif2s2", "to": "Eif3a", "width": 1}, {"color": "#8eb041", "from": "Eif2s2", "to": "Eif3e", "width": 1}, {"color": "#8eb041", "from": "Eif2s2", "to": "Eif3m", "width": 1}, {"color": "#8eb041", "from": "Eif2s2", "to": "Eif4g1", "width": 1}, {"color": "#8eb041", "from": "Hspd1", "to": "Hspa4", "width": 1}, {"color": "#8eb041", "from": "Ddx27", "to": "Gnl2", "width": 1}, {"color": "#8eb041", "from": "Ddx27", "to": "Mak16", "width": 1}, {"color": "#8eb041", "from": "Ddx27", "to": "Rbm34", "width": 1}, {"color": "#8eb041", "from": "Hspa4", "to": "Eif4g1", "width": 1}, {"color": "#8eb041", "from": "Hspa4", "to": "Park7", "width": 1}, {"color": "#8eb041", "from": "Hspa4", "to": "Ptges3", "width": 1}, {"color": "#8eb041", "from": "Hspa4", "to": "Ube3a", "width": 1}, {"color": "#8eb041", "from": "Gria2", "to": "Cdh2", "width": 1}, {"color": "#8eb041", "from": "Gria2", "to": "Nsf", "width": 1}, {"color": "#f47832", "from": "Gria2", "to": "Sacm1l", "width": 1}, {"color": "#8eb041", "from": "Upf3a", "to": "Casc3", "width": 1}, {"color": "#8eb041", "from": "Upf3a", "to": "Smg6", "width": 1}, {"color": "#8eb041", "from": "Rbm39", "to": "Prpf4b", "width": 1}, {"color": "#8eb041", "from": "Rbm39", "to": "U2af1", "width": 1}, {"color": "#8eb041", "from": "Ndufb10", "to": "Cox7c", "width": 1}, {"color": "#8eb041", "from": "Ndufb10", "to": "Ndufs4", "width": 1}, {"color": "#8eb041", "from": "Ndufb10", "to": "Palb2", "width": 1}, {"color": "#f47832", "from": "Ttr", "to": "Tdg", "width": 1}, {"color": "#f47832", "from": "Ttr", "to": "Vdac2", "width": 1}, {"color": "#8eb041", "from": "Ube2i", "to": "Nsmce2", "width": 1}, {"color": "#8eb041", "from": "Ube2i", "to": "Rnf4", "width": 1}, {"color": "#8eb041", "from": "Ube2i", "to": "Smc5", "width": 1}, {"color": "#8eb041", "from": "Ube2i", "to": "Sumo1", "width": 1}, {"color": "#8eb041", "from": "Ube2i", "to": "Tdg", "width": 1}, {"color": "#f47832", "from": "Ube2i", "to": "Park7", "width": 1}, {"color": "#f47832", "from": "Rnf111", "to": "Park7", "width": 1}, {"color": "#8eb041", "from": "Rnf111", "to": "Sumo1", "width": 1}, {"color": "#8eb041", "from": "Ndufs4", "to": "Cox7c", "width": 1}, {"color": "#8eb041", "from": "Ndufs4", "to": "Palb2", "width": 1}, {"color": "#8eb041", "from": "Ndufs4", "to": "Sdhc", "width": 1}, {"color": "#8eb041", "from": "Gnl2", "to": "Mak16", "width": 1}, {"color": "#8eb041", "from": "Psma3", "to": "Pomp", "width": 1}, {"color": "#8eb041", "from": "Psma3", "to": "Psma4", "width": 1}, {"color": "#8eb041", "from": "Psma3", "to": "Psmc6", "width": 1}, {"color": "#8eb041", "from": "Psma3", "to": "Psme4", "width": 1}, {"color": "#8eb041", "from": "Foxo3", "to": "Brd4", "width": 1}, {"color": "#8eb041", "from": "Foxo3", "to": "Cdkn1b", "width": 1}, {"color": "#ad9d31", "from": "Foxo3", "to": "Foxo3", "width": 1}, {"color": "#8eb041", "from": "Foxo3", "to": "Mapk11", "width": 1}, {"color": "#ad9d31", "from": "Foxo3", "to": "Pde3b", "width": 1}, {"color": "#8eb041", "from": "Foxo3", "to": "Stk4", "width": 1}, {"color": "#8eb041", "from": "Synj1", "to": "Itsn1", "width": 1}, {"color": "#8eb041", "from": "Synj1", "to": "Pik3c2a", "width": 1}, {"color": "#f47832", "from": "Synj1", "to": "Pik3c2b", "width": 1}, {"color": "#8eb041", "from": "Synj1", "to": "Sacm1l", "width": 1}, {"color": "#f47832", "from": "Braf", "to": "Braf", "width": 1}, {"color": "#8eb041", "from": "Braf", "to": "Sos1", "width": 1}, {"color": "#8eb041", "from": "Ppp2r2d", "to": "Stk3", "width": 1}, {"color": "#8eb041", "from": "Vcp", "to": "Derl1", "width": 1}, {"color": "#8eb041", "from": "Vcp", "to": "Os9", "width": 1}, {"color": "#8eb041", "from": "Vcp", "to": "Ptges3", "width": 1}, {"color": "#8eb041", "from": "Ube3a", "to": "Magi1", "width": 1}, {"color": "#f47832", "from": "Ube3a", "to": "Idh1", "width": 1}, {"color": "#8eb041", "from": "Pik3c2a", "to": "Pi4ka", "width": 1}, {"color": "#8eb041", "from": "Pik3c2a", "to": "Pik3c2b", "width": 1}, {"color": "#8eb041", "from": "Pik3c2a", "to": "Sacm1l", "width": 1}, {"color": "#8eb041", "from": "Eif4g1", "to": "Eif3a", "width": 1}, {"color": "#8eb041", "from": "Eif4g1", "to": "Eif3m", "width": 1}, {"color": "#8eb041", "from": "Stk3", "to": "Stk4", "width": 1}, {"color": "#f47832", "from": "Magi1", "to": "Pard6a", "width": 1}, {"color": "#8eb041", "from": "Eif3a", "to": "Eif3e", "width": 1}, {"color": "#8eb041", "from": "Eif3a", "to": "Eif3m", "width": 1}, {"color": "#8eb041", "from": "Psma4", "to": "Pomp", "width": 1}, {"color": "#8eb041", "from": "Psma4", "to": "Psmc6", "width": 1}, {"color": "#8eb041", "from": "Psma4", "to": "Psme4", "width": 1}, {"color": "#f47832", "from": "Itsn1", "to": "Exoc1", "width": 1}, {"color": "#f47832", "from": "Itsn1", "to": "Kif5c", "width": 1}, {"color": "#8eb041", "from": "Itsn1", "to": "Snap25", "width": 1}, {"color": "#f47832", "from": "Itsn1", "to": "Sos1", "width": 1}, {"color": "#8eb041", "from": "Hnrnpa3", "to": "Rbmxl1", "width": 1}, {"color": "#8eb041", "from": "Nedd4", "to": "Cblb", "width": 1}, {"color": "#8eb041", "from": "Nedd4", "to": "Igf1r", "width": 1}, {"color": "#8eb041", "from": "Nedd4", "to": "Nedd4l", "width": 1}, {"color": "#f47832", "from": "Igf1r", "to": "Igf1r", "width": 1}, {"color": "#8eb041", "from": "Igf1r", "to": "Jak2", "width": 1}, {"color": "#8eb041", "from": "Srsf2", "to": "Srsf4", "width": 1}, {"color": "#8eb041", "from": "Srsf2", "to": "U2af1", "width": 1}, {"color": "#8eb041", "from": "Mak16", "to": "Rbm34", "width": 1}, {"color": "#8eb041", "from": "Top2a", "to": "Top1", "width": 1}, {"color": "#8eb041", "from": "Palb2", "to": "Morf4l1", "width": 1}, {"color": "#8eb041", "from": "Palb2", "to": "Rbbp8", "width": 1}, {"color": "#8eb041", "from": "Pi4ka", "to": "Pik3c2b", "width": 1}, {"color": "#8eb041", "from": "Pi4ka", "to": "Sacm1l", "width": 1}, {"color": "#f47832", "from": "Jak2", "to": "Alk", "width": 1}, {"color": "#f47832", "from": "Jak2", "to": "Cdkn1b", "width": 1}, {"color": "#8eb041", "from": "Jak2", "to": "Socs2", "width": 1}, {"color": "#8eb041", "from": "Jak2", "to": "Stam", "width": 1}, {"color": "#f47832", "from": "Sacm1l", "to": "Pik3c2b", "width": 1}, {"color": "#8eb041", "from": "Mrps10", "to": "Eprs", "width": 1}, {"color": "#8eb041", "from": "Mrps10", "to": "Mrps23", "width": 1}, {"color": "#8eb041", "from": "Mrps10", "to": "Mrps24", "width": 1}, {"color": "#8eb041", "from": "Syp", "to": "Snap25", "width": 1}, {"color": "#8eb041", "from": "Parp1", "to": "Top1", "width": 1}, {"color": "#8eb041", "from": "Parp1", "to": "Xrcc5", "width": 1}, {"color": "#8eb041", "from": "Morf4l1", "to": "Epc2", "width": 1}, {"color": "#8eb041", "from": "Morf4l1", "to": "Ing3", "width": 1}, {"color": "#f47832", "from": "Morf4l1", "to": "Ttc3", "width": 1}, {"color": "#8eb041", "from": "Prpf39", "to": "Prpf40b", "width": 1}, {"color": "#8eb041", "from": "Snap25", "to": "Nsf", "width": 1}, {"color": "#8eb041", "from": "Smg6", "to": "Casc3", "width": 1}, {"color": "#f47832", "from": "Park7", "to": "Park7", "width": 1}, {"color": "#8eb041", "from": "Elob", "to": "Brd4", "width": 1}, {"color": "#8eb041", "from": "Elob", "to": "Cbfb", "width": 1}, {"color": "#8eb041", "from": "Elob", "to": "Cul5", "width": 1}, {"color": "#8eb041", "from": "Elob", "to": "Nelfa", "width": 1}, {"color": "#f47832", "from": "Elob", "to": "Socs2", "width": 1}, {"color": "#8eb041", "from": "Elob", "to": "Supt4a", "width": 1}, {"color": "#f47832", "from": "Aplp2", "to": "Aplp2", "width": 1}, {"color": "#f47832", "from": "Aplp2", "to": "Lrp8", "width": 1}, {"color": "#8eb041", "from": "Cul5", "to": "Cbfb", "width": 1}, {"color": "#8eb041", "from": "Cul5", "to": "Socs2", "width": 1}, {"color": "#8eb041", "from": "Cul5", "to": "Uba3", "width": 1}, {"color": "#f47832", "from": "Idh1", "to": "Calm1", "width": 1}, {"color": "#8eb041", "from": "Idh1", "to": "Got2", "width": 1}, {"color": "#8eb041", "from": "Sumo1", "to": "Rnf4", "width": 1}, {"color": "#f47832", "from": "Sumo1", "to": "Sumo1", "width": 1}, {"color": "#8eb041", "from": "Sumo1", "to": "Tdg", "width": 1}, {"color": "#f47832", "from": "Mapk11", "to": "Atf2", "width": 1}, {"color": "#f47832", "from": "Atf2", "to": "Creb3", "width": 1}, {"color": "#f47832", "from": "Stk4", "to": "Stk4", "width": 1}, {"color": "#8eb041", "from": "Chd4", "to": "Brd4", "width": 1}, {"color": "#8eb041", "from": "Chd4", "to": "Gatad2a", "width": 1}, {"color": "#8eb041", "from": "Chd4", "to": "Gatad2b", "width": 1}, {"color": "#8eb041", "from": "Esf1", "to": "Nom1", "width": 1}, {"color": "#8eb041", "from": "Os9", "to": "Derl1", "width": 1}, {"color": "#8eb041", "from": "Bmpr2", "to": "Acvr1", "width": 1}, {"color": "#8eb041", "from": "Bmpr2", "to": "Acvr2a", "width": 1}, {"color": "#8eb041", "from": "Bmpr2", "to": "Bmpr1a", "width": 1}, {"color": "#8eb041", "from": "Acvr1", "to": "Acvr2a", "width": 1}, {"color": "#8eb041", "from": "Acvr1", "to": "Bmpr1a", "width": 1}, {"color": "#8eb041", "from": "Bmpr1a", "to": "Acvr2a", "width": 1}, {"color": "#8eb041", "from": "Eif3m", "to": "Eif3e", "width": 1}, {"color": "#8eb041", "from": "Supt4a", "to": "Nelfa", "width": 1}, {"color": "#8eb041", "from": "Supt4a", "to": "Polr2g", "width": 1}, {"color": "#8eb041", "from": "Supt4a", "to": "Supt16", "width": 1}, {"color": "#8eb041", "from": "Polr2g", "to": "Gtf2a2", "width": 1}, {"color": "#8eb041", "from": "Polr2g", "to": "Nelfa", "width": 1}, {"color": "#8eb041", "from": "Polr2g", "to": "Supt16", "width": 1}, {"color": "#8eb041", "from": "U2af1", "to": "Dek", "width": 1}, {"color": "#8eb041", "from": "U2af1", "to": "Sfpq", "width": 1}, {"color": "#8eb041", "from": "Nsmce2", "to": "Smc5", "width": 1}, {"color": "#8eb041", "from": "Dek", "to": "Smarca5", "width": 1}, {"color": "#8eb041", "from": "Tbpl1", "to": "Gtf2a2", "width": 1}, {"color": "#8eb041", "from": "Tbpl1", "to": "Rbpj", "width": 1}, {"color": "#8eb041", "from": "Pde3b", "to": "Adk", "width": 1}, {"color": "#8eb041", "from": "Atp6v1h", "to": "Atp6v0a1", "width": 1}, {"color": "#8eb041", "from": "Atp6v1h", "to": "Atp6v1g1", "width": 1}, {"color": "#8eb041", "from": "Sh3kbp1", "to": "Cblb", "width": 1}, {"color": "#8eb041", "from": "Sh3kbp1", "to": "Sos1", "width": 1}, {"color": "#8eb041", "from": "Kif5b", "to": "Alk", "width": 1}, {"color": "#8eb041", "from": "Kif5b", "to": "Kif5c", "width": 1}, {"color": "#8eb041", "from": "Kif5b", "to": "Tubb2b", "width": 1}, {"color": "#8eb041", "from": "Nae1", "to": "Uba3", "width": 1}, {"color": "#8eb041", "from": "Ppp3ca", "to": "Calm1", "width": 1}, {"color": "#f47832", "from": "Kif5c", "to": "Csnk2a2", "width": 1}, {"color": "#8eb041", "from": "Kif5c", "to": "Tubb2b", "width": 1}, {"color": "#8eb041", "from": "Lrp6", "to": "Fzd3", "width": 1}, {"color": "#f47832", "from": "Lrp6", "to": "Lrp6", "width": 1}, {"color": "#8eb041", "from": "Mad2l1", "to": "Cdc16", "width": 1}, {"color": "#8eb041", "from": "Mad2l1", "to": "Tpr", "width": 1}, {"color": "#8eb041", "from": "Tpr", "to": "Nup210", "width": 1}, {"color": "#f47832", "from": "Pde4d", "to": "Adk", "width": 1}, {"color": "#f47832", "from": "Xrcc5", "to": "Tcf4", "width": 1}, {"color": "#8eb041", "from": "Nedd4l", "to": "Cblb", "width": 1}, {"color": "#8eb041", "from": "Psip1", "to": "Kmt2a", "width": 1}, {"color": "#8eb041", "from": "Psip1", "to": "Rbbp8", "width": 1}, {"color": "#f47832", "from": "Alk", "to": "Alk", "width": 1}, {"color": "#f47832", "from": "Kmt2a", "to": "Kmt2a", "width": 1}, {"color": "#8eb041", "from": "Kmt2a", "to": "Kmt2c", "width": 1}, {"color": "#8eb041", "from": "Ldb1", "to": "Tcf4", "width": 1}, {"color": "#8eb041", "from": "Smarca5", "to": "Rsf1", "width": 1}, {"color": "#8eb041", "from": "Atp6v1g1", "to": "Atp6v0a1", "width": 1}, {"color": "#8eb041", "from": "Gatad2a", "to": "Gatad2b", "width": 1}, {"color": "#f47832", "from": "Atp6v0a1", "to": "Ttc3", "width": 1}, {"color": "#8eb041", "from": "Erg28", "to": "Msmo1", "width": 1}, {"color": "#8eb041", "from": "Erg28", "to": "Sc5d", "width": 1}, {"color": "#8eb041", "from": "Sc5d", "to": "Msmo1", "width": 1}, {"color": "#8eb041", "from": "Mrps23", "to": "Mrps24", "width": 1}, {"color": "#8eb041", "from": "Epc2", "to": "Ing3", "width": 1}, {"color": "#f47832", "from": "Timm17b", "to": "Atn1", "width": 1}, {"color": "#8eb041", "from": "Timm17b", "to": "Timm50", "width": 1}, {"color": "#f47832", "from": "Ttc3", "to": "Exoc1", "width": 1}, {"color": "#f47832", "from": "Tcf4", "to": "Tcf4", "width": 1}, {"color": "#f47832", "from": "Creb3", "to": "Creb3", "width": 1}, {"color": "#8eb041", "from": "Anapc7", "to": "Anapc2", "width": 1}, {"color": "#8eb041", "from": "Setd1b", "to": "Kmt2c", "width": 1}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "repulsion": {
+            "centralGravity": 0.2,
+            "damping": 0.09,
+            "nodeDistance": 150,
+            "springConstant": 0.05,
+            "springLength": 200
+        },
+        "solver": "repulsion",
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+                      network.on("stabilizationProgress", function(params) {
+                          document.getElementById('loadingBar').removeAttribute("style");
+                          var maxWidth = 496;
+                          var minWidth = 20;
+                          var widthFactor = params.iterations/params.total;
+                          var width = Math.max(minWidth,maxWidth * widthFactor);
+                          document.getElementById('bar').style.width = width + 'px';
+                          document.getElementById('text').innerHTML = Math.round(widthFactor*100) + '%';
+                      });
+                      network.once("stabilizationIterationsDone", function() {
+                          document.getElementById('text').innerHTML = '100%';
+                          document.getElementById('bar').style.width = '496px';
+                          document.getElementById('loadingBar').style.opacity = 0;
+                          // really clean the dom element
+                          setTimeout(function () {document.getElementById('loadingBar').style.display = 'none';}, 500);
+                      });
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+        <script type="text/javascript">
+        
+            let selectedNodes = [];
+            let previousStyles = {}; 
+            let undoStack = [];
+    
+            function saveNetworkState() {
+                const nodes = network.body.data.nodes.get();
+                const edges = network.body.data.edges.get();
+                const styles = {};
+            
+                nodes.forEach(node => {
+                    styles[node.id] = {
+                        color: previousStyles[node.id]?.color || node.color || null
+                    };
+                });
+            
+                undoStack.push(JSON.stringify({ nodes, edges, styles }));
+            }
+            
+            
+            function removeSelectedNodes() {
+                if (selectedNodes.length > 0) {
+                    saveNetworkState();
+            
+                    network.body.data.nodes.remove(selectedNodes.map(id => ({ id })));
+                    selectedNodes = [];
+                } else {
+                    alert("No nodes selected.");
+                }
+            }
+            
+            function undo() {
+                if (undoStack.length > 0) {
+                    const previousState = JSON.parse(undoStack.pop());
+            
+                    network.body.data.nodes.clear();
+                    network.body.data.edges.clear();
+                    network.body.data.nodes.add(previousState.nodes);
+                    network.body.data.edges.add(previousState.edges);
+            
+                    Object.keys(previousState.styles).forEach(nodeId => {
+                        network.body.data.nodes.update({
+                            id: nodeId,
+                            ...previousState.styles[nodeId]
+                        });
+                    });
+            
+                    selectedNodes = [];
+                    previousStyles = previousState.styles;
+                } else {
+                    alert("Nothing to undo.");
+                }
+            }
+            
+            network.on("selectNode", function (params) {
+                if (event.ctrlKey) {
+                    selectedNodes = [...new Set([...selectedNodes, ...params.nodes])];
+                } else {
+                    selectedNodes.forEach(nodeId => {
+                        if (previousStyles[nodeId]) {
+                            network.body.data.nodes.update({
+                                id: nodeId,
+                                ...previousStyles[nodeId]
+                            });
+                        }
+                    });
+                    selectedNodes = params.nodes;
+                }
+            
+                params.nodes.forEach(nodeId => {
+                    const nodeData = network.body.data.nodes.get(nodeId);
+                    if (!previousStyles[nodeId]) {
+                        previousStyles[nodeId] = {
+                            color: nodeData.color || null
+                        };
+                    }
+                    network.body.data.nodes.update({
+                        id: nodeId,
+                        color: "black"
+                    });
+                });
+            });
+            
+            network.on("deselectNode", function (params) {
+                if (!event.ctrlKey) {
+                    selectedNodes.forEach(nodeId => {
+                        if (previousStyles[nodeId]) {
+                            network.body.data.nodes.update({
+                                id: nodeId,
+                                ...previousStyles[nodeId]
+                            });
+                        }
+                    });
+                    selectedNodes = [];
+                } else {
+                    params.nodes.forEach(nodeId => {
+                        if (previousStyles[nodeId]) {
+                            network.body.data.nodes.update({
+                                id: nodeId,
+                                ...previousStyles[nodeId]
+                            });
+                        }
+                    });
+                }
+            });
+                    
+                    
+            
+            
+            
+            function changePhysics(value) {
+                network.setOptions({
+                    physics: {
+                        solver: 'repulsion',
+                        repulsion: {
+                            nodeDistance: parseInt(value),
+                        },
+                    },
+                });
+            }
+            
+            
+            
+            
+            
+                            
+            let originalNodeSizes = {};
+            
+            function initializeOriginalNodeSizes() {
+                network.body.data.nodes.get().forEach(node => {
+                    if (!originalNodeSizes[node.id]) {
+                        originalNodeSizes[node.id] = node.size || 1; 
+                    }
+                });
+            }
+            
+            function scaleNetworkSize(scaleFactor) {
+                initializeOriginalNodeSizes(); 
+            
+                network.body.data.nodes.update(
+                    network.body.data.nodes.get().map(node => ({
+                        id: node.id,
+                        size: originalNodeSizes[node.id] * scaleFactor 
+                    }))
+                );
+            }
+                            
+                        
+            
+            function changeFontSize(size) {
+                network.body.data.nodes.update(
+                    network.body.data.nodes.get().map(node => ({
+                        id: node.id,
+                        font: { size: size }
+                    }))
+                );
+            }
+            
+            
+            let physicsEnabled = true;
+            
+            function togglePhysics() {
+                physicsEnabled = !physicsEnabled;
+            
+                network.setOptions({
+                    physics: physicsEnabled
+                });
+            
+
+                document.getElementById("togglePhysicsButton").innerText = physicsEnabled
+                    ? "Disable Physics"
+                    : "Enable Physics";
+            }
+
+
+
+            function downloadFile(blob, filename) {
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = filename;
+                link.click();
+    
+                URL.revokeObjectURL(link.href);
+            }
+
+
+            function saveGraph(format, resolution = 96) {
+                
+                if (format === "svg") {
+
+                    const positions = network.getPositions();
+
+                    const nodes = network.body.data.nodes.get();
+                    const edges = network.body.data.edges.get();
+                
+                    let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+                    Object.values(positions).forEach(pos => {
+                        minX = Math.min(minX, pos.x);
+                        maxX = Math.max(maxX, pos.x);
+                        minY = Math.min(minY, pos.y);
+                        maxY = Math.max(maxY, pos.y);
+                    });
+                
+                    const margin = 600; 
+                    const width = maxX - minX + margin * 2.5; 
+                    const height = maxY - minY + margin * 1.5; 
+                
+                    const offsetX = margin - minX; 
+                    const offsetY = margin - minY; 
+                
+                    let svgContent = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">`;
+                
+                    edges.forEach((edge) => {
+                        const from = positions[edge.from];
+                        const to = positions[edge.to];
+                        if (from && to) {
+                            const controlX = (from.x + to.x) / 2; 
+                            const controlY = (from.y + to.y) / 2 - 50; 
+                    
+                            const pathData = `M${from.x + offsetX},${from.y + offsetY} C${controlX + offsetX},${controlY + offsetY} ${controlX + offsetX},${controlY + offsetY} ${to.x + offsetX},${to.y + offsetY}`;
+                            const color = edge.color || "black"; 
+                            const width = edge.width || 2; 
+                            svgContent += `<path d="${pathData}" stroke="${color}" stroke-width="${width}" fill="none"/>`;
+                        }
+                    });
+                
+
+                    nodes.forEach((node) => {
+                        const pos = positions[node.id];
+                        if (pos) {
+                            const size = (node.size || 10); 
+                            const color = node.color || "blue"; 
+                            svgContent += `<circle cx="${pos.x + offsetX}" cy="${pos.y + offsetY}" r="${size}" fill="${color}" />`;
+                
+                            const labelColor = node.font?.color || "black"; 
+                            const labelFontSize = node.font?.size || 12; 
+                            svgContent += `<text x="${pos.x + offsetX + size + 5}" y="${pos.y + offsetY}" font-size="${labelFontSize}" fill="${labelColor}">${node.label || node.id}</text>`;
+                        }
+                    });
+                
+                    svgContent += `</svg>`;
+                
+                    const blob = new Blob([svgContent], { type: "image/svg+xml;charset=utf-8" });
+                    const link = document.createElement("a");
+                    link.href = URL.createObjectURL(blob);
+                    link.download = "graph.svg";
+                    link.click();
+                                            
+                    
+                } else {
+                    
+                    const positions = network.getPositions();
+
+                    const nodes = network.body.data.nodes.get();
+                    const edges = network.body.data.edges.get();
+                
+                    let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+                    Object.values(positions).forEach(pos => {
+                        minX = Math.min(minX, pos.x);
+                        maxX = Math.max(maxX, pos.x);
+                        minY = Math.min(minY, pos.y);
+                        maxY = Math.max(maxY, pos.y);
+                    });
+                
+                    const margin = 600;  
+                    const width = maxX - minX + margin * 2.5; 
+                    const height = maxY - minY + margin * 1.5; 
+                
+                    const offsetX = margin - minX; 
+                    const offsetY = margin - minY; 
+                
+                    let svgContent = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">`;
+                
+                    edges.forEach((edge) => {
+                        const from = positions[edge.from];
+                        const to = positions[edge.to];
+                        if (from && to) {
+                            const controlX = (from.x + to.x) / 2; 
+                            const controlY = (from.y + to.y) / 2 - 50; 
+                    
+                            const pathData = `M${from.x + offsetX},${from.y + offsetY} C${controlX + offsetX},${controlY + offsetY} ${controlX + offsetX},${controlY + offsetY} ${to.x + offsetX},${to.y + offsetY}`;
+                            const color = edge.color || "black"; 
+                            const width = edge.width || 2; 
+                            svgContent += `<path d="${pathData}" stroke="${color}" stroke-width="${width}" fill="none"/>`;
+                        }
+                    });
+                
+                    nodes.forEach((node) => {
+                        const pos = positions[node.id];
+                        if (pos) {
+                            const size = (node.size || 10); 
+                            const color = node.color || "blue"; 
+                            svgContent += `<circle cx="${pos.x + offsetX}" cy="${pos.y + offsetY}" r="${size}" fill="${color}" />`;
+                
+                            const labelColor = node.font?.color || "black"; 
+                            const labelFontSize = node.font?.size || 12; 
+                            svgContent += `<text x="${pos.x + offsetX + size + 5}" y="${pos.y + offsetY}" font-size="${labelFontSize}" fill="${labelColor}">${node.label || node.id}</text>`;
+                        }
+                    });
+                
+                    svgContent += `</svg>`;
+                    
+                    const svgBlob = new Blob([svgContent], { type: 'image/svg+xml' });
+                    const svgUrl = URL.createObjectURL(svgBlob);
+                    
+                    const getScaleFactor = (resolution = 300) => {
+                        const defaultDPI = 96;
+                        return resolution / defaultDPI;
+                    };
+                    
+                    const scaleFactor = getScaleFactor(resolution || 300);
+                    
+                    const canvas = document.createElement('canvas');
+                    const context = canvas.getContext('2d');
+                    const img = new Image();
+                    
+                    img.onload = () => {
+                        try {
+                            canvas.width = width * scaleFactor;
+                            canvas.height = height * scaleFactor;
+                    
+                            context.setTransform(scaleFactor, 0, 0, scaleFactor, 0, 0);
+                    
+                            if (format === 'jpeg' || format === 'jpg') {
+                                context.fillStyle = 'white';
+                                context.fillRect(0, 0, canvas.width, canvas.height);
+                            }
+                    
+                            context.drawImage(img, 0, 0, width, height);
+                    
+                            canvas.toBlob((blob) => {
+                                if (blob) {
+                                    downloadFile(blob, `image.${format}`);
+                                } else {
+                                    console.error('Błąd: Blob jest pusty!');
+                                }
+                            }, `image/${format}`);
+                        } catch (error) {
+                            console.error('Błąd podczas rysowania na canvasie:', error);
+                        }
+                    };
+                    
+                    img.onerror = (error) => {
+                        console.error('Nie udało się załadować obrazu SVG jako źródła:', error);
+                    };
+                    
+                    img.src = svgUrl;
+                    
+
+                        
+                        
+                }
+            }
+                        
+                        
+                        
+    
+    
+            document.body.insertAdjacentHTML('beforeend', `
+                <div style="position: fixed; top: 0; left: 0; width: 100%; background: #353834; padding: 10px; z-index: 1000; display: flex; gap: 10px; align-items: center; border-bottom: 1px solid #ddd;">
+                    <button onclick="removeSelectedNodes()">
+                        <i class="fa-solid fa-eraser"></i>
+                    </button>
+                    
+                    
+
+                    
+                    
+                    <button onclick="undo()">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </button>
+                    
+
+                    <label for="formatSelect" style="color: white;">Save As:</label>
+                    <select id="formatSelect">
+                        <option value="png">PNG</option>
+                        <option value="jpg">JPEG</option>
+                        <option value="svg">SVG</option>
+
+                    </select>
+                    
+                    <label for="resolutionSelect" style="color: white;">Resolution (DPI):</label>
+                    <select id="resolutionSelect">
+                        <option value="200">300 DPI</option>
+                        <option value="300">300 DPI</option>
+                        <option value="600">600 DPI</option>
+
+                    </select>
+                    
+                    <button onclick="saveGraph(
+                        document.getElementById('formatSelect').value,
+                        parseInt(document.getElementById('resolutionSelect').value)
+                    )">
+                        Export Graph
+                    </button>
+                    
+
+        
+                    <label style="color: white;">Font Size:</label>
+                    <input type="range" min="10" max="50" value="14" onchange="changeFontSize(this.value)">
+                    <label style="color: white;">Node Size:</label>
+                    <input type="range" min="0.1" max="10" value="0.1" onchange="scaleNetworkSize(this.value)">
+                    
+                    <button id="togglePhysicsButton" onclick="togglePhysics()">Disable Physics</button>
+
+                    <label style="color: white;">Physics:</label>
+                    <input type="range" min="50" max="500" value="200" step="10" onchange="changePhysics(this.value)">
+               
+                </div>
+            `);
+        </script>
+        </body>
+</html>

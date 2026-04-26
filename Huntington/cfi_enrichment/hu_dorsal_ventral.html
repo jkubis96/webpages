@@ -1,0 +1,579 @@
+<html>
+    <head>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 1900px;
+                 height: 864px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#FFA07A", "id": "CTX Foxg1 Mt-rnr2 - Auts2.var1", "label": "CTX Foxg1 Mt-rnr2 - Auts2.var1", "shape": "dot", "size": 10}, {"color": "#FFA07A", "id": "STR Foxp1 Mt-rnr2 - Gm10801", "label": "STR Foxp1 Mt-rnr2 - Gm10801", "shape": "dot", "size": 10}, {"color": "#FFA07A", "id": "CTX Foxg1 Srsf3 - Tuba1a", "label": "CTX Foxg1 Srsf3 - Tuba1a", "shape": "dot", "size": 10}, {"color": "#FFA07A", "id": "CTX Emx2 Mt-rnr2 - Ybx1", "label": "CTX Emx2 Mt-rnr2 - Ybx1", "shape": "dot", "size": 10}, {"color": "#FFA07A", "id": "CTX Foxg1 Mt-rnr2 - Actb", "label": "CTX Foxg1 Mt-rnr2 - Actb", "shape": "dot", "size": 10}, {"color": "#FFA07A", "id": "CTX Foxg1 Mt-rnr2 - Prkca.var1", "label": "CTX Foxg1 Mt-rnr2 - Prkca.var1", "shape": "dot", "size": 10}, {"color": "#FFA07A", "id": "CTX Foxg1 Mt-rnr2 - Rn18s-rs5", "label": "CTX Foxg1 Mt-rnr2 - Rn18s-rs5", "shape": "dot", "size": 10}, {"color": "#FFA07A", "id": "CTX Foxg1 Mt-rnr2 - Sox11", "label": "CTX Foxg1 Mt-rnr2 - Sox11", "shape": "dot", "size": 10}, {"color": "#FFA07A", "id": "CTX Foxg1 Mt-rnr2 - Tuba1a", "label": "CTX Foxg1 Mt-rnr2 - Tuba1a", "shape": "dot", "size": 10}, {"color": "#FFA07A", "id": "CTX Foxg1 Mt-rnr2 - Tubb2b", "label": "CTX Foxg1 Mt-rnr2 - Tubb2b", "shape": "dot", "size": 10}, {"color": "#FFA07A", "id": "CTX Foxg1 Mt-rnr2 - Tubb5", "label": "CTX Foxg1 Mt-rnr2 - Tubb5", "shape": "dot", "size": 10}, {"color": "#FFA07A", "id": "STR Foxp1 Mt-rnr2 - Hnrnpa2b1", "label": "STR Foxp1 Mt-rnr2 - Hnrnpa2b1", "shape": "dot", "size": 10}, {"color": "#FFA07A", "id": "STR Foxp1 Mt-rnr2 - Gm50306", "label": "STR Foxp1 Mt-rnr2 - Gm50306", "shape": "dot", "size": 10}, {"color": "#FFA07A", "id": "STR Foxp1 Mt-rnr2 - Trim30a", "label": "STR Foxp1 Mt-rnr2 - Trim30a", "shape": "dot", "size": 10}, {"color": "#FFA07A", "id": "STR Foxp1 Mt-rnr2 - Ywhae", "label": "STR Foxp1 Mt-rnr2 - Ywhae", "shape": "dot", "size": 10}, {"color": "#FFA07A", "id": "HIP Lhx2 Mt-rnr2 - Dab1", "label": "HIP Lhx2 Mt-rnr2 - Dab1", "shape": "dot", "size": 10}, {"color": "#FFA07A", "id": "ChP Ttr Mt-rnr2 - Rbm25", "label": "ChP Ttr Mt-rnr2 - Rbm25", "shape": "dot", "size": 10}, {"color": "#FFA07A", "id": "ChP Ttr Mt-rnr2 - Prkca.var1", "label": "ChP Ttr Mt-rnr2 - Prkca.var1", "shape": "dot", "size": 10}, {"color": "#FFA07A", "id": "ChP Ttr Mt-rnr2 - Rn18s-rs5", "label": "ChP Ttr Mt-rnr2 - Rn18s-rs5", "shape": "dot", "size": 10}, {"color": "#FFA07A", "id": "ChP Ttr Mt-rnr2 - Gclc", "label": "ChP Ttr Mt-rnr2 - Gclc", "shape": "dot", "size": 10}, {"color": "#FFA07A", "id": "ChP Ttr Mt-rnr2 - Basp1", "label": "ChP Ttr Mt-rnr2 - Basp1", "shape": "dot", "size": 10}, {"color": "#FFA07A", "id": "CTX Tbr1 Mt-rnr2 - Cdh2.var1", "label": "CTX Tbr1 Mt-rnr2 - Cdh2.var1", "shape": "dot", "size": 10}, {"color": "#FFA07A", "id": "CTX Foxg1 Mt-rnr2 - Rps12", "label": "CTX Foxg1 Mt-rnr2 - Rps12", "shape": "dot", "size": 10}, {"color": "#FFA07A", "id": "CTX Foxg1 Mt-rnr2 - Anp32b", "label": "CTX Foxg1 Mt-rnr2 - Anp32b", "shape": "dot", "size": 10}, {"color": "#FFA07A", "id": "CTX Foxg1 Mt-rnr2 - Sfpq", "label": "CTX Foxg1 Mt-rnr2 - Sfpq", "shape": "dot", "size": 10}, {"color": "#FFA07A", "id": "ChP Ttr Mt-rnr2 - Eef1g", "label": "ChP Ttr Mt-rnr2 - Eef1g", "shape": "dot", "size": 10}, {"color": "#FFA07A", "id": "ChP Ttr Mt-rnr2 - Hspd1", "label": "ChP Ttr Mt-rnr2 - Hspd1", "shape": "dot", "size": 10}, {"color": "#FFA07A", "id": "ChP Ttr Mt-rnr2 - Psip1", "label": "ChP Ttr Mt-rnr2 - Psip1", "shape": "dot", "size": 10}, {"color": "#FFA07A", "id": "ChP Ttr Mt-rnr2 - Rps5", "label": "ChP Ttr Mt-rnr2 - Rps5", "shape": "dot", "size": 10}, {"color": "#FFA07A", "id": "CTX Foxg1 Srsf3 - Gm10801", "label": "CTX Foxg1 Srsf3 - Gm10801", "shape": "dot", "size": 10}, {"color": "#FFA07A", "id": "CTX Foxg1 Mt-rnr2 - Map4k4", "label": "CTX Foxg1 Mt-rnr2 - Map4k4", "shape": "dot", "size": 10}, {"color": "#FFA07A", "id": "ChP Ttr Mt-rnr2 - Gm10717", "label": "ChP Ttr Mt-rnr2 - Gm10717", "shape": "dot", "size": 10}, {"color": "#FFA07A", "id": "CTX Emx1 Mt-rnr2 - Dek", "label": "CTX Emx1 Mt-rnr2 - Dek", "shape": "dot", "size": 10}, {"color": "#FFA07A", "id": "CTX Emx2 Mt-rnr2 - Gria2", "label": "CTX Emx2 Mt-rnr2 - Gria2", "shape": "dot", "size": 10}, {"color": "#FFA07A", "id": "CTX Emx1 Mt-rnr2 - Dach1", "label": "CTX Emx1 Mt-rnr2 - Dach1", "shape": "dot", "size": 10}, {"color": "#FFA07A", "id": "ChP Ttr Mt-rnr2 - Fabp7", "label": "ChP Ttr Mt-rnr2 - Fabp7", "shape": "dot", "size": 10}, {"color": "#FFA07A", "id": "HIP Lhx2 Mt-rnr2 - Nrg1", "label": "HIP Lhx2 Mt-rnr2 - Nrg1", "shape": "dot", "size": 10}, {"color": "#FFA07A", "id": "HIP Lhx2 Mt-rnr2 - Dcc.var1", "label": "HIP Lhx2 Mt-rnr2 - Dcc.var1", "shape": "dot", "size": 10}, {"color": "#FFA07A", "id": "CTX Foxg1 Mt-rnr2 - Hspa5", "label": "CTX Foxg1 Mt-rnr2 - Hspa5", "shape": "dot", "size": 10}]);
+                  edges = new vis.DataSet([{"alpha": 0.05, "color": "#DCDCDC", "from": "CTX Foxg1 Mt-rnr2 - Auts2.var1", "to": "STR Foxp1 Mt-rnr2 - Gm10801", "width": 5.43372200355424}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX Foxg1 Srsf3 - Tuba1a", "to": "CTX Emx2 Mt-rnr2 - Ybx1", "width": 8.192016914536875}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX Foxg1 Srsf3 - Tuba1a", "to": "CTX Foxg1 Mt-rnr2 - Actb", "width": 7.862497197230545}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX Foxg1 Srsf3 - Tuba1a", "to": "CTX Foxg1 Mt-rnr2 - Prkca.var1", "width": 8.414717399827001}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX Foxg1 Srsf3 - Tuba1a", "to": "CTX Foxg1 Mt-rnr2 - Rn18s-rs5", "width": 8.515591910049263}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX Foxg1 Srsf3 - Tuba1a", "to": "CTX Foxg1 Mt-rnr2 - Sox11", "width": 8.466320861042481}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX Foxg1 Srsf3 - Tuba1a", "to": "CTX Foxg1 Mt-rnr2 - Tuba1a", "width": 7.9919305198524775}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX Foxg1 Srsf3 - Tuba1a", "to": "CTX Foxg1 Mt-rnr2 - Tubb2b", "width": 7.76004068088038}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX Foxg1 Srsf3 - Tuba1a", "to": "CTX Foxg1 Mt-rnr2 - Tubb5", "width": 8.380685946761574}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX Foxg1 Srsf3 - Tuba1a", "to": "STR Foxp1 Mt-rnr2 - Gm10801", "width": 8.465899897028686}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX Foxg1 Srsf3 - Tuba1a", "to": "STR Foxp1 Mt-rnr2 - Hnrnpa2b1", "width": 6.81783057145415}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX Foxg1 Srsf3 - Tuba1a", "to": "STR Foxp1 Mt-rnr2 - Gm50306", "width": 7.616775808698373}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX Foxg1 Srsf3 - Tuba1a", "to": "STR Foxp1 Mt-rnr2 - Trim30a", "width": 8.22389538017882}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX Foxg1 Srsf3 - Tuba1a", "to": "STR Foxp1 Mt-rnr2 - Ywhae", "width": 8.087025470667701}, {"alpha": 0.05, "color": "#DCDCDC", "from": "HIP Lhx2 Mt-rnr2 - Dab1", "to": "STR Foxp1 Mt-rnr2 - Gm10801", "width": 5.209486152841421}, {"alpha": 0.05, "color": "#DCDCDC", "from": "ChP Ttr Mt-rnr2 - Rbm25", "to": "STR Foxp1 Mt-rnr2 - Gm10801", "width": 7.429520842786462}, {"alpha": 0.05, "color": "#DCDCDC", "from": "ChP Ttr Mt-rnr2 - Rbm25", "to": "CTX Foxg1 Mt-rnr2 - Rn18s-rs5", "width": 7.372118028337787}, {"alpha": 0.05, "color": "#DCDCDC", "from": "ChP Ttr Mt-rnr2 - Rbm25", "to": "CTX Foxg1 Mt-rnr2 - Prkca.var1", "width": 7.336936913707618}, {"alpha": 0.05, "color": "#DCDCDC", "from": "ChP Ttr Mt-rnr2 - Rbm25", "to": "CTX Foxg1 Mt-rnr2 - Sox11", "width": 7.332369205929062}, {"alpha": 0.05, "color": "#DCDCDC", "from": "ChP Ttr Mt-rnr2 - Rbm25", "to": "CTX Foxg1 Mt-rnr2 - Tubb2b", "width": 6.872128101338986}, {"alpha": 0.05, "color": "#DCDCDC", "from": "ChP Ttr Mt-rnr2 - Prkca.var1", "to": "CTX Emx2 Mt-rnr2 - Ybx1", "width": 7.329093736246592}, {"alpha": 0.05, "color": "#DCDCDC", "from": "ChP Ttr Mt-rnr2 - Prkca.var1", "to": "CTX Foxg1 Mt-rnr2 - Actb", "width": 7.10002716662926}, {"alpha": 0.05, "color": "#DCDCDC", "from": "ChP Ttr Mt-rnr2 - Prkca.var1", "to": "CTX Foxg1 Mt-rnr2 - Prkca.var1", "width": 7.079184394609668}, {"alpha": 0.05, "color": "#DCDCDC", "from": "ChP Ttr Mt-rnr2 - Prkca.var1", "to": "CTX Foxg1 Mt-rnr2 - Rn18s-rs5", "width": 7.262628600974241}, {"alpha": 0.05, "color": "#DCDCDC", "from": "ChP Ttr Mt-rnr2 - Prkca.var1", "to": "CTX Foxg1 Mt-rnr2 - Sox11", "width": 7.191429330036379}, {"alpha": 0.05, "color": "#DCDCDC", "from": "ChP Ttr Mt-rnr2 - Prkca.var1", "to": "CTX Foxg1 Mt-rnr2 - Tuba1a", "width": 7.326465613840322}, {"alpha": 0.05, "color": "#DCDCDC", "from": "ChP Ttr Mt-rnr2 - Prkca.var1", "to": "CTX Foxg1 Mt-rnr2 - Tubb2b", "width": 7.121252453244542}, {"alpha": 0.05, "color": "#DCDCDC", "from": "ChP Ttr Mt-rnr2 - Prkca.var1", "to": "CTX Foxg1 Mt-rnr2 - Tubb5", "width": 7.478734825567875}, {"alpha": 0.05, "color": "#DCDCDC", "from": "ChP Ttr Mt-rnr2 - Prkca.var1", "to": "STR Foxp1 Mt-rnr2 - Gm10801", "width": 7.557472901614746}, {"alpha": 0.05, "color": "#DCDCDC", "from": "ChP Ttr Mt-rnr2 - Prkca.var1", "to": "STR Foxp1 Mt-rnr2 - Hnrnpa2b1", "width": 6.476972362889683}, {"alpha": 0.05, "color": "#DCDCDC", "from": "ChP Ttr Mt-rnr2 - Prkca.var1", "to": "STR Foxp1 Mt-rnr2 - Gm50306", "width": 6.669498089857879}, {"alpha": 0.05, "color": "#DCDCDC", "from": "ChP Ttr Mt-rnr2 - Prkca.var1", "to": "STR Foxp1 Mt-rnr2 - Trim30a", "width": 7.346010209913293}, {"alpha": 0.05, "color": "#DCDCDC", "from": "ChP Ttr Mt-rnr2 - Prkca.var1", "to": "STR Foxp1 Mt-rnr2 - Ywhae", "width": 7.171656822768514}, {"alpha": 0.05, "color": "#DCDCDC", "from": "STR Foxp1 Mt-rnr2 - Trim30a", "to": "ChP Ttr Mt-rnr2 - Rn18s-rs5", "width": 8.045267716607803}, {"alpha": 0.05, "color": "#DCDCDC", "from": "STR Foxp1 Mt-rnr2 - Trim30a", "to": "ChP Ttr Mt-rnr2 - Gclc", "width": 7.365812837209472}, {"alpha": 0.05, "color": "#DCDCDC", "from": "STR Foxp1 Mt-rnr2 - Trim30a", "to": "ChP Ttr Mt-rnr2 - Basp1", "width": 7.335633981927201}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX Tbr1 Mt-rnr2 - Cdh2.var1", "to": "STR Foxp1 Mt-rnr2 - Gm10801", "width": 5.673323267171493}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX Foxg1 Mt-rnr2 - Rps12", "to": "STR Foxp1 Mt-rnr2 - Gm10801", "width": 5.459585514144159}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX Foxg1 Mt-rnr2 - Rn18s-rs5", "to": "CTX Foxg1 Mt-rnr2 - Anp32b", "width": 4.890349128221754}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX Foxg1 Mt-rnr2 - Rn18s-rs5", "to": "ChP Ttr Mt-rnr2 - Rn18s-rs5", "width": 8.347353412124338}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX Foxg1 Mt-rnr2 - Rn18s-rs5", "to": "ChP Ttr Mt-rnr2 - Gclc", "width": 7.476472381163905}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX Foxg1 Mt-rnr2 - Rn18s-rs5", "to": "ChP Ttr Mt-rnr2 - Basp1", "width": 7.428927194802272}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX Foxg1 Mt-rnr2 - Rn18s-rs5", "to": "CTX Foxg1 Mt-rnr2 - Sfpq", "width": 6.63200177739563}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX Foxg1 Mt-rnr2 - Rn18s-rs5", "to": "ChP Ttr Mt-rnr2 - Eef1g", "width": 4.330733340286331}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX Foxg1 Mt-rnr2 - Rn18s-rs5", "to": "ChP Ttr Mt-rnr2 - Hspd1", "width": 6.184148890937483}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX Foxg1 Mt-rnr2 - Rn18s-rs5", "to": "ChP Ttr Mt-rnr2 - Psip1", "width": 6.135564891081739}, {"alpha": 0.05, "color": "#DCDCDC", "from": "ChP Ttr Mt-rnr2 - Gclc", "to": "CTX Emx2 Mt-rnr2 - Ybx1", "width": 7.322510433997394}, {"alpha": 0.05, "color": "#DCDCDC", "from": "ChP Ttr Mt-rnr2 - Gclc", "to": "CTX Foxg1 Mt-rnr2 - Actb", "width": 6.985641817639208}, {"alpha": 0.05, "color": "#DCDCDC", "from": "ChP Ttr Mt-rnr2 - Gclc", "to": "CTX Foxg1 Mt-rnr2 - Prkca.var1", "width": 7.362010551259734}, {"alpha": 0.05, "color": "#DCDCDC", "from": "ChP Ttr Mt-rnr2 - Gclc", "to": "CTX Foxg1 Mt-rnr2 - Sox11", "width": 7.56164174558878}, {"alpha": 0.05, "color": "#DCDCDC", "from": "ChP Ttr Mt-rnr2 - Gclc", "to": "CTX Foxg1 Mt-rnr2 - Tuba1a", "width": 7.1180162044653335}, {"alpha": 0.05, "color": "#DCDCDC", "from": "ChP Ttr Mt-rnr2 - Gclc", "to": "CTX Foxg1 Mt-rnr2 - Tubb2b", "width": 6.842683282238422}, {"alpha": 0.05, "color": "#DCDCDC", "from": "ChP Ttr Mt-rnr2 - Gclc", "to": "CTX Foxg1 Mt-rnr2 - Tubb5", "width": 7.537430036586509}, {"alpha": 0.05, "color": "#DCDCDC", "from": "ChP Ttr Mt-rnr2 - Gclc", "to": "STR Foxp1 Mt-rnr2 - Gm10801", "width": 7.552762084214147}, {"alpha": 0.05, "color": "#DCDCDC", "from": "ChP Ttr Mt-rnr2 - Gclc", "to": "STR Foxp1 Mt-rnr2 - Gm50306", "width": 6.75343791859778}, {"alpha": 0.05, "color": "#DCDCDC", "from": "ChP Ttr Mt-rnr2 - Gclc", "to": "STR Foxp1 Mt-rnr2 - Ywhae", "width": 7.238496840894365}, {"alpha": 0.05, "color": "#DCDCDC", "from": "ChP Ttr Mt-rnr2 - Rps5", "to": "STR Foxp1 Mt-rnr2 - Gm10801", "width": 5.902633333401366}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX Foxg1 Srsf3 - Gm10801", "to": "STR Foxp1 Mt-rnr2 - Gm10801", "width": 6.263398262591624}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX Foxg1 Mt-rnr2 - Actb", "to": "ChP Ttr Mt-rnr2 - Rn18s-rs5", "width": 7.710653323501202}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX Foxg1 Mt-rnr2 - Actb", "to": "ChP Ttr Mt-rnr2 - Basp1", "width": 6.964135612418245}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX Foxg1 Mt-rnr2 - Tubb2b", "to": "CTX Foxg1 Mt-rnr2 - Map4k4", "width": 4.23410650459726}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX Foxg1 Mt-rnr2 - Tubb2b", "to": "ChP Ttr Mt-rnr2 - Rn18s-rs5", "width": 7.614805364711073}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX Foxg1 Mt-rnr2 - Tubb2b", "to": "ChP Ttr Mt-rnr2 - Basp1", "width": 6.807934943699926}, {"alpha": 0.05, "color": "#DCDCDC", "from": "ChP Ttr Mt-rnr2 - Gm10717", "to": "STR Foxp1 Mt-rnr2 - Gm10801", "width": 5.950642552587727}, {"alpha": 0.05, "color": "#DCDCDC", "from": "ChP Ttr Mt-rnr2 - Rn18s-rs5", "to": "CTX Emx2 Mt-rnr2 - Ybx1", "width": 8.022568946988255}, {"alpha": 0.05, "color": "#DCDCDC", "from": "ChP Ttr Mt-rnr2 - Rn18s-rs5", "to": "CTX Foxg1 Mt-rnr2 - Prkca.var1", "width": 8.293299358711323}, {"alpha": 0.05, "color": "#DCDCDC", "from": "ChP Ttr Mt-rnr2 - Rn18s-rs5", "to": "CTX Foxg1 Mt-rnr2 - Sox11", "width": 8.325548307161398}, {"alpha": 0.05, "color": "#DCDCDC", "from": "ChP Ttr Mt-rnr2 - Rn18s-rs5", "to": "CTX Foxg1 Mt-rnr2 - Tuba1a", "width": 7.8655717576847906}, {"alpha": 0.05, "color": "#DCDCDC", "from": "ChP Ttr Mt-rnr2 - Rn18s-rs5", "to": "CTX Foxg1 Mt-rnr2 - Tubb5", "width": 8.213652703029998}, {"alpha": 0.05, "color": "#DCDCDC", "from": "ChP Ttr Mt-rnr2 - Rn18s-rs5", "to": "STR Foxp1 Mt-rnr2 - Gm10801", "width": 8.273336598504486}, {"alpha": 0.05, "color": "#DCDCDC", "from": "ChP Ttr Mt-rnr2 - Rn18s-rs5", "to": "STR Foxp1 Mt-rnr2 - Hnrnpa2b1", "width": 6.675823221634848}, {"alpha": 0.05, "color": "#DCDCDC", "from": "ChP Ttr Mt-rnr2 - Rn18s-rs5", "to": "STR Foxp1 Mt-rnr2 - Gm50306", "width": 7.413970290190444}, {"alpha": 0.05, "color": "#DCDCDC", "from": "ChP Ttr Mt-rnr2 - Rn18s-rs5", "to": "STR Foxp1 Mt-rnr2 - Ywhae", "width": 7.900636613018005}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX Emx2 Mt-rnr2 - Ybx1", "to": "ChP Ttr Mt-rnr2 - Basp1", "width": 7.303843225277705}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX Foxg1 Mt-rnr2 - Sfpq", "to": "STR Foxp1 Mt-rnr2 - Gm10801", "width": 6.9411900550683745}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX Foxg1 Mt-rnr2 - Sfpq", "to": "STR Foxp1 Mt-rnr2 - Hnrnpa2b1", "width": 6.776506992372183}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX Foxg1 Mt-rnr2 - Sfpq", "to": "CTX Foxg1 Mt-rnr2 - Tuba1a", "width": 6.6293632534374485}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX Foxg1 Mt-rnr2 - Sfpq", "to": "CTX Foxg1 Mt-rnr2 - Sox11", "width": 6.602587892189336}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX Foxg1 Mt-rnr2 - Tubb5", "to": "ChP Ttr Mt-rnr2 - Basp1", "width": 7.503289630675082}, {"alpha": 0.05, "color": "#DCDCDC", "from": "STR Foxp1 Mt-rnr2 - Gm50306", "to": "ChP Ttr Mt-rnr2 - Basp1", "width": 6.717804695023691}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX Emx1 Mt-rnr2 - Dek", "to": "CTX Foxg1 Mt-rnr2 - Sox11", "width": 5.521460917862246}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX Emx2 Mt-rnr2 - Gria2", "to": "STR Foxp1 Mt-rnr2 - Gm10801", "width": 6.401917196727186}, {"alpha": 0.05, "color": "#DCDCDC", "from": "STR Foxp1 Mt-rnr2 - Gm10801", "to": "CTX Emx1 Mt-rnr2 - Dach1", "width": 5.929589143389895}, {"alpha": 0.05, "color": "#DCDCDC", "from": "STR Foxp1 Mt-rnr2 - Gm10801", "to": "ChP Ttr Mt-rnr2 - Basp1", "width": 7.511524648390866}, {"alpha": 0.05, "color": "#DCDCDC", "from": "STR Foxp1 Mt-rnr2 - Gm10801", "to": "ChP Ttr Mt-rnr2 - Fabp7", "width": 5.209486152841421}, {"alpha": 0.05, "color": "#DCDCDC", "from": "STR Foxp1 Mt-rnr2 - Gm10801", "to": "HIP Lhx2 Mt-rnr2 - Nrg1", "width": 6.3818160174060985}, {"alpha": 0.05, "color": "#DCDCDC", "from": "HIP Lhx2 Mt-rnr2 - Dcc.var1", "to": "CTX Foxg1 Mt-rnr2 - Sox11", "width": 4.499809670330265}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX Foxg1 Mt-rnr2 - Tuba1a", "to": "ChP Ttr Mt-rnr2 - Basp1", "width": 7.068172000388042}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX Foxg1 Mt-rnr2 - Hspa5", "to": "CTX Foxg1 Mt-rnr2 - Sox11", "width": 5.117993812416755}, {"alpha": 0.05, "color": "#DCDCDC", "from": "STR Foxp1 Mt-rnr2 - Ywhae", "to": "ChP Ttr Mt-rnr2 - Basp1", "width": 7.221835825288449}, {"alpha": 0.05, "color": "#DCDCDC", "from": "CTX Foxg1 Mt-rnr2 - Sox11", "to": "ChP Ttr Mt-rnr2 - Basp1", "width": 7.543273346705446}, {"alpha": 0.05, "color": "#DCDCDC", "from": "ChP Ttr Mt-rnr2 - Basp1", "to": "CTX Foxg1 Mt-rnr2 - Prkca.var1", "width": 7.3277805384216315}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "repulsion": {
+            "centralGravity": 0.2,
+            "damping": 0.09,
+            "nodeDistance": 150,
+            "springConstant": 0.05,
+            "springLength": 200
+        },
+        "solver": "repulsion",
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+        <script type="text/javascript">
+        
+            let selectedNodes = [];
+            let previousStyles = {}; 
+            let undoStack = [];
+    
+            function saveNetworkState() {
+                const nodes = network.body.data.nodes.get();
+                const edges = network.body.data.edges.get();
+                const styles = {};
+            
+                nodes.forEach(node => {
+                    styles[node.id] = {
+                        color: previousStyles[node.id]?.color || node.color || null
+                    };
+                });
+            
+                undoStack.push(JSON.stringify({ nodes, edges, styles }));
+            }
+            
+            
+            function removeSelectedNodes() {
+                if (selectedNodes.length > 0) {
+                    saveNetworkState();
+            
+                    network.body.data.nodes.remove(selectedNodes.map(id => ({ id })));
+                    selectedNodes = [];
+                } else {
+                    alert("No nodes selected.");
+                }
+            }
+            
+            function undo() {
+                if (undoStack.length > 0) {
+                    const previousState = JSON.parse(undoStack.pop());
+            
+                    network.body.data.nodes.clear();
+                    network.body.data.edges.clear();
+                    network.body.data.nodes.add(previousState.nodes);
+                    network.body.data.edges.add(previousState.edges);
+            
+                    Object.keys(previousState.styles).forEach(nodeId => {
+                        network.body.data.nodes.update({
+                            id: nodeId,
+                            ...previousState.styles[nodeId]
+                        });
+                    });
+            
+                    selectedNodes = [];
+                    previousStyles = previousState.styles;
+                } else {
+                    alert("Nothing to undo.");
+                }
+            }
+            
+            network.on("selectNode", function (params) {
+                if (event.ctrlKey) {
+                    selectedNodes = [...new Set([...selectedNodes, ...params.nodes])];
+                } else {
+                    selectedNodes.forEach(nodeId => {
+                        if (previousStyles[nodeId]) {
+                            network.body.data.nodes.update({
+                                id: nodeId,
+                                ...previousStyles[nodeId]
+                            });
+                        }
+                    });
+                    selectedNodes = params.nodes;
+                }
+            
+                params.nodes.forEach(nodeId => {
+                    const nodeData = network.body.data.nodes.get(nodeId);
+                    if (!previousStyles[nodeId]) {
+                        previousStyles[nodeId] = {
+                            color: nodeData.color || null
+                        };
+                    }
+                    network.body.data.nodes.update({
+                        id: nodeId,
+                        color: "black"
+                    });
+                });
+            });
+            
+            network.on("deselectNode", function (params) {
+                if (!event.ctrlKey) {
+                    selectedNodes.forEach(nodeId => {
+                        if (previousStyles[nodeId]) {
+                            network.body.data.nodes.update({
+                                id: nodeId,
+                                ...previousStyles[nodeId]
+                            });
+                        }
+                    });
+                    selectedNodes = [];
+                } else {
+                    params.nodes.forEach(nodeId => {
+                        if (previousStyles[nodeId]) {
+                            network.body.data.nodes.update({
+                                id: nodeId,
+                                ...previousStyles[nodeId]
+                            });
+                        }
+                    });
+                }
+            });
+                    
+                    
+            
+            
+            
+            function changePhysics(value) {
+                network.setOptions({
+                    physics: {
+                        solver: 'repulsion',
+                        repulsion: {
+                            nodeDistance: parseInt(value),
+                        },
+                    },
+                });
+            }
+            
+            
+            
+            
+            
+                            
+            let originalNodeSizes = {};
+            
+            function initializeOriginalNodeSizes() {
+                network.body.data.nodes.get().forEach(node => {
+                    if (!originalNodeSizes[node.id]) {
+                        originalNodeSizes[node.id] = node.size || 1; 
+                    }
+                });
+            }
+            
+            function scaleNetworkSize(scaleFactor) {
+                initializeOriginalNodeSizes(); 
+            
+                network.body.data.nodes.update(
+                    network.body.data.nodes.get().map(node => ({
+                        id: node.id,
+                        size: originalNodeSizes[node.id] * scaleFactor 
+                    }))
+                );
+            }
+                            
+                        
+            
+            function changeFontSize(size) {
+                network.body.data.nodes.update(
+                    network.body.data.nodes.get().map(node => ({
+                        id: node.id,
+                        font: { size: size }
+                    }))
+                );
+            }
+            
+            
+            let physicsEnabled = true;
+            
+            function togglePhysics() {
+                physicsEnabled = !physicsEnabled;
+            
+                network.setOptions({
+                    physics: physicsEnabled
+                });
+            
+
+                document.getElementById("togglePhysicsButton").innerText = physicsEnabled
+                    ? "Disable Physics"
+                    : "Enable Physics";
+            }
+
+
+
+            function downloadFile(blob, filename) {
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = filename;
+                link.click();
+    
+                URL.revokeObjectURL(link.href);
+            }
+
+
+            function saveGraph(format, resolution = 96) {
+                
+                if (format === "svg") {
+
+                    const positions = network.getPositions();
+
+                    const nodes = network.body.data.nodes.get();
+                    const edges = network.body.data.edges.get();
+                
+                    let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+                    Object.values(positions).forEach(pos => {
+                        minX = Math.min(minX, pos.x);
+                        maxX = Math.max(maxX, pos.x);
+                        minY = Math.min(minY, pos.y);
+                        maxY = Math.max(maxY, pos.y);
+                    });
+                
+                    const margin = 600; 
+                    const width = maxX - minX + margin * 2.5; 
+                    const height = maxY - minY + margin * 1.5; 
+                
+                    const offsetX = margin - minX; 
+                    const offsetY = margin - minY; 
+                
+                    let svgContent = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">`;
+                
+                    edges.forEach((edge) => {
+                        const from = positions[edge.from];
+                        const to = positions[edge.to];
+                        if (from && to) {
+                            const controlX = (from.x + to.x) / 2; 
+                            const controlY = (from.y + to.y) / 2 - 50; 
+                    
+                            const pathData = `M${from.x + offsetX},${from.y + offsetY} C${controlX + offsetX},${controlY + offsetY} ${controlX + offsetX},${controlY + offsetY} ${to.x + offsetX},${to.y + offsetY}`;
+                            const color = edge.color || "black"; 
+                            const width = edge.width || 2; 
+                            svgContent += `<path d="${pathData}" stroke="${color}" stroke-width="${width}" fill="none"/>`;
+                        }
+                    });
+                
+
+                    nodes.forEach((node) => {
+                        const pos = positions[node.id];
+                        if (pos) {
+                            const size = (node.size || 10); 
+                            const color = node.color || "blue"; 
+                            svgContent += `<circle cx="${pos.x + offsetX}" cy="${pos.y + offsetY}" r="${size}" fill="${color}" />`;
+                
+                            const labelColor = node.font?.color || "black"; 
+                            const labelFontSize = node.font?.size || 12; 
+                            svgContent += `<text x="${pos.x + offsetX + size + 5}" y="${pos.y + offsetY}" font-size="${labelFontSize}" fill="${labelColor}">${node.label || node.id}</text>`;
+                        }
+                    });
+                
+                    svgContent += `</svg>`;
+                
+                    const blob = new Blob([svgContent], { type: "image/svg+xml;charset=utf-8" });
+                    const link = document.createElement("a");
+                    link.href = URL.createObjectURL(blob);
+                    link.download = "graph.svg";
+                    link.click();
+                                            
+                    
+                } else {
+                    
+                    const positions = network.getPositions();
+
+                    const nodes = network.body.data.nodes.get();
+                    const edges = network.body.data.edges.get();
+                
+                    let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+                    Object.values(positions).forEach(pos => {
+                        minX = Math.min(minX, pos.x);
+                        maxX = Math.max(maxX, pos.x);
+                        minY = Math.min(minY, pos.y);
+                        maxY = Math.max(maxY, pos.y);
+                    });
+                
+                    const margin = 600;  
+                    const width = maxX - minX + margin * 2.5; 
+                    const height = maxY - minY + margin * 1.5; 
+                
+                    const offsetX = margin - minX; 
+                    const offsetY = margin - minY; 
+                
+                    let svgContent = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">`;
+                
+                    edges.forEach((edge) => {
+                        const from = positions[edge.from];
+                        const to = positions[edge.to];
+                        if (from && to) {
+                            const controlX = (from.x + to.x) / 2; 
+                            const controlY = (from.y + to.y) / 2 - 50; 
+                    
+                            const pathData = `M${from.x + offsetX},${from.y + offsetY} C${controlX + offsetX},${controlY + offsetY} ${controlX + offsetX},${controlY + offsetY} ${to.x + offsetX},${to.y + offsetY}`;
+                            const color = edge.color || "black"; 
+                            const width = edge.width || 2; 
+                            svgContent += `<path d="${pathData}" stroke="${color}" stroke-width="${width}" fill="none"/>`;
+                        }
+                    });
+                
+                    nodes.forEach((node) => {
+                        const pos = positions[node.id];
+                        if (pos) {
+                            const size = (node.size || 10); 
+                            const color = node.color || "blue"; 
+                            svgContent += `<circle cx="${pos.x + offsetX}" cy="${pos.y + offsetY}" r="${size}" fill="${color}" />`;
+                
+                            const labelColor = node.font?.color || "black"; 
+                            const labelFontSize = node.font?.size || 12; 
+                            svgContent += `<text x="${pos.x + offsetX + size + 5}" y="${pos.y + offsetY}" font-size="${labelFontSize}" fill="${labelColor}">${node.label || node.id}</text>`;
+                        }
+                    });
+                
+                    svgContent += `</svg>`;
+                    
+                    const svgBlob = new Blob([svgContent], { type: 'image/svg+xml' });
+                    const svgUrl = URL.createObjectURL(svgBlob);
+                    
+                    const getScaleFactor = (resolution = 300) => {
+                        const defaultDPI = 96;
+                        return resolution / defaultDPI;
+                    };
+                    
+                    const scaleFactor = getScaleFactor(resolution || 300);
+                    
+                    const canvas = document.createElement('canvas');
+                    const context = canvas.getContext('2d');
+                    const img = new Image();
+                    
+                    img.onload = () => {
+                        try {
+                            canvas.width = width * scaleFactor;
+                            canvas.height = height * scaleFactor;
+                    
+                            context.setTransform(scaleFactor, 0, 0, scaleFactor, 0, 0);
+                    
+                            if (format === 'jpeg' || format === 'jpg') {
+                                context.fillStyle = 'white';
+                                context.fillRect(0, 0, canvas.width, canvas.height);
+                            }
+                    
+                            context.drawImage(img, 0, 0, width, height);
+                    
+                            canvas.toBlob((blob) => {
+                                if (blob) {
+                                    downloadFile(blob, `image.${format}`);
+                                } else {
+                                    console.error('Błąd: Blob jest pusty!');
+                                }
+                            }, `image/${format}`);
+                        } catch (error) {
+                            console.error('Błąd podczas rysowania na canvasie:', error);
+                        }
+                    };
+                    
+                    img.onerror = (error) => {
+                        console.error('Nie udało się załadować obrazu SVG jako źródła:', error);
+                    };
+                    
+                    img.src = svgUrl;
+                    
+
+                        
+                        
+                }
+            }
+                        
+                        
+                        
+    
+    
+            document.body.insertAdjacentHTML('beforeend', `
+                <div style="position: fixed; top: 0; left: 0; width: 100%; background: #353834; padding: 10px; z-index: 1000; display: flex; gap: 10px; align-items: center; border-bottom: 1px solid #ddd;">
+                    <button onclick="removeSelectedNodes()">
+                        <i class="fa-solid fa-eraser"></i>
+                    </button>
+                    
+                    
+
+                    
+                    
+                    <button onclick="undo()">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </button>
+                    
+
+                    <label for="formatSelect" style="color: white;">Save As:</label>
+                    <select id="formatSelect">
+                        <option value="png">PNG</option>
+                        <option value="jpg">JPEG</option>
+                        <option value="svg">SVG</option>
+
+                    </select>
+                    
+                    <label for="resolutionSelect" style="color: white;">Resolution (DPI):</label>
+                    <select id="resolutionSelect">
+                        <option value="200">300 DPI</option>
+                        <option value="300">300 DPI</option>
+                        <option value="600">600 DPI</option>
+
+                    </select>
+                    
+                    <button onclick="saveGraph(
+                        document.getElementById('formatSelect').value,
+                        parseInt(document.getElementById('resolutionSelect').value)
+                    )">
+                        Export Graph
+                    </button>
+                    
+
+        
+                    <label style="color: white;">Font Size:</label>
+                    <input type="range" min="10" max="50" value="14" onchange="changeFontSize(this.value)">
+                    <label style="color: white;">Node Size:</label>
+                    <input type="range" min="0.1" max="10" value="0.1" onchange="scaleNetworkSize(this.value)">
+                    
+                    <button id="togglePhysicsButton" onclick="togglePhysics()">Disable Physics</button>
+
+                    <label style="color: white;">Physics:</label>
+                    <input type="range" min="50" max="500" value="200" step="10" onchange="changePhysics(this.value)">
+               
+                </div>
+            `);
+        </script>
+        </body>
+</html>

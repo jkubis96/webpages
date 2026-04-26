@@ -1,0 +1,51 @@
+.main-container {
+  max-width: 1600px;
+  margin-left: -450px;   
+  margin-right: auto;
+  padding-left: 20px;
+  padding-right: 20px;
+  background-color: #ffffff;
+}
+
+#TOC {
+  position: fixed !important;
+  top: 15px !important;
+  left: 15px !important;       
+  width: 300 !important;     
+  max-height: 80vh;
+  overflow-y: auto;            
+  background-color: #f8f9fa;   
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 10px 15px;
+  font-size: 14px;
+  z-index: 1000;
+}
+
+.plotly.html-widget {
+  width: 100% !important;
+  height: auto !important;
+  margin-top: 10px;
+  margin-bottom: 15px;
+  border: none;
+  border-radius: 8px;
+  background-color: none;
+}
+
+.table {
+  width: 200% !important;
+  font-size: 12px;
+}
+
+body {
+  background-color: #ffffff !important;
+}
+
+
+svg {
+  display: block !important;
+  margin: 0 auto !important;
+  max-width: 150% !important;
+  height: auto !important;
+  background: none !important;
+}

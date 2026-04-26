@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GEDSpy – global change enrichment in integrated scRNA-seq data</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f7fa;
+      color: #1a1a1a;
+    }
+
+    header {
+      background: linear-gradient(135deg, #1b2537, #303c54);
+      color: white;
+      padding: 30px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 30px;
+    }
+
+    header p {
+      font-size: 18px;
+      margin-top: 10px;
+      opacity: 0.9;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      background: white;
+      padding: 15px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #303c54;
+      font-weight: bold;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: auto;
+      padding: 40px 20px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 30px;
+      justify-content: center;
+    }
+
+    .card {
+      background: white;
+      border-radius: 16px;
+      padding: 15px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      max-width: 250px;
+      margin: 0 auto; 
+      text-align: center;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.1);
+    }
+
+    .card img {
+      width: 100%;
+      height: auto; 
+      border-radius: 12px;
+      margin-bottom: 10px;
+    }
+
+    .card h3 {
+      margin: 5px 0 5px;
+      font-size: 18px;
+      color: #303c54;
+    }
+
+    .card p {
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
+    @media (max-width: 700px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    footer {
+      background: #0f172a;
+      color: white;
+      text-align: center;
+      padding: 30px 20px;
+      margin-top: 60px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>GEDSpy</h1>
+    <p>Global change enrichment in integrated scRNA-seq data</p>
+
+  </header>
+
+  
+  <div class="container">
+    <p>
+  
+</p>
+  <a href="gedspy_enrichment/gedspy_data_enrichment_organoids.html" style="text-decoration:none; color:inherit;">
+    <div class="grid">
+      <div class="card" id="organoidsr">
+        <img src="images/org.BMP" alt="expression-vector" />
+        <h3>Fused dorsal-ventral organoids</h3>
+        <p>
+          Data include fused organoids: 17D17V, 21D21V, 71D71V, 77D77V; and mosaic organoids: 21D71V, 71D21V.
+        </p>
+      </div>
+  </a>
+
+    <a href="gedspy_enrichment/gedspy_data_enrichment_embryos.html" style="text-decoration:none; color:inherit;">
+      <div class="card" id="embryos">
+        <img src="images/em.png" alt="silencing-vector" />
+        <h3>Embryonic mouse brains (e.13.5)</h3>
+        <p>
+          Data include embryonic brains divided into ventral and dorsal parts: BAC21, HU128/21 and YAC128.
+        </p>
+      </div>
+    </a>
+
+   
+
+    </div>
+  </div>
+
+  <footer>
+    © 2026 GEDSpy – global change enrichment in integrated scRNA-seq data
+  </footer>
+</body>
+</html>

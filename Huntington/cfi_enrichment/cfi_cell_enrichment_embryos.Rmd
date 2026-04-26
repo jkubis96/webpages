@@ -1,0 +1,1222 @@
+---
+title: "CFI - single cell (subtypes) functionality enrichment"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    theme: flatly       
+    highlight: tango
+    toc: true
+    toc_float: true
+    number_sections: true
+    df_print: paged
+    self_contained: true
+    css: "custom.css"
+---
+
+
+```{r setup, include=FALSE}
+install_if_missing <- function(pkg) {
+  if (!require(pkg, character.only = TRUE)) {
+    install.packages(pkg, dependencies = TRUE)
+  }
+}
+
+packages <- c("knitr", "dplyr", "kableExtra")
+lapply(packages, install_if_missing)
+
+library(knitr)
+library(dplyr)
+library(kableExtra)
+
+set.seed(123)
+
+
+
+show_image <- function(path, caption = NULL, width = NULL, height = NULL) {
+  if (file.exists(path)) {
+    if (!is.null(caption)) cat(sprintf("%s\n", caption))
+    knitr::include_graphics(path, dpi = 300, auto_pdf = FALSE)
+  }
+}
+
+
+```
+
+
+---
+
+
+# Embryos data - subtypes functionality enrichment
+
+\
+
+
+
+Included data of separated dorsal and ventral embryonic brain parts:
+
+- BAC21D - healthy (CTRL)
+- BAC21V - healthy (CTRL)
+- HU128/21D - heterozygous disease (HD/CTRL)
+- HU128/21V - heterozygous disease (HD/CTRL)
+- YAC128D - homozygous disease (HD)
+- YAC128V - homozygous disease (HD)
+
+---
+
+
+## Healthy BAC21D
+
+### Cell-Cell interactions
+
+
+
+\
+
+```{r echo=FALSE, results='asis'}
+cat('
+<div style="text-align:center; margin:20px 0;">
+  <a href="BAC21D/bac21q_dorsal.xlsx" download 
+     style="
+       display:inline-block;
+       padding:12px 22px;
+       font-size:16px;
+       font-weight:600;
+       color:#fff;
+       background:linear-gradient(135deg,#4CAF50,#2E7D32);
+       border:none;
+       border-radius:8px;
+       text-decoration:none;
+       box-shadow:0 4px 10px rgba(0,0,0,0.15);
+       transition:all 0.2s ease-in-out;
+     "
+     onmouseover="this.style.transform=\'scale(1.05)\'; this.style.boxShadow=\'0 6px 14px rgba(0,0,0,0.25)\'"
+     onmouseout="this.style.transform=\'scale(1)\'; this.style.boxShadow=\'0 4px 10px rgba(0,0,0,0.15)\'"
+  >
+    ⬇️ Download cell-cell interactions data
+  </a>
+</div>
+')
+
+```
+
+
+```{r echo=FALSE, results='asis'}
+
+cat(sprintf('
+<div style="text-align:center; margin:10px 0;">
+  <a href="%s" target="_blank"
+     style="
+       display:inline-block;
+       padding:12px 20px;
+       font-size:15px;
+       font-weight:600;
+       color:#fff;
+       background:linear-gradient(135deg,#6A11CB,#2575FC);
+       border-radius:8px;
+       text-decoration:none;
+       box-shadow:0 4px 10px rgba(0,0,0,0.15);
+       transition:0.2s ease;
+     "
+     onmouseover="this.style.transform=\'scale(1.05)\'"
+     onmouseout="this.style.transform=\'scale(1)\'"
+  >
+    Open %s
+  </a>
+</div>
+', 'BAC21D/bac21q_dorsal.html', 'Cell-Cell interaction interactive network'))
+
+```
+
+ 
+
+### Cell subtypes gene markers enrichment (cell functionality)
+
+
+
+```{r echo=FALSE, results='asis'}
+cat('
+<div style="text-align:center; margin:20px 0;">
+  <a href="BAC21D/bac21q_dorsal_GO_r.xlsx" download 
+     style="
+       display:inline-block;
+       padding:12px 22px;
+       font-size:16px;
+       font-weight:600;
+       color:#fff;
+       background:linear-gradient(135deg,#4CAF50,#2E7D32);
+       border:none;
+       border-radius:8px;
+       text-decoration:none;
+       box-shadow:0 4px 10px rgba(0,0,0,0.15);
+       transition:all 0.2s ease-in-out;
+     "
+     onmouseover="this.style.transform=\'scale(1.05)\'; this.style.boxShadow=\'0 6px 14px rgba(0,0,0,0.25)\'"
+     onmouseout="this.style.transform=\'scale(1)\'; this.style.boxShadow=\'0 4px 10px rgba(0,0,0,0.15)\'"
+  >
+    ⬇️ Download GO-TERM data
+  </a>
+</div>
+')
+
+```
+
+
+```{r echo=FALSE, results='asis'}
+cat('
+<div style="text-align:center; margin:20px 0;">
+  <a href="BAC21D/bac21q_dorsal_KEGG_r.xlsx" download 
+     style="
+       display:inline-block;
+       padding:12px 22px;
+       font-size:16px;
+       font-weight:600;
+       color:#fff;
+       background:linear-gradient(135deg,#4CAF50,#2E7D32);
+       border:none;
+       border-radius:8px;
+       text-decoration:none;
+       box-shadow:0 4px 10px rgba(0,0,0,0.15);
+       transition:all 0.2s ease-in-out;
+     "
+     onmouseover="this.style.transform=\'scale(1.05)\'; this.style.boxShadow=\'0 6px 14px rgba(0,0,0,0.25)\'"
+     onmouseout="this.style.transform=\'scale(1)\'; this.style.boxShadow=\'0 4px 10px rgba(0,0,0,0.15)\'"
+  >
+    ⬇️ Download KEGG data
+  </a>
+</div>
+')
+
+```
+
+
+```{r echo=FALSE, results='asis'}
+cat('
+<div style="text-align:center; margin:20px 0;">
+  <a href="BAC21D/bac21q_dorsal_REACTOME_r.xlsx" download 
+     style="
+       display:inline-block;
+       padding:12px 22px;
+       font-size:16px;
+       font-weight:600;
+       color:#fff;
+       background:linear-gradient(135deg,#4CAF50,#2E7D32);
+       border:none;
+       border-radius:8px;
+       text-decoration:none;
+       box-shadow:0 4px 10px rgba(0,0,0,0.15);
+       transition:all 0.2s ease-in-out;
+     "
+     onmouseover="this.style.transform=\'scale(1.05)\'; this.style.boxShadow=\'0 6px 14px rgba(0,0,0,0.25)\'"
+     onmouseout="this.style.transform=\'scale(1)\'; this.style.boxShadow=\'0 4px 10px rgba(0,0,0,0.15)\'"
+  >
+    ⬇️ Download REACTOME data
+  </a>
+</div>
+')
+
+```
+
+\
+
+---
+
+## Healthy BAC21V
+
+### Cell-Cell interactions
+
+
+
+\
+
+```{r echo=FALSE, results='asis'}
+cat('
+<div style="text-align:center; margin:20px 0;">
+  <a href="BAC21V/bac21q_ventral.xlsx" download 
+     style="
+       display:inline-block;
+       padding:12px 22px;
+       font-size:16px;
+       font-weight:600;
+       color:#fff;
+       background:linear-gradient(135deg,#4CAF50,#2E7D32);
+       border:none;
+       border-radius:8px;
+       text-decoration:none;
+       box-shadow:0 4px 10px rgba(0,0,0,0.15);
+       transition:all 0.2s ease-in-out;
+     "
+     onmouseover="this.style.transform=\'scale(1.05)\'; this.style.boxShadow=\'0 6px 14px rgba(0,0,0,0.25)\'"
+     onmouseout="this.style.transform=\'scale(1)\'; this.style.boxShadow=\'0 4px 10px rgba(0,0,0,0.15)\'"
+  >
+    ⬇️ Download cell-cell interactions data
+  </a>
+</div>
+')
+
+```
+
+
+```{r echo=FALSE, results='asis'}
+
+cat(sprintf('
+<div style="text-align:center; margin:10px 0;">
+  <a href="%s" target="_blank"
+     style="
+       display:inline-block;
+       padding:12px 20px;
+       font-size:15px;
+       font-weight:600;
+       color:#fff;
+       background:linear-gradient(135deg,#6A11CB,#2575FC);
+       border-radius:8px;
+       text-decoration:none;
+       box-shadow:0 4px 10px rgba(0,0,0,0.15);
+       transition:0.2s ease;
+     "
+     onmouseover="this.style.transform=\'scale(1.05)\'"
+     onmouseout="this.style.transform=\'scale(1)\'"
+  >
+    Open %s
+  </a>
+</div>
+', 'BAC21V/bac21q_ventral.html', 'Cell-Cell interaction interactive network'))
+
+```
+
+ 
+
+### Cell subtypes gene markers enrichment (cell functionality)
+
+
+
+```{r echo=FALSE, results='asis'}
+cat('
+<div style="text-align:center; margin:20px 0;">
+  <a href="BAC21V/bac21q_ventral_GO_r.xlsx" download 
+     style="
+       display:inline-block;
+       padding:12px 22px;
+       font-size:16px;
+       font-weight:600;
+       color:#fff;
+       background:linear-gradient(135deg,#4CAF50,#2E7D32);
+       border:none;
+       border-radius:8px;
+       text-decoration:none;
+       box-shadow:0 4px 10px rgba(0,0,0,0.15);
+       transition:all 0.2s ease-in-out;
+     "
+     onmouseover="this.style.transform=\'scale(1.05)\'; this.style.boxShadow=\'0 6px 14px rgba(0,0,0,0.25)\'"
+     onmouseout="this.style.transform=\'scale(1)\'; this.style.boxShadow=\'0 4px 10px rgba(0,0,0,0.15)\'"
+  >
+    ⬇️ Download GO-TERM data
+  </a>
+</div>
+')
+
+```
+
+
+```{r echo=FALSE, results='asis'}
+cat('
+<div style="text-align:center; margin:20px 0;">
+  <a href="BAC21V/bac21q_ventral_KEGG_r.xlsx" download 
+     style="
+       display:inline-block;
+       padding:12px 22px;
+       font-size:16px;
+       font-weight:600;
+       color:#fff;
+       background:linear-gradient(135deg,#4CAF50,#2E7D32);
+       border:none;
+       border-radius:8px;
+       text-decoration:none;
+       box-shadow:0 4px 10px rgba(0,0,0,0.15);
+       transition:all 0.2s ease-in-out;
+     "
+     onmouseover="this.style.transform=\'scale(1.05)\'; this.style.boxShadow=\'0 6px 14px rgba(0,0,0,0.25)\'"
+     onmouseout="this.style.transform=\'scale(1)\'; this.style.boxShadow=\'0 4px 10px rgba(0,0,0,0.15)\'"
+  >
+    ⬇️ Download KEGG data
+  </a>
+</div>
+')
+
+```
+
+
+```{r echo=FALSE, results='asis'}
+cat('
+<div style="text-align:center; margin:20px 0;">
+  <a href="BAC21V/bac21q_ventral_REACTOME_r.xlsx" download 
+     style="
+       display:inline-block;
+       padding:12px 22px;
+       font-size:16px;
+       font-weight:600;
+       color:#fff;
+       background:linear-gradient(135deg,#4CAF50,#2E7D32);
+       border:none;
+       border-radius:8px;
+       text-decoration:none;
+       box-shadow:0 4px 10px rgba(0,0,0,0.15);
+       transition:all 0.2s ease-in-out;
+     "
+     onmouseover="this.style.transform=\'scale(1.05)\'; this.style.boxShadow=\'0 6px 14px rgba(0,0,0,0.25)\'"
+     onmouseout="this.style.transform=\'scale(1)\'; this.style.boxShadow=\'0 4px 10px rgba(0,0,0,0.15)\'"
+  >
+    ⬇️ Download REACTOME data
+  </a>
+</div>
+')
+
+```
+
+
+
+\
+
+---
+
+## Healthy BAC21D ~ BAC21V
+
+### Cell-Cell dorsal <-> ventral interactions
+
+
+
+\
+
+```{r echo=FALSE, results='asis'}
+cat('
+<div style="text-align:center; margin:20px 0;">
+  <a href="bac_dorsal_ventral.xlsx" download 
+     style="
+       display:inline-block;
+       padding:12px 22px;
+       font-size:16px;
+       font-weight:600;
+       color:#fff;
+       background:linear-gradient(135deg,#4CAF50,#2E7D32);
+       border:none;
+       border-radius:8px;
+       text-decoration:none;
+       box-shadow:0 4px 10px rgba(0,0,0,0.15);
+       transition:all 0.2s ease-in-out;
+     "
+     onmouseover="this.style.transform=\'scale(1.05)\'; this.style.boxShadow=\'0 6px 14px rgba(0,0,0,0.25)\'"
+     onmouseout="this.style.transform=\'scale(1)\'; this.style.boxShadow=\'0 4px 10px rgba(0,0,0,0.15)\'"
+  >
+    ⬇️ Download cell-cell dorsal <-> ventral interactions data
+  </a>
+</div>
+')
+
+```
+
+
+```{r echo=FALSE, results='asis'}
+
+cat(sprintf('
+<div style="text-align:center; margin:10px 0;">
+  <a href="%s" target="_blank"
+     style="
+       display:inline-block;
+       padding:12px 20px;
+       font-size:15px;
+       font-weight:600;
+       color:#fff;
+       background:linear-gradient(135deg,#6A11CB,#2575FC);
+       border-radius:8px;
+       text-decoration:none;
+       box-shadow:0 4px 10px rgba(0,0,0,0.15);
+       transition:0.2s ease;
+     "
+     onmouseover="this.style.transform=\'scale(1.05)\'"
+     onmouseout="this.style.transform=\'scale(1)\'"
+  >
+    Open %s
+  </a>
+</div>
+', 'bac_dorsal_ventral.html', 'Cell-Cell dorsal <-> ventral interaction interactive network'))
+
+```
+
+\
+ 
+---
+
+## Heterozygous disease HU128/21D
+
+### Cell-Cell interactions
+
+
+
+\
+
+```{r echo=FALSE, results='asis'}
+cat('
+<div style="text-align:center; margin:20px 0;">
+  <a href="HU128_21D/hu128q_21q_dorsal.xlsx" download 
+     style="
+       display:inline-block;
+       padding:12px 22px;
+       font-size:16px;
+       font-weight:600;
+       color:#fff;
+       background:linear-gradient(135deg,#4CAF50,#2E7D32);
+       border:none;
+       border-radius:8px;
+       text-decoration:none;
+       box-shadow:0 4px 10px rgba(0,0,0,0.15);
+       transition:all 0.2s ease-in-out;
+     "
+     onmouseover="this.style.transform=\'scale(1.05)\'; this.style.boxShadow=\'0 6px 14px rgba(0,0,0,0.25)\'"
+     onmouseout="this.style.transform=\'scale(1)\'; this.style.boxShadow=\'0 4px 10px rgba(0,0,0,0.15)\'"
+  >
+    ⬇️ Download cell-cell interactions data
+  </a>
+</div>
+')
+
+```
+
+
+```{r echo=FALSE, results='asis'}
+
+cat(sprintf('
+<div style="text-align:center; margin:10px 0;">
+  <a href="%s" target="_blank"
+     style="
+       display:inline-block;
+       padding:12px 20px;
+       font-size:15px;
+       font-weight:600;
+       color:#fff;
+       background:linear-gradient(135deg,#6A11CB,#2575FC);
+       border-radius:8px;
+       text-decoration:none;
+       box-shadow:0 4px 10px rgba(0,0,0,0.15);
+       transition:0.2s ease;
+     "
+     onmouseover="this.style.transform=\'scale(1.05)\'"
+     onmouseout="this.style.transform=\'scale(1)\'"
+  >
+    Open %s
+  </a>
+</div>
+', 'HU128_21D/hu128q_21q_dorsal.html', 'Cell-Cell interaction interactive network'))
+
+```
+
+ 
+
+### Cell subtypes gene markers enrichment (cell functionality)
+
+
+
+```{r echo=FALSE, results='asis'}
+cat('
+<div style="text-align:center; margin:20px 0;">
+  <a href="HU128_21D/hu128q_21q_dorsal_GO_r.xlsx" download 
+     style="
+       display:inline-block;
+       padding:12px 22px;
+       font-size:16px;
+       font-weight:600;
+       color:#fff;
+       background:linear-gradient(135deg,#4CAF50,#2E7D32);
+       border:none;
+       border-radius:8px;
+       text-decoration:none;
+       box-shadow:0 4px 10px rgba(0,0,0,0.15);
+       transition:all 0.2s ease-in-out;
+     "
+     onmouseover="this.style.transform=\'scale(1.05)\'; this.style.boxShadow=\'0 6px 14px rgba(0,0,0,0.25)\'"
+     onmouseout="this.style.transform=\'scale(1)\'; this.style.boxShadow=\'0 4px 10px rgba(0,0,0,0.15)\'"
+  >
+    ⬇️ Download GO-TERM data
+  </a>
+</div>
+')
+
+```
+
+
+```{r echo=FALSE, results='asis'}
+cat('
+<div style="text-align:center; margin:20px 0;">
+  <a href="HU128_21D/hu128q_21q_dorsal_KEGG_r.xlsx" download 
+     style="
+       display:inline-block;
+       padding:12px 22px;
+       font-size:16px;
+       font-weight:600;
+       color:#fff;
+       background:linear-gradient(135deg,#4CAF50,#2E7D32);
+       border:none;
+       border-radius:8px;
+       text-decoration:none;
+       box-shadow:0 4px 10px rgba(0,0,0,0.15);
+       transition:all 0.2s ease-in-out;
+     "
+     onmouseover="this.style.transform=\'scale(1.05)\'; this.style.boxShadow=\'0 6px 14px rgba(0,0,0,0.25)\'"
+     onmouseout="this.style.transform=\'scale(1)\'; this.style.boxShadow=\'0 4px 10px rgba(0,0,0,0.15)\'"
+  >
+    ⬇️ Download KEGG data
+  </a>
+</div>
+')
+
+```
+
+
+```{r echo=FALSE, results='asis'}
+cat('
+<div style="text-align:center; margin:20px 0;">
+  <a href="HU128_21D/hu128q_21q_dorsal_REACTOME_r.xlsx" download 
+     style="
+       display:inline-block;
+       padding:12px 22px;
+       font-size:16px;
+       font-weight:600;
+       color:#fff;
+       background:linear-gradient(135deg,#4CAF50,#2E7D32);
+       border:none;
+       border-radius:8px;
+       text-decoration:none;
+       box-shadow:0 4px 10px rgba(0,0,0,0.15);
+       transition:all 0.2s ease-in-out;
+     "
+     onmouseover="this.style.transform=\'scale(1.05)\'; this.style.boxShadow=\'0 6px 14px rgba(0,0,0,0.25)\'"
+     onmouseout="this.style.transform=\'scale(1)\'; this.style.boxShadow=\'0 4px 10px rgba(0,0,0,0.15)\'"
+  >
+    ⬇️ Download REACTOME data
+  </a>
+</div>
+')
+
+```
+
+\
+
+---
+
+## Heterozygous disease HU128/21V
+
+### Cell-Cell interactions
+
+
+
+\
+
+```{r echo=FALSE, results='asis'}
+cat('
+<div style="text-align:center; margin:20px 0;">
+  <a href="HU128_21V/hu128q_21q_ventral.xlsx" download 
+     style="
+       display:inline-block;
+       padding:12px 22px;
+       font-size:16px;
+       font-weight:600;
+       color:#fff;
+       background:linear-gradient(135deg,#4CAF50,#2E7D32);
+       border:none;
+       border-radius:8px;
+       text-decoration:none;
+       box-shadow:0 4px 10px rgba(0,0,0,0.15);
+       transition:all 0.2s ease-in-out;
+     "
+     onmouseover="this.style.transform=\'scale(1.05)\'; this.style.boxShadow=\'0 6px 14px rgba(0,0,0,0.25)\'"
+     onmouseout="this.style.transform=\'scale(1)\'; this.style.boxShadow=\'0 4px 10px rgba(0,0,0,0.15)\'"
+  >
+    ⬇️ Download cell-cell interactions data
+  </a>
+</div>
+')
+
+```
+
+
+```{r echo=FALSE, results='asis'}
+
+cat(sprintf('
+<div style="text-align:center; margin:10px 0;">
+  <a href="%s" target="_blank"
+     style="
+       display:inline-block;
+       padding:12px 20px;
+       font-size:15px;
+       font-weight:600;
+       color:#fff;
+       background:linear-gradient(135deg,#6A11CB,#2575FC);
+       border-radius:8px;
+       text-decoration:none;
+       box-shadow:0 4px 10px rgba(0,0,0,0.15);
+       transition:0.2s ease;
+     "
+     onmouseover="this.style.transform=\'scale(1.05)\'"
+     onmouseout="this.style.transform=\'scale(1)\'"
+  >
+    Open %s
+  </a>
+</div>
+', 'HU128_21V/hu128q_21q_ventral.html', 'Cell-Cell interaction interactive network'))
+
+```
+
+ 
+
+### Cell subtypes gene markers enrichment (cell functionality)
+
+
+
+```{r echo=FALSE, results='asis'}
+cat('
+<div style="text-align:center; margin:20px 0;">
+  <a href="HU128_21V/hu128q_21q_ventral_GO_r.xlsx" download 
+     style="
+       display:inline-block;
+       padding:12px 22px;
+       font-size:16px;
+       font-weight:600;
+       color:#fff;
+       background:linear-gradient(135deg,#4CAF50,#2E7D32);
+       border:none;
+       border-radius:8px;
+       text-decoration:none;
+       box-shadow:0 4px 10px rgba(0,0,0,0.15);
+       transition:all 0.2s ease-in-out;
+     "
+     onmouseover="this.style.transform=\'scale(1.05)\'; this.style.boxShadow=\'0 6px 14px rgba(0,0,0,0.25)\'"
+     onmouseout="this.style.transform=\'scale(1)\'; this.style.boxShadow=\'0 4px 10px rgba(0,0,0,0.15)\'"
+  >
+    ⬇️ Download GO-TERM data
+  </a>
+</div>
+')
+
+```
+
+
+```{r echo=FALSE, results='asis'}
+cat('
+<div style="text-align:center; margin:20px 0;">
+  <a href="HU128_21V/hu128q_21q_ventral_KEGG_r.xlsx" download 
+     style="
+       display:inline-block;
+       padding:12px 22px;
+       font-size:16px;
+       font-weight:600;
+       color:#fff;
+       background:linear-gradient(135deg,#4CAF50,#2E7D32);
+       border:none;
+       border-radius:8px;
+       text-decoration:none;
+       box-shadow:0 4px 10px rgba(0,0,0,0.15);
+       transition:all 0.2s ease-in-out;
+     "
+     onmouseover="this.style.transform=\'scale(1.05)\'; this.style.boxShadow=\'0 6px 14px rgba(0,0,0,0.25)\'"
+     onmouseout="this.style.transform=\'scale(1)\'; this.style.boxShadow=\'0 4px 10px rgba(0,0,0,0.15)\'"
+  >
+    ⬇️ Download KEGG data
+  </a>
+</div>
+')
+
+```
+
+
+```{r echo=FALSE, results='asis'}
+cat('
+<div style="text-align:center; margin:20px 0;">
+  <a href="HU128_21V/hu128q_21q_ventral_REACTOME_r.xlsx" download 
+     style="
+       display:inline-block;
+       padding:12px 22px;
+       font-size:16px;
+       font-weight:600;
+       color:#fff;
+       background:linear-gradient(135deg,#4CAF50,#2E7D32);
+       border:none;
+       border-radius:8px;
+       text-decoration:none;
+       box-shadow:0 4px 10px rgba(0,0,0,0.15);
+       transition:all 0.2s ease-in-out;
+     "
+     onmouseover="this.style.transform=\'scale(1.05)\'; this.style.boxShadow=\'0 6px 14px rgba(0,0,0,0.25)\'"
+     onmouseout="this.style.transform=\'scale(1)\'; this.style.boxShadow=\'0 4px 10px rgba(0,0,0,0.15)\'"
+  >
+    ⬇️ Download REACTOME data
+  </a>
+</div>
+')
+
+```
+
+
+
+\
+
+---
+
+## Heterozygous disease HU128/21D ~ HU128/21V
+
+### Cell-Cell dorsal <-> ventral interactions
+
+
+
+\
+
+```{r echo=FALSE, results='asis'}
+cat('
+<div style="text-align:center; margin:20px 0;">
+  <a href="hu_dorsal_ventral.xlsx" download 
+     style="
+       display:inline-block;
+       padding:12px 22px;
+       font-size:16px;
+       font-weight:600;
+       color:#fff;
+       background:linear-gradient(135deg,#4CAF50,#2E7D32);
+       border:none;
+       border-radius:8px;
+       text-decoration:none;
+       box-shadow:0 4px 10px rgba(0,0,0,0.15);
+       transition:all 0.2s ease-in-out;
+     "
+     onmouseover="this.style.transform=\'scale(1.05)\'; this.style.boxShadow=\'0 6px 14px rgba(0,0,0,0.25)\'"
+     onmouseout="this.style.transform=\'scale(1)\'; this.style.boxShadow=\'0 4px 10px rgba(0,0,0,0.15)\'"
+  >
+    ⬇️ Download cell-cell dorsal <-> ventral interactions data
+  </a>
+</div>
+')
+
+```
+
+
+```{r echo=FALSE, results='asis'}
+
+cat(sprintf('
+<div style="text-align:center; margin:10px 0;">
+  <a href="%s" target="_blank"
+     style="
+       display:inline-block;
+       padding:12px 20px;
+       font-size:15px;
+       font-weight:600;
+       color:#fff;
+       background:linear-gradient(135deg,#6A11CB,#2575FC);
+       border-radius:8px;
+       text-decoration:none;
+       box-shadow:0 4px 10px rgba(0,0,0,0.15);
+       transition:0.2s ease;
+     "
+     onmouseover="this.style.transform=\'scale(1.05)\'"
+     onmouseout="this.style.transform=\'scale(1)\'"
+  >
+    Open %s
+  </a>
+</div>
+', 'hu_dorsal_ventral.html', 'Cell-Cell dorsal <-> ventral interaction interactive network'))
+
+```
+
+
+\
+
+
+---
+
+## Homozygous disease YAC128D
+
+### Cell-Cell interactions
+
+
+\
+
+```{r echo=FALSE, results='asis'}
+cat('
+<div style="text-align:center; margin:20px 0;">
+  <a href="YAC128D/yac128q_dorsal.xlsx" download 
+     style="
+       display:inline-block;
+       padding:12px 22px;
+       font-size:16px;
+       font-weight:600;
+       color:#fff;
+       background:linear-gradient(135deg,#4CAF50,#2E7D32);
+       border:none;
+       border-radius:8px;
+       text-decoration:none;
+       box-shadow:0 4px 10px rgba(0,0,0,0.15);
+       transition:all 0.2s ease-in-out;
+     "
+     onmouseover="this.style.transform=\'scale(1.05)\'; this.style.boxShadow=\'0 6px 14px rgba(0,0,0,0.25)\'"
+     onmouseout="this.style.transform=\'scale(1)\'; this.style.boxShadow=\'0 4px 10px rgba(0,0,0,0.15)\'"
+  >
+    ⬇️ Download cell-cell interactions data
+  </a>
+</div>
+')
+
+```
+
+
+```{r echo=FALSE, results='asis'}
+
+cat(sprintf('
+<div style="text-align:center; margin:10px 0;">
+  <a href="%s" target="_blank"
+     style="
+       display:inline-block;
+       padding:12px 20px;
+       font-size:15px;
+       font-weight:600;
+       color:#fff;
+       background:linear-gradient(135deg,#6A11CB,#2575FC);
+       border-radius:8px;
+       text-decoration:none;
+       box-shadow:0 4px 10px rgba(0,0,0,0.15);
+       transition:0.2s ease;
+     "
+     onmouseover="this.style.transform=\'scale(1.05)\'"
+     onmouseout="this.style.transform=\'scale(1)\'"
+  >
+    Open %s
+  </a>
+</div>
+', 'YAC128D/yac128q_dorsal.html', 'Cell-Cell interaction interactive network'))
+
+```
+
+ 
+
+### Cell subtypes gene markers enrichment (cell functionality)
+
+
+
+```{r echo=FALSE, results='asis'}
+cat('
+<div style="text-align:center; margin:20px 0;">
+  <a href="YAC128D/yac128q_dorsal_GO_r.xlsx" download 
+     style="
+       display:inline-block;
+       padding:12px 22px;
+       font-size:16px;
+       font-weight:600;
+       color:#fff;
+       background:linear-gradient(135deg,#4CAF50,#2E7D32);
+       border:none;
+       border-radius:8px;
+       text-decoration:none;
+       box-shadow:0 4px 10px rgba(0,0,0,0.15);
+       transition:all 0.2s ease-in-out;
+     "
+     onmouseover="this.style.transform=\'scale(1.05)\'; this.style.boxShadow=\'0 6px 14px rgba(0,0,0,0.25)\'"
+     onmouseout="this.style.transform=\'scale(1)\'; this.style.boxShadow=\'0 4px 10px rgba(0,0,0,0.15)\'"
+  >
+    ⬇️ Download GO-TERM data
+  </a>
+</div>
+')
+
+```
+
+
+```{r echo=FALSE, results='asis'}
+cat('
+<div style="text-align:center; margin:20px 0;">
+  <a href="YAC128D/yac128q_dorsal_KEGG_r.xlsx" download 
+     style="
+       display:inline-block;
+       padding:12px 22px;
+       font-size:16px;
+       font-weight:600;
+       color:#fff;
+       background:linear-gradient(135deg,#4CAF50,#2E7D32);
+       border:none;
+       border-radius:8px;
+       text-decoration:none;
+       box-shadow:0 4px 10px rgba(0,0,0,0.15);
+       transition:all 0.2s ease-in-out;
+     "
+     onmouseover="this.style.transform=\'scale(1.05)\'; this.style.boxShadow=\'0 6px 14px rgba(0,0,0,0.25)\'"
+     onmouseout="this.style.transform=\'scale(1)\'; this.style.boxShadow=\'0 4px 10px rgba(0,0,0,0.15)\'"
+  >
+    ⬇️ Download KEGG data
+  </a>
+</div>
+')
+
+```
+
+
+```{r echo=FALSE, results='asis'}
+cat('
+<div style="text-align:center; margin:20px 0;">
+  <a href="YAC128D/yac128q_dorsal_REACTOME_r.xlsx" download 
+     style="
+       display:inline-block;
+       padding:12px 22px;
+       font-size:16px;
+       font-weight:600;
+       color:#fff;
+       background:linear-gradient(135deg,#4CAF50,#2E7D32);
+       border:none;
+       border-radius:8px;
+       text-decoration:none;
+       box-shadow:0 4px 10px rgba(0,0,0,0.15);
+       transition:all 0.2s ease-in-out;
+     "
+     onmouseover="this.style.transform=\'scale(1.05)\'; this.style.boxShadow=\'0 6px 14px rgba(0,0,0,0.25)\'"
+     onmouseout="this.style.transform=\'scale(1)\'; this.style.boxShadow=\'0 4px 10px rgba(0,0,0,0.15)\'"
+  >
+    ⬇️ Download REACTOME data
+  </a>
+</div>
+')
+
+```
+
+\
+
+---
+
+## Homozygous disease YAC128V
+
+### Cell-Cell interactions
+
+
+
+\
+
+```{r echo=FALSE, results='asis'}
+cat('
+<div style="text-align:center; margin:20px 0;">
+  <a href="YAC128V/yac128q_ventral.xlsx" download 
+     style="
+       display:inline-block;
+       padding:12px 22px;
+       font-size:16px;
+       font-weight:600;
+       color:#fff;
+       background:linear-gradient(135deg,#4CAF50,#2E7D32);
+       border:none;
+       border-radius:8px;
+       text-decoration:none;
+       box-shadow:0 4px 10px rgba(0,0,0,0.15);
+       transition:all 0.2s ease-in-out;
+     "
+     onmouseover="this.style.transform=\'scale(1.05)\'; this.style.boxShadow=\'0 6px 14px rgba(0,0,0,0.25)\'"
+     onmouseout="this.style.transform=\'scale(1)\'; this.style.boxShadow=\'0 4px 10px rgba(0,0,0,0.15)\'"
+  >
+    ⬇️ Download cell-cell interactions data
+  </a>
+</div>
+')
+
+```
+
+
+```{r echo=FALSE, results='asis'}
+
+cat(sprintf('
+<div style="text-align:center; margin:10px 0;">
+  <a href="%s" target="_blank"
+     style="
+       display:inline-block;
+       padding:12px 20px;
+       font-size:15px;
+       font-weight:600;
+       color:#fff;
+       background:linear-gradient(135deg,#6A11CB,#2575FC);
+       border-radius:8px;
+       text-decoration:none;
+       box-shadow:0 4px 10px rgba(0,0,0,0.15);
+       transition:0.2s ease;
+     "
+     onmouseover="this.style.transform=\'scale(1.05)\'"
+     onmouseout="this.style.transform=\'scale(1)\'"
+  >
+    Open %s
+  </a>
+</div>
+', 'YAC128V/yac128q_ventral.html', 'Cell-Cell interaction interactive network'))
+
+```
+
+ 
+
+### Cell subtypes gene markers enrichment (cell functionality)
+
+
+
+```{r echo=FALSE, results='asis'}
+cat('
+<div style="text-align:center; margin:20px 0;">
+  <a href="YAC128V/yac128q_ventral_GO_r.xlsx" download 
+     style="
+       display:inline-block;
+       padding:12px 22px;
+       font-size:16px;
+       font-weight:600;
+       color:#fff;
+       background:linear-gradient(135deg,#4CAF50,#2E7D32);
+       border:none;
+       border-radius:8px;
+       text-decoration:none;
+       box-shadow:0 4px 10px rgba(0,0,0,0.15);
+       transition:all 0.2s ease-in-out;
+     "
+     onmouseover="this.style.transform=\'scale(1.05)\'; this.style.boxShadow=\'0 6px 14px rgba(0,0,0,0.25)\'"
+     onmouseout="this.style.transform=\'scale(1)\'; this.style.boxShadow=\'0 4px 10px rgba(0,0,0,0.15)\'"
+  >
+    ⬇️ Download GO-TERM data
+  </a>
+</div>
+')
+
+```
+
+
+```{r echo=FALSE, results='asis'}
+cat('
+<div style="text-align:center; margin:20px 0;">
+  <a href="YAC128V/yac128q_ventral_KEGG_r.xlsx" download 
+     style="
+       display:inline-block;
+       padding:12px 22px;
+       font-size:16px;
+       font-weight:600;
+       color:#fff;
+       background:linear-gradient(135deg,#4CAF50,#2E7D32);
+       border:none;
+       border-radius:8px;
+       text-decoration:none;
+       box-shadow:0 4px 10px rgba(0,0,0,0.15);
+       transition:all 0.2s ease-in-out;
+     "
+     onmouseover="this.style.transform=\'scale(1.05)\'; this.style.boxShadow=\'0 6px 14px rgba(0,0,0,0.25)\'"
+     onmouseout="this.style.transform=\'scale(1)\'; this.style.boxShadow=\'0 4px 10px rgba(0,0,0,0.15)\'"
+  >
+    ⬇️ Download KEGG data
+  </a>
+</div>
+')
+
+```
+
+
+```{r echo=FALSE, results='asis'}
+cat('
+<div style="text-align:center; margin:20px 0;">
+  <a href="YAC128V/yac128q_ventral_REACTOME_r.xlsx" download 
+     style="
+       display:inline-block;
+       padding:12px 22px;
+       font-size:16px;
+       font-weight:600;
+       color:#fff;
+       background:linear-gradient(135deg,#4CAF50,#2E7D32);
+       border:none;
+       border-radius:8px;
+       text-decoration:none;
+       box-shadow:0 4px 10px rgba(0,0,0,0.15);
+       transition:all 0.2s ease-in-out;
+     "
+     onmouseover="this.style.transform=\'scale(1.05)\'; this.style.boxShadow=\'0 6px 14px rgba(0,0,0,0.25)\'"
+     onmouseout="this.style.transform=\'scale(1)\'; this.style.boxShadow=\'0 4px 10px rgba(0,0,0,0.15)\'"
+  >
+    ⬇️ Download REACTOME data
+  </a>
+</div>
+')
+
+```
+
+
+
+\
+
+---
+
+## Homozygous disease YAC128D ~ YAC128V
+
+### Cell-Cell dorsal <-> ventral interactions
+
+
+
+\
+
+```{r echo=FALSE, results='asis'}
+cat('
+<div style="text-align:center; margin:20px 0;">
+  <a href="yac_dorsal_ventral.xlsx" download 
+     style="
+       display:inline-block;
+       padding:12px 22px;
+       font-size:16px;
+       font-weight:600;
+       color:#fff;
+       background:linear-gradient(135deg,#4CAF50,#2E7D32);
+       border:none;
+       border-radius:8px;
+       text-decoration:none;
+       box-shadow:0 4px 10px rgba(0,0,0,0.15);
+       transition:all 0.2s ease-in-out;
+     "
+     onmouseover="this.style.transform=\'scale(1.05)\'; this.style.boxShadow=\'0 6px 14px rgba(0,0,0,0.25)\'"
+     onmouseout="this.style.transform=\'scale(1)\'; this.style.boxShadow=\'0 4px 10px rgba(0,0,0,0.15)\'"
+  >
+    ⬇️ Download cell-cell dorsal <-> ventral interactions data
+  </a>
+</div>
+')
+
+```
+
+
+```{r echo=FALSE, results='asis'}
+
+cat(sprintf('
+<div style="text-align:center; margin:10px 0;">
+  <a href="%s" target="_blank"
+     style="
+       display:inline-block;
+       padding:12px 20px;
+       font-size:15px;
+       font-weight:600;
+       color:#fff;
+       background:linear-gradient(135deg,#6A11CB,#2575FC);
+       border-radius:8px;
+       text-decoration:none;
+       box-shadow:0 4px 10px rgba(0,0,0,0.15);
+       transition:0.2s ease;
+     "
+     onmouseover="this.style.transform=\'scale(1.05)\'"
+     onmouseout="this.style.transform=\'scale(1)\'"
+  >
+    Open %s
+  </a>
+</div>
+', 'yac_dorsal_ventral.html', 'Cell-Cell dorsal <-> ventral interaction interactive network'))
+
+```
+
+
+\
+
+---
+
+\
+
+# Disclaimer
+
+The analysis was performed through the non-profit and open-source library **CFI**.
+Remember, *in silico* analysis must be validated *in vitro* or *in vivo*. For more information, visit [GitHub](https://github.com/jkubis96/CFI) or contact us. 
+
+---
+
+\
+

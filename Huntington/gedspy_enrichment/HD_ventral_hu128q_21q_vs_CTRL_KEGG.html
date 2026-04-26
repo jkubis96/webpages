@@ -1,0 +1,579 @@
+<html>
+    <head>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 1900px;
+                 height: 864px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "royalblue", "id": "Signal transduction", "label": "Signal transduction", "shape": "dot", "size": 28}, {"color": "turquoise", "id": "Gna12", "label": "Gna12", "shape": "dot", "size": 14}, {"color": "turquoise", "id": "Pak1", "label": "Pak1", "shape": "dot", "size": 14}, {"color": "mediumblue", "id": "Fos", "label": "Fos", "shape": "dot", "size": 15}, {"color": "mediumblue", "id": "Traf2", "label": "Traf2", "shape": "dot", "size": 15}, {"color": "mediumblue", "id": "Ddit3", "label": "Ddit3", "shape": "dot", "size": 15}, {"color": "mediumblue", "id": "Ywhae", "label": "Ywhae", "shape": "dot", "size": 13}, {"color": "mediumblue", "id": "Ctnnb1", "label": "Ctnnb1", "shape": "dot", "size": 15}, {"color": "mediumblue", "id": "Ccnd2", "label": "Ccnd2", "shape": "dot", "size": 14}, {"color": "mediumblue", "id": "Sox2", "label": "Sox2", "shape": "dot", "size": 12}, {"color": "royalblue", "id": "Cancer: overview", "label": "Cancer: overview", "shape": "dot", "size": 30}, {"color": "turquoise", "id": "Arhgef1", "label": "Arhgef1", "shape": "dot", "size": 13}, {"color": "turquoise", "id": "Pxn", "label": "Pxn", "shape": "dot", "size": 13}, {"color": "mediumblue", "id": "Tpr", "label": "Tpr", "shape": "dot", "size": 12}, {"color": "mediumblue", "id": "Hsp90ab1", "label": "Hsp90ab1", "shape": "dot", "size": 16}, {"color": "mediumblue", "id": "Hsp90b1", "label": "Hsp90b1", "shape": "dot", "size": 15}, {"color": "mediumblue", "id": "Ptges3", "label": "Ptges3", "shape": "dot", "size": 14}, {"color": "mediumblue", "id": "Hnrnpk", "label": "Hnrnpk", "shape": "dot", "size": 15}, {"color": "mediumblue", "id": "Ddx3x", "label": "Ddx3x", "shape": "dot", "size": 13}, {"color": "mediumblue", "id": "Eif2ak2", "label": "Eif2ak2", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Infectious disease: bacterial", "label": "Infectious disease: bacterial", "shape": "dot", "size": 29}, {"color": "mediumblue", "id": "Ncl", "label": "Ncl", "shape": "dot", "size": 15}, {"color": "mediumblue", "id": "Gapdh", "label": "Gapdh", "shape": "dot", "size": 15}, {"color": "royalblue", "id": "Protein families: genetic information processing", "label": "Protein families: genetic information processing", "shape": "dot", "size": 33}, {"color": "turquoise", "id": "Cop1", "label": "Cop1", "shape": "dot", "size": 11}, {"color": "turquoise", "id": "Cops6", "label": "Cops6", "shape": "dot", "size": 11}, {"color": "mediumblue", "id": "Supt5", "label": "Supt5", "shape": "dot", "size": 13}, {"color": "mediumblue", "id": "Eef1a1", "label": "Eef1a1", "shape": "dot", "size": 14}, {"color": "mediumblue", "id": "Hnrnpa2b1", "label": "Hnrnpa2b1", "shape": "dot", "size": 15}, {"color": "mediumblue", "id": "Ybx1", "label": "Ybx1", "shape": "dot", "size": 15}, {"color": "mediumblue", "id": "Lsm7", "label": "Lsm7", "shape": "dot", "size": 14}, {"color": "mediumblue", "id": "G3bp1", "label": "G3bp1", "shape": "dot", "size": 13}, {"color": "mediumblue", "id": "Hnrnpc", "label": "Hnrnpc", "shape": "dot", "size": 15}, {"color": "mediumblue", "id": "Hnrnpu", "label": "Hnrnpu", "shape": "dot", "size": 15}, {"color": "mediumblue", "id": "Ddx5", "label": "Ddx5", "shape": "dot", "size": 13}, {"color": "mediumblue", "id": "Sf3b2", "label": "Sf3b2", "shape": "dot", "size": 14}, {"color": "mediumblue", "id": "Serbp1", "label": "Serbp1", "shape": "dot", "size": 11}, {"color": "mediumblue", "id": "Matr3", "label": "Matr3", "shape": "dot", "size": 13}, {"color": "mediumblue", "id": "Clta", "label": "Clta", "shape": "dot", "size": 12}, {"color": "mediumblue", "id": "Psma7", "label": "Psma7", "shape": "dot", "size": 14}, {"color": "mediumblue", "id": "Hspa5", "label": "Hspa5", "shape": "dot", "size": 15}, {"color": "mediumblue", "id": "Ttc3", "label": "Ttc3", "shape": "dot", "size": 12}, {"color": "mediumblue", "id": "Nsmce1", "label": "Nsmce1", "shape": "dot", "size": 13}, {"color": "mediumblue", "id": "Nsmce2", "label": "Nsmce2", "shape": "dot", "size": 13}, {"color": "mediumblue", "id": "Lrr1", "label": "Lrr1", "shape": "dot", "size": 12}, {"color": "mediumblue", "id": "Ranbp9", "label": "Ranbp9", "shape": "dot", "size": 13}, {"color": "mediumblue", "id": "Mkln1", "label": "Mkln1", "shape": "dot", "size": 13}, {"color": "mediumblue", "id": "Rad21", "label": "Rad21", "shape": "dot", "size": 13}, {"color": "mediumblue", "id": "Nipbl", "label": "Nipbl", "shape": "dot", "size": 13}, {"color": "mediumblue", "id": "Wdhd1", "label": "Wdhd1", "shape": "dot", "size": 12}, {"color": "mediumblue", "id": "Npm1", "label": "Npm1", "shape": "dot", "size": 13}, {"color": "mediumblue", "id": "Set", "label": "Set", "shape": "dot", "size": 11}, {"color": "mediumblue", "id": "Hmgb1", "label": "Hmgb1", "shape": "dot", "size": 13}, {"color": "mediumblue", "id": "Hmgb2", "label": "Hmgb2", "shape": "dot", "size": 13}, {"color": "mediumblue", "id": "Suz12", "label": "Suz12", "shape": "dot", "size": 14}, {"color": "mediumblue", "id": "Mtf2", "label": "Mtf2", "shape": "dot", "size": 13}, {"color": "mediumblue", "id": "Aspm", "label": "Aspm", "shape": "dot", "size": 13}, {"color": "mediumblue", "id": "Ckap5", "label": "Ckap5", "shape": "dot", "size": 12}, {"color": "mediumblue", "id": "Baz2a", "label": "Baz2a", "shape": "dot", "size": 12}, {"color": "orangered", "id": "Protein families: signaling and cellular processes", "label": "Protein families: signaling and cellular processes", "shape": "dot", "size": 30}, {"color": "turquoise", "id": "Flnb", "label": "Flnb", "shape": "dot", "size": 14}, {"color": "mediumblue", "id": "Tmsb10", "label": "Tmsb10", "shape": "dot", "size": 11}, {"color": "mediumblue", "id": "Kif15", "label": "Kif15", "shape": "dot", "size": 13}, {"color": "mediumblue", "id": "Lpl", "label": "Lpl", "shape": "dot", "size": 13}, {"color": "mediumblue", "id": "Rheb", "label": "Rheb", "shape": "dot", "size": 13}, {"color": "royalblue", "id": "Transcription", "label": "Transcription", "shape": "dot", "size": 27}, {"color": "royalblue", "id": "Folding, sorting and degradation", "label": "Folding, sorting and degradation", "shape": "dot", "size": 27}, {"color": "mediumblue", "id": "Dnaja2", "label": "Dnaja2", "shape": "dot", "size": 12}, {"color": "mediumblue", "id": "Hspa4", "label": "Hspa4", "shape": "dot", "size": 15}, {"color": "royalblue", "id": "Cell growth and death", "label": "Cell growth and death", "shape": "dot", "size": 26}, {"color": "mediumblue", "id": "Cdkn1c", "label": "Cdkn1c", "shape": "dot", "size": 13}, {"color": "gold", "id": "Nervous system", "label": "Nervous system", "shape": "dot", "size": 21}, {"color": "gold", "id": "Cancer: specific types", "label": "Cancer: specific types", "shape": "dot", "size": 25}, {"color": "royalblue", "id": "Neurodegenerative disease", "label": "Neurodegenerative disease", "shape": "dot", "size": 33}, {"color": "mediumblue", "id": "Psma5", "label": "Psma5", "shape": "dot", "size": 14}, {"color": "mediumblue", "id": "Psmd9", "label": "Psmd9", "shape": "dot", "size": 14}, {"color": "mediumblue", "id": "Polr2e", "label": "Polr2e", "shape": "dot", "size": 14}, {"color": "mediumblue", "id": "Polr2i", "label": "Polr2i", "shape": "dot", "size": 14}, {"color": "mediumblue", "id": "Nop56", "label": "Nop56", "shape": "dot", "size": 12}, {"color": "mediumblue", "id": "Egr1", "label": "Egr1", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Immune system", "label": "Immune system", "shape": "dot", "size": 25}, {"color": "royalblue", "id": "Cardiovascular disease", "label": "Cardiovascular disease", "shape": "dot", "size": 27}]);
+                  edges = new vis.DataSet([{"color": "gray", "from": "Signal transduction", "to": "Gna12", "width": 1}, {"color": "gray", "from": "Signal transduction", "to": "Pak1", "width": 1}, {"color": "gray", "from": "Signal transduction", "to": "Fos", "width": 1}, {"color": "gray", "from": "Signal transduction", "to": "Traf2", "width": 1}, {"color": "gray", "from": "Signal transduction", "to": "Ddit3", "width": 1}, {"color": "gray", "from": "Signal transduction", "to": "Ywhae", "width": 1}, {"color": "gray", "from": "Signal transduction", "to": "Ctnnb1", "width": 1}, {"color": "gray", "from": "Signal transduction", "to": "Ccnd2", "width": 1}, {"color": "gray", "from": "Signal transduction", "to": "Sox2", "width": 1}, {"color": "gray", "from": "Cancer: overview", "to": "Gna12", "width": 1}, {"color": "gray", "from": "Cancer: overview", "to": "Arhgef1", "width": 1}, {"color": "gray", "from": "Cancer: overview", "to": "Pxn", "width": 1}, {"color": "gray", "from": "Cancer: overview", "to": "Ctnnb1", "width": 1}, {"color": "gray", "from": "Cancer: overview", "to": "Traf2", "width": 1}, {"color": "gray", "from": "Cancer: overview", "to": "Fos", "width": 1}, {"color": "gray", "from": "Cancer: overview", "to": "Tpr", "width": 1}, {"color": "gray", "from": "Cancer: overview", "to": "Ccnd2", "width": 1}, {"color": "gray", "from": "Cancer: overview", "to": "Hsp90ab1", "width": 1}, {"color": "gray", "from": "Cancer: overview", "to": "Hsp90b1", "width": 1}, {"color": "gray", "from": "Cancer: overview", "to": "Ptges3", "width": 1}, {"color": "gray", "from": "Cancer: overview", "to": "Ywhae", "width": 1}, {"color": "gray", "from": "Cancer: overview", "to": "Hnrnpk", "width": 1}, {"color": "gray", "from": "Cancer: overview", "to": "Ddx3x", "width": 1}, {"color": "gray", "from": "Cancer: overview", "to": "Eif2ak2", "width": 1}, {"color": "gray", "from": "Infectious disease: bacterial", "to": "Arhgef1", "width": 1}, {"color": "gray", "from": "Infectious disease: bacterial", "to": "Gna12", "width": 1}, {"color": "gray", "from": "Infectious disease: bacterial", "to": "Pak1", "width": 1}, {"color": "gray", "from": "Infectious disease: bacterial", "to": "Ncl", "width": 1}, {"color": "gray", "from": "Infectious disease: bacterial", "to": "Gapdh", "width": 1}, {"color": "gray", "from": "Infectious disease: bacterial", "to": "Traf2", "width": 1}, {"color": "gray", "from": "Infectious disease: bacterial", "to": "Fos", "width": 1}, {"color": "gray", "from": "Infectious disease: bacterial", "to": "Hsp90ab1", "width": 1}, {"color": "gray", "from": "Infectious disease: bacterial", "to": "Hsp90b1", "width": 1}, {"color": "gray", "from": "Infectious disease: bacterial", "to": "Ctnnb1", "width": 1}, {"color": "gray", "from": "Protein families: genetic information processing", "to": "Pak1", "width": 1}, {"color": "gray", "from": "Protein families: genetic information processing", "to": "Arhgef1", "width": 1}, {"color": "gray", "from": "Protein families: genetic information processing", "to": "Cop1", "width": 1}, {"color": "gray", "from": "Protein families: genetic information processing", "to": "Cops6", "width": 1}, {"color": "gray", "from": "Protein families: genetic information processing", "to": "Supt5", "width": 1}, {"color": "gray", "from": "Protein families: genetic information processing", "to": "Tpr", "width": 1}, {"color": "gray", "from": "Protein families: genetic information processing", "to": "Ddx3x", "width": 1}, {"color": "gray", "from": "Protein families: genetic information processing", "to": "Eef1a1", "width": 1}, {"color": "gray", "from": "Protein families: genetic information processing", "to": "Hnrnpa2b1", "width": 1}, {"color": "gray", "from": "Protein families: genetic information processing", "to": "Ybx1", "width": 1}, {"color": "gray", "from": "Protein families: genetic information processing", "to": "Lsm7", "width": 1}, {"color": "gray", "from": "Protein families: genetic information processing", "to": "Eif2ak2", "width": 1}, {"color": "gray", "from": "Protein families: genetic information processing", "to": "G3bp1", "width": 1}, {"color": "gray", "from": "Protein families: genetic information processing", "to": "Traf2", "width": 1}, {"color": "gray", "from": "Protein families: genetic information processing", "to": "Hnrnpc", "width": 1}, {"color": "gray", "from": "Protein families: genetic information processing", "to": "Hnrnpk", "width": 1}, {"color": "gray", "from": "Protein families: genetic information processing", "to": "Hnrnpu", "width": 1}, {"color": "gray", "from": "Protein families: genetic information processing", "to": "Ddx5", "width": 1}, {"color": "gray", "from": "Protein families: genetic information processing", "to": "Sf3b2", "width": 1}, {"color": "gray", "from": "Protein families: genetic information processing", "to": "Serbp1", "width": 1}, {"color": "gray", "from": "Protein families: genetic information processing", "to": "Matr3", "width": 1}, {"color": "gray", "from": "Protein families: genetic information processing", "to": "Clta", "width": 1}, {"color": "gray", "from": "Protein families: genetic information processing", "to": "Psma7", "width": 1}, {"color": "gray", "from": "Protein families: genetic information processing", "to": "Hspa5", "width": 1}, {"color": "gray", "from": "Protein families: genetic information processing", "to": "Fos", "width": 1}, {"color": "gray", "from": "Protein families: genetic information processing", "to": "Gapdh", "width": 1}, {"color": "gray", "from": "Protein families: genetic information processing", "to": "Ttc3", "width": 1}, {"color": "gray", "from": "Protein families: genetic information processing", "to": "Nsmce1", "width": 1}, {"color": "gray", "from": "Protein families: genetic information processing", "to": "Nsmce2", "width": 1}, {"color": "gray", "from": "Protein families: genetic information processing", "to": "Lrr1", "width": 1}, {"color": "gray", "from": "Protein families: genetic information processing", "to": "Ranbp9", "width": 1}, {"color": "gray", "from": "Protein families: genetic information processing", "to": "Mkln1", "width": 1}, {"color": "gray", "from": "Protein families: genetic information processing", "to": "Rad21", "width": 1}, {"color": "gray", "from": "Protein families: genetic information processing", "to": "Nipbl", "width": 1}, {"color": "gray", "from": "Protein families: genetic information processing", "to": "Wdhd1", "width": 1}, {"color": "gray", "from": "Protein families: genetic information processing", "to": "Npm1", "width": 1}, {"color": "gray", "from": "Protein families: genetic information processing", "to": "Set", "width": 1}, {"color": "gray", "from": "Protein families: genetic information processing", "to": "Ncl", "width": 1}, {"color": "gray", "from": "Protein families: genetic information processing", "to": "Hmgb1", "width": 1}, {"color": "gray", "from": "Protein families: genetic information processing", "to": "Hmgb2", "width": 1}, {"color": "gray", "from": "Protein families: genetic information processing", "to": "Suz12", "width": 1}, {"color": "gray", "from": "Protein families: genetic information processing", "to": "Mtf2", "width": 1}, {"color": "gray", "from": "Protein families: genetic information processing", "to": "Aspm", "width": 1}, {"color": "gray", "from": "Protein families: genetic information processing", "to": "Ckap5", "width": 1}, {"color": "gray", "from": "Protein families: genetic information processing", "to": "Baz2a", "width": 1}, {"color": "gray", "from": "Protein families: signaling and cellular processes", "to": "Flnb", "width": 1}, {"color": "gray", "from": "Protein families: signaling and cellular processes", "to": "Gna12", "width": 1}, {"color": "gray", "from": "Protein families: signaling and cellular processes", "to": "Tmsb10", "width": 1}, {"color": "gray", "from": "Protein families: signaling and cellular processes", "to": "Kif15", "width": 1}, {"color": "gray", "from": "Protein families: signaling and cellular processes", "to": "Ckap5", "width": 1}, {"color": "gray", "from": "Protein families: signaling and cellular processes", "to": "Gapdh", "width": 1}, {"color": "gray", "from": "Protein families: signaling and cellular processes", "to": "Ywhae", "width": 1}, {"color": "gray", "from": "Protein families: signaling and cellular processes", "to": "Eef1a1", "width": 1}, {"color": "gray", "from": "Protein families: signaling and cellular processes", "to": "Hspa5", "width": 1}, {"color": "gray", "from": "Protein families: signaling and cellular processes", "to": "G3bp1", "width": 1}, {"color": "gray", "from": "Protein families: signaling and cellular processes", "to": "Hnrnpa2b1", "width": 1}, {"color": "gray", "from": "Protein families: signaling and cellular processes", "to": "Lpl", "width": 1}, {"color": "gray", "from": "Protein families: signaling and cellular processes", "to": "Clta", "width": 1}, {"color": "gray", "from": "Protein families: signaling and cellular processes", "to": "Hmgb1", "width": 1}, {"color": "gray", "from": "Protein families: signaling and cellular processes", "to": "Hmgb2", "width": 1}, {"color": "gray", "from": "Protein families: signaling and cellular processes", "to": "Rheb", "width": 1}, {"color": "gray", "from": "Transcription", "to": "Ddx5", "width": 1}, {"color": "gray", "from": "Transcription", "to": "Sf3b2", "width": 1}, {"color": "gray", "from": "Transcription", "to": "Lsm7", "width": 1}, {"color": "gray", "from": "Transcription", "to": "Hnrnpc", "width": 1}, {"color": "gray", "from": "Transcription", "to": "Hnrnpk", "width": 1}, {"color": "gray", "from": "Transcription", "to": "Hnrnpu", "width": 1}, {"color": "gray", "from": "Folding, sorting and degradation", "to": "Hspa5", "width": 1}, {"color": "gray", "from": "Folding, sorting and degradation", "to": "Hsp90ab1", "width": 1}, {"color": "gray", "from": "Folding, sorting and degradation", "to": "Hsp90b1", "width": 1}, {"color": "gray", "from": "Folding, sorting and degradation", "to": "Dnaja2", "width": 1}, {"color": "gray", "from": "Folding, sorting and degradation", "to": "Hspa4", "width": 1}, {"color": "gray", "from": "Folding, sorting and degradation", "to": "Ddit3", "width": 1}, {"color": "gray", "from": "Folding, sorting and degradation", "to": "Traf2", "width": 1}, {"color": "gray", "from": "Cell growth and death", "to": "Ccnd2", "width": 1}, {"color": "gray", "from": "Cell growth and death", "to": "Cdkn1c", "width": 1}, {"color": "gray", "from": "Cell growth and death", "to": "Ywhae", "width": 1}, {"color": "gray", "from": "Cell growth and death", "to": "Rad21", "width": 1}, {"color": "gray", "from": "Cell growth and death", "to": "Nipbl", "width": 1}, {"color": "gray", "from": "Nervous system", "to": "Fos", "width": 1}, {"color": "gray", "from": "Cancer: specific types", "to": "Ctnnb1", "width": 1}, {"color": "gray", "from": "Cancer: specific types", "to": "Hsp90ab1", "width": 1}, {"color": "gray", "from": "Cancer: specific types", "to": "Hsp90b1", "width": 1}, {"color": "gray", "from": "Neurodegenerative disease", "to": "Gapdh", "width": 1}, {"color": "gray", "from": "Neurodegenerative disease", "to": "Lpl", "width": 1}, {"color": "gray", "from": "Neurodegenerative disease", "to": "Ddit3", "width": 1}, {"color": "gray", "from": "Neurodegenerative disease", "to": "Traf2", "width": 1}, {"color": "gray", "from": "Neurodegenerative disease", "to": "Psma7", "width": 1}, {"color": "gray", "from": "Neurodegenerative disease", "to": "Psma5", "width": 1}, {"color": "gray", "from": "Neurodegenerative disease", "to": "Psmd9", "width": 1}, {"color": "gray", "from": "Neurodegenerative disease", "to": "Ctnnb1", "width": 1}, {"color": "gray", "from": "Neurodegenerative disease", "to": "Eif2ak2", "width": 1}, {"color": "gray", "from": "Neurodegenerative disease", "to": "Hspa5", "width": 1}, {"color": "gray", "from": "Neurodegenerative disease", "to": "Hnrnpa2b1", "width": 1}, {"color": "gray", "from": "Neurodegenerative disease", "to": "Matr3", "width": 1}, {"color": "gray", "from": "Neurodegenerative disease", "to": "Tpr", "width": 1}, {"color": "gray", "from": "Neurodegenerative disease", "to": "Clta", "width": 1}, {"color": "gray", "from": "Neurodegenerative disease", "to": "Polr2e", "width": 1}, {"color": "gray", "from": "Neurodegenerative disease", "to": "Polr2i", "width": 1}, {"color": "gray", "from": "Neurodegenerative disease", "to": "Nop56", "width": 1}, {"color": "gray", "from": "Neurodegenerative disease", "to": "Egr1", "width": 1}, {"color": "gray", "from": "Immune system", "to": "Fos", "width": 1}, {"color": "gray", "from": "Immune system", "to": "Hsp90ab1", "width": 1}, {"color": "gray", "from": "Immune system", "to": "Hsp90b1", "width": 1}, {"color": "gray", "from": "Immune system", "to": "Traf2", "width": 1}, {"color": "gray", "from": "Cardiovascular disease", "to": "Fos", "width": 1}, {"color": "gray", "from": "Cardiovascular disease", "to": "Hsp90ab1", "width": 1}, {"color": "gray", "from": "Cardiovascular disease", "to": "Hsp90b1", "width": 1}, {"color": "gray", "from": "Cardiovascular disease", "to": "Hspa5", "width": 1}, {"color": "gray", "from": "Cardiovascular disease", "to": "Ddit3", "width": 1}, {"color": "gray", "from": "Cardiovascular disease", "to": "Traf2", "width": 1}, {"color": "red", "from": "Cops6", "to": "Cop1", "width": 1}, {"color": "red", "from": "Ncl", "to": "Npm1", "width": 1}, {"color": "red", "from": "Ncl", "to": "Fos", "width": 1}, {"color": "red", "from": "Ncl", "to": "Ybx1", "width": 1}, {"color": "red", "from": "Ncl", "to": "Hnrnpu", "width": 1}, {"color": "red", "from": "Ncl", "to": "Hnrnpk", "width": 1}, {"color": "red", "from": "Ncl", "to": "Nop56", "width": 1}, {"color": "red", "from": "Ncl", "to": "Hnrnpa2b1", "width": 1}, {"color": "red", "from": "Hsp90ab1", "to": "Traf2", "width": 1}, {"color": "red", "from": "Hsp90ab1", "to": "Hsp90b1", "width": 1}, {"color": "red", "from": "Hsp90ab1", "to": "Hspa5", "width": 1}, {"color": "red", "from": "Hsp90ab1", "to": "Eef1a1", "width": 1}, {"color": "red", "from": "Hsp90ab1", "to": "Gapdh", "width": 1}, {"color": "red", "from": "Hsp90ab1", "to": "Ptges3", "width": 1}, {"color": "red", "from": "Hsp90ab1", "to": "Hspa4", "width": 1}, {"color": "red", "from": "Gapdh", "to": "Ctnnb1", "width": 1}, {"color": "red", "from": "Gapdh", "to": "Rheb", "width": 1}, {"color": "red", "from": "Gapdh", "to": "Eef1a1", "width": 1}, {"color": "red", "from": "Gapdh", "to": "Traf2", "width": 1}, {"color": "red", "from": "Gapdh", "to": "Hspa4", "width": 1}, {"color": "red", "from": "Psmd9", "to": "Lpl", "width": 1}, {"color": "red", "from": "Ddit3", "to": "Fos", "width": 1}, {"color": "red", "from": "Ddit3", "to": "G3bp1", "width": 1}, {"color": "red", "from": "Ddit3", "to": "Hspa5", "width": 1}, {"color": "red", "from": "Ttc3", "to": "Ywhae", "width": 1}, {"color": "red", "from": "Ttc3", "to": "Ckap5", "width": 1}, {"color": "red", "from": "Egr1", "to": "Ctnnb1", "width": 1}, {"color": "red", "from": "Egr1", "to": "Fos", "width": 1}, {"color": "red", "from": "Ctnnb1", "to": "Clta", "width": 1}, {"color": "red", "from": "Ctnnb1", "to": "Sox2", "width": 1}, {"color": "red", "from": "G3bp1", "to": "Ybx1", "width": 1}, {"color": "red", "from": "G3bp1", "to": "Ddx3x", "width": 1}, {"color": "red", "from": "Fos", "to": "Serbp1", "width": 1}, {"color": "red", "from": "Fos", "to": "Hsp90b1", "width": 1}, {"color": "red", "from": "Fos", "to": "Tpr", "width": 1}, {"color": "red", "from": "Fos", "to": "Matr3", "width": 1}, {"color": "red", "from": "Fos", "to": "Set", "width": 1}, {"color": "red", "from": "Fos", "to": "Tmsb10", "width": 1}, {"color": "red", "from": "Hsp90b1", "to": "Hspa5", "width": 1}, {"color": "red", "from": "Hsp90b1", "to": "Hspa4", "width": 1}, {"color": "red", "from": "Gna12", "to": "Arhgef1", "width": 1}, {"color": "red", "from": "Pak1", "to": "Flnb", "width": 1}, {"color": "red", "from": "Flnb", "to": "Pxn", "width": 1}, {"color": "red", "from": "Ccnd2", "to": "Cdkn1c", "width": 1}, {"color": "red", "from": "Polr2e", "to": "Polr2i", "width": 1}, {"color": "red", "from": "Polr2e", "to": "Supt5", "width": 1}, {"color": "red", "from": "Suz12", "to": "Baz2a", "width": 1}, {"color": "red", "from": "Suz12", "to": "Mtf2", "width": 1}, {"color": "red", "from": "Polr2i", "to": "Supt5", "width": 1}, {"color": "red", "from": "Ddx5", "to": "Hnrnpk", "width": 1}, {"color": "red", "from": "Ddx5", "to": "Hnrnpc", "width": 1}, {"color": "red", "from": "Rad21", "to": "Nipbl", "width": 1}, {"color": "red", "from": "Eif2ak2", "to": "Hspa5", "width": 1}, {"color": "red", "from": "Sf3b2", "to": "Lsm7", "width": 1}, {"color": "red", "from": "Sf3b2", "to": "Ybx1", "width": 1}, {"color": "red", "from": "Mkln1", "to": "Ranbp9", "width": 1}, {"color": "red", "from": "Hspa5", "to": "Hspa4", "width": 1}, {"color": "red", "from": "Psma7", "to": "Psma5", "width": 1}, {"color": "red", "from": "Nsmce1", "to": "Nsmce2", "width": 1}, {"color": "red", "from": "Kif15", "to": "Aspm", "width": 1}, {"color": "red", "from": "Eef1a1", "to": "Hspa4", "width": 1}, {"color": "red", "from": "Hnrnpu", "to": "Ybx1", "width": 1}, {"color": "red", "from": "Hnrnpu", "to": "Hnrnpa2b1", "width": 1}, {"color": "red", "from": "Hnrnpu", "to": "Hnrnpk", "width": 1}, {"color": "red", "from": "Hnrnpu", "to": "Hnrnpc", "width": 1}, {"color": "red", "from": "Ptges3", "to": "Hspa4", "width": 1}, {"color": "red", "from": "Hmgb2", "to": "Hmgb1", "width": 1}, {"color": "red", "from": "Ybx1", "to": "Hnrnpa2b1", "width": 1}, {"color": "red", "from": "Ybx1", "to": "Hnrnpc", "width": 1}, {"color": "red", "from": "Hnrnpa2b1", "to": "Hnrnpc", "width": 1}, {"color": "red", "from": "Hnrnpa2b1", "to": "Hnrnpk", "width": 1}, {"color": "red", "from": "Hnrnpc", "to": "Hnrnpk", "width": 1}, {"color": "red", "from": "Hnrnpc", "to": "Matr3", "width": 1}, {"color": "red", "from": "Hnrnpk", "to": "Matr3", "width": 1}, {"color": "red", "from": "Lrr1", "to": "Wdhd1", "width": 1}, {"color": "red", "from": "Hspa4", "to": "Dnaja2", "width": 1}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "repulsion": {
+            "centralGravity": 0.2,
+            "damping": 0.09,
+            "nodeDistance": 150,
+            "springConstant": 0.05,
+            "springLength": 200
+        },
+        "solver": "repulsion",
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+        <script type="text/javascript">
+        
+            let selectedNodes = [];
+            let previousStyles = {}; 
+            let undoStack = [];
+    
+            function saveNetworkState() {
+                const nodes = network.body.data.nodes.get();
+                const edges = network.body.data.edges.get();
+                const styles = {};
+            
+                nodes.forEach(node => {
+                    styles[node.id] = {
+                        color: previousStyles[node.id]?.color || node.color || null
+                    };
+                });
+            
+                undoStack.push(JSON.stringify({ nodes, edges, styles }));
+            }
+            
+            
+            function removeSelectedNodes() {
+                if (selectedNodes.length > 0) {
+                    saveNetworkState();
+            
+                    network.body.data.nodes.remove(selectedNodes.map(id => ({ id })));
+                    selectedNodes = [];
+                } else {
+                    alert("No nodes selected.");
+                }
+            }
+            
+            function undo() {
+                if (undoStack.length > 0) {
+                    const previousState = JSON.parse(undoStack.pop());
+            
+                    network.body.data.nodes.clear();
+                    network.body.data.edges.clear();
+                    network.body.data.nodes.add(previousState.nodes);
+                    network.body.data.edges.add(previousState.edges);
+            
+                    Object.keys(previousState.styles).forEach(nodeId => {
+                        network.body.data.nodes.update({
+                            id: nodeId,
+                            ...previousState.styles[nodeId]
+                        });
+                    });
+            
+                    selectedNodes = [];
+                    previousStyles = previousState.styles;
+                } else {
+                    alert("Nothing to undo.");
+                }
+            }
+            
+            network.on("selectNode", function (params) {
+                if (event.ctrlKey) {
+                    selectedNodes = [...new Set([...selectedNodes, ...params.nodes])];
+                } else {
+                    selectedNodes.forEach(nodeId => {
+                        if (previousStyles[nodeId]) {
+                            network.body.data.nodes.update({
+                                id: nodeId,
+                                ...previousStyles[nodeId]
+                            });
+                        }
+                    });
+                    selectedNodes = params.nodes;
+                }
+            
+                params.nodes.forEach(nodeId => {
+                    const nodeData = network.body.data.nodes.get(nodeId);
+                    if (!previousStyles[nodeId]) {
+                        previousStyles[nodeId] = {
+                            color: nodeData.color || null
+                        };
+                    }
+                    network.body.data.nodes.update({
+                        id: nodeId,
+                        color: "black"
+                    });
+                });
+            });
+            
+            network.on("deselectNode", function (params) {
+                if (!event.ctrlKey) {
+                    selectedNodes.forEach(nodeId => {
+                        if (previousStyles[nodeId]) {
+                            network.body.data.nodes.update({
+                                id: nodeId,
+                                ...previousStyles[nodeId]
+                            });
+                        }
+                    });
+                    selectedNodes = [];
+                } else {
+                    params.nodes.forEach(nodeId => {
+                        if (previousStyles[nodeId]) {
+                            network.body.data.nodes.update({
+                                id: nodeId,
+                                ...previousStyles[nodeId]
+                            });
+                        }
+                    });
+                }
+            });
+                    
+                    
+            
+            
+            
+            function changePhysics(value) {
+                network.setOptions({
+                    physics: {
+                        solver: 'repulsion',
+                        repulsion: {
+                            nodeDistance: parseInt(value),
+                        },
+                    },
+                });
+            }
+            
+            
+            
+            
+            
+                            
+            let originalNodeSizes = {};
+            
+            function initializeOriginalNodeSizes() {
+                network.body.data.nodes.get().forEach(node => {
+                    if (!originalNodeSizes[node.id]) {
+                        originalNodeSizes[node.id] = node.size || 1; 
+                    }
+                });
+            }
+            
+            function scaleNetworkSize(scaleFactor) {
+                initializeOriginalNodeSizes(); 
+            
+                network.body.data.nodes.update(
+                    network.body.data.nodes.get().map(node => ({
+                        id: node.id,
+                        size: originalNodeSizes[node.id] * scaleFactor 
+                    }))
+                );
+            }
+                            
+                        
+            
+            function changeFontSize(size) {
+                network.body.data.nodes.update(
+                    network.body.data.nodes.get().map(node => ({
+                        id: node.id,
+                        font: { size: size }
+                    }))
+                );
+            }
+            
+            
+            let physicsEnabled = true;
+            
+            function togglePhysics() {
+                physicsEnabled = !physicsEnabled;
+            
+                network.setOptions({
+                    physics: physicsEnabled
+                });
+            
+
+                document.getElementById("togglePhysicsButton").innerText = physicsEnabled
+                    ? "Disable Physics"
+                    : "Enable Physics";
+            }
+
+
+
+            function downloadFile(blob, filename) {
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = filename;
+                link.click();
+    
+                URL.revokeObjectURL(link.href);
+            }
+
+
+            function saveGraph(format, resolution = 96) {
+                
+                if (format === "svg") {
+
+                    const positions = network.getPositions();
+
+                    const nodes = network.body.data.nodes.get();
+                    const edges = network.body.data.edges.get();
+                
+                    let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+                    Object.values(positions).forEach(pos => {
+                        minX = Math.min(minX, pos.x);
+                        maxX = Math.max(maxX, pos.x);
+                        minY = Math.min(minY, pos.y);
+                        maxY = Math.max(maxY, pos.y);
+                    });
+                
+                    const margin = 600; 
+                    const width = maxX - minX + margin * 2.5; 
+                    const height = maxY - minY + margin * 1.5; 
+                
+                    const offsetX = margin - minX; 
+                    const offsetY = margin - minY; 
+                
+                    let svgContent = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">`;
+                
+                    edges.forEach((edge) => {
+                        const from = positions[edge.from];
+                        const to = positions[edge.to];
+                        if (from && to) {
+                            const controlX = (from.x + to.x) / 2; 
+                            const controlY = (from.y + to.y) / 2 - 50; 
+                    
+                            const pathData = `M${from.x + offsetX},${from.y + offsetY} C${controlX + offsetX},${controlY + offsetY} ${controlX + offsetX},${controlY + offsetY} ${to.x + offsetX},${to.y + offsetY}`;
+                            const color = edge.color || "black"; 
+                            const width = edge.width || 2; 
+                            svgContent += `<path d="${pathData}" stroke="${color}" stroke-width="${width}" fill="none"/>`;
+                        }
+                    });
+                
+
+                    nodes.forEach((node) => {
+                        const pos = positions[node.id];
+                        if (pos) {
+                            const size = (node.size || 10); 
+                            const color = node.color || "blue"; 
+                            svgContent += `<circle cx="${pos.x + offsetX}" cy="${pos.y + offsetY}" r="${size}" fill="${color}" />`;
+                
+                            const labelColor = node.font?.color || "black"; 
+                            const labelFontSize = node.font?.size || 12; 
+                            svgContent += `<text x="${pos.x + offsetX + size + 5}" y="${pos.y + offsetY}" font-size="${labelFontSize}" fill="${labelColor}">${node.label || node.id}</text>`;
+                        }
+                    });
+                
+                    svgContent += `</svg>`;
+                
+                    const blob = new Blob([svgContent], { type: "image/svg+xml;charset=utf-8" });
+                    const link = document.createElement("a");
+                    link.href = URL.createObjectURL(blob);
+                    link.download = "graph.svg";
+                    link.click();
+                                            
+                    
+                } else {
+                    
+                    const positions = network.getPositions();
+
+                    const nodes = network.body.data.nodes.get();
+                    const edges = network.body.data.edges.get();
+                
+                    let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+                    Object.values(positions).forEach(pos => {
+                        minX = Math.min(minX, pos.x);
+                        maxX = Math.max(maxX, pos.x);
+                        minY = Math.min(minY, pos.y);
+                        maxY = Math.max(maxY, pos.y);
+                    });
+                
+                    const margin = 600;  
+                    const width = maxX - minX + margin * 2.5; 
+                    const height = maxY - minY + margin * 1.5; 
+                
+                    const offsetX = margin - minX; 
+                    const offsetY = margin - minY; 
+                
+                    let svgContent = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">`;
+                
+                    edges.forEach((edge) => {
+                        const from = positions[edge.from];
+                        const to = positions[edge.to];
+                        if (from && to) {
+                            const controlX = (from.x + to.x) / 2; 
+                            const controlY = (from.y + to.y) / 2 - 50; 
+                    
+                            const pathData = `M${from.x + offsetX},${from.y + offsetY} C${controlX + offsetX},${controlY + offsetY} ${controlX + offsetX},${controlY + offsetY} ${to.x + offsetX},${to.y + offsetY}`;
+                            const color = edge.color || "black"; 
+                            const width = edge.width || 2; 
+                            svgContent += `<path d="${pathData}" stroke="${color}" stroke-width="${width}" fill="none"/>`;
+                        }
+                    });
+                
+                    nodes.forEach((node) => {
+                        const pos = positions[node.id];
+                        if (pos) {
+                            const size = (node.size || 10); 
+                            const color = node.color || "blue"; 
+                            svgContent += `<circle cx="${pos.x + offsetX}" cy="${pos.y + offsetY}" r="${size}" fill="${color}" />`;
+                
+                            const labelColor = node.font?.color || "black"; 
+                            const labelFontSize = node.font?.size || 12; 
+                            svgContent += `<text x="${pos.x + offsetX + size + 5}" y="${pos.y + offsetY}" font-size="${labelFontSize}" fill="${labelColor}">${node.label || node.id}</text>`;
+                        }
+                    });
+                
+                    svgContent += `</svg>`;
+                    
+                    const svgBlob = new Blob([svgContent], { type: 'image/svg+xml' });
+                    const svgUrl = URL.createObjectURL(svgBlob);
+                    
+                    const getScaleFactor = (resolution = 300) => {
+                        const defaultDPI = 96;
+                        return resolution / defaultDPI;
+                    };
+                    
+                    const scaleFactor = getScaleFactor(resolution || 300);
+                    
+                    const canvas = document.createElement('canvas');
+                    const context = canvas.getContext('2d');
+                    const img = new Image();
+                    
+                    img.onload = () => {
+                        try {
+                            canvas.width = width * scaleFactor;
+                            canvas.height = height * scaleFactor;
+                    
+                            context.setTransform(scaleFactor, 0, 0, scaleFactor, 0, 0);
+                    
+                            if (format === 'jpeg' || format === 'jpg') {
+                                context.fillStyle = 'white';
+                                context.fillRect(0, 0, canvas.width, canvas.height);
+                            }
+                    
+                            context.drawImage(img, 0, 0, width, height);
+                    
+                            canvas.toBlob((blob) => {
+                                if (blob) {
+                                    downloadFile(blob, `image.${format}`);
+                                } else {
+                                    console.error('Błąd: Blob jest pusty!');
+                                }
+                            }, `image/${format}`);
+                        } catch (error) {
+                            console.error('Błąd podczas rysowania na canvasie:', error);
+                        }
+                    };
+                    
+                    img.onerror = (error) => {
+                        console.error('Nie udało się załadować obrazu SVG jako źródła:', error);
+                    };
+                    
+                    img.src = svgUrl;
+                    
+
+                        
+                        
+                }
+            }
+                        
+                        
+                        
+    
+    
+            document.body.insertAdjacentHTML('beforeend', `
+                <div style="position: fixed; top: 0; left: 0; width: 100%; background: #353834; padding: 10px; z-index: 1000; display: flex; gap: 10px; align-items: center; border-bottom: 1px solid #ddd;">
+                    <button onclick="removeSelectedNodes()">
+                        <i class="fa-solid fa-eraser"></i>
+                    </button>
+                    
+                    
+
+                    
+                    
+                    <button onclick="undo()">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </button>
+                    
+
+                    <label for="formatSelect" style="color: white;">Save As:</label>
+                    <select id="formatSelect">
+                        <option value="png">PNG</option>
+                        <option value="jpg">JPEG</option>
+                        <option value="svg">SVG</option>
+
+                    </select>
+                    
+                    <label for="resolutionSelect" style="color: white;">Resolution (DPI):</label>
+                    <select id="resolutionSelect">
+                        <option value="200">300 DPI</option>
+                        <option value="300">300 DPI</option>
+                        <option value="600">600 DPI</option>
+
+                    </select>
+                    
+                    <button onclick="saveGraph(
+                        document.getElementById('formatSelect').value,
+                        parseInt(document.getElementById('resolutionSelect').value)
+                    )">
+                        Export Graph
+                    </button>
+                    
+
+        
+                    <label style="color: white;">Font Size:</label>
+                    <input type="range" min="10" max="50" value="14" onchange="changeFontSize(this.value)">
+                    <label style="color: white;">Node Size:</label>
+                    <input type="range" min="0.1" max="10" value="0.1" onchange="scaleNetworkSize(this.value)">
+                    
+                    <button id="togglePhysicsButton" onclick="togglePhysics()">Disable Physics</button>
+
+                    <label style="color: white;">Physics:</label>
+                    <input type="range" min="50" max="500" value="200" step="10" onchange="changePhysics(this.value)">
+               
+                </div>
+            `);
+        </script>
+        </body>
+</html>

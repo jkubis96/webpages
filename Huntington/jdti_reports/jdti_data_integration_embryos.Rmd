@@ -1,0 +1,166 @@
+---
+title: "JDtI - data integration and analysis"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    theme: flatly       
+    highlight: tango
+    toc: true
+    toc_float: true
+    number_sections: true
+    df_print: paged
+    self_contained: true
+    css: "custom.css"
+---
+
+
+```{r setup, include=FALSE}
+install_if_missing <- function(pkg) {
+  if (!require(pkg, character.only = TRUE)) {
+    install.packages(pkg, dependencies = TRUE)
+  }
+}
+
+packages <- c("knitr", "dplyr", "kableExtra")
+lapply(packages, install_if_missing)
+
+library(knitr)
+library(dplyr)
+library(kableExtra)
+
+set.seed(123)
+
+
+
+show_image <- function(path, caption = NULL, width = NULL, height = NULL) {
+  if (file.exists(path)) {
+    if (!is.null(caption)) cat(sprintf("%s\n", caption))
+    knitr::include_graphics(path, dpi = 300, auto_pdf = FALSE)
+  }
+}
+
+
+```
+
+
+---
+
+
+# Embrionic brains data integration
+
+\
+
+
+
+Integrated data of separate dorsal and ventral embryonic brain parts:
+
+- BAC21D - healthy
+- BAC21V - healthy
+- HU128/21D - heterozygous-disease
+- HU128/21V - heterozygous-disease
+- YAC128D - homozygous-disease
+- YAC128V - homozygous-disease
+
+---
+
+### Quality Control
+
+\
+
+```{r echo=FALSE, out.width = '100%', fig.align="center", results='asis'}
+show_image(file.path(getwd(), "gene_hist_embryos.jpeg"), "Genes per cell")
+
+```
+
+\
+
+```{r echo=FALSE, out.width = '100%', fig.align="center", results='asis'}
+show_image(file.path(getwd(), "cell_hist_embryos.jpeg"), "Cells per cluster")
+
+```
+
+\
+
+
+### Dimensionality reduction - PCA
+
+\
+
+```{r echo=FALSE, out.width = '100%', fig.align="center", results='asis'}
+show_image(file.path(getwd(), "pca_embryos.svg"), "PCA-plot")
+
+```
+
+\
+
+### PC selection
+
+\
+
+```{r echo=FALSE, out.width = '100%', fig.align="center", results='asis'}
+  show_image(file.path(getwd(), "pca_knee_embryos.svg"), "Knee plot")
+```
+
+
+\
+
+### Dimensionality reduction - UMAP - harmonized data
+
+
+\
+
+```{r echo=FALSE, out.width = '100%', fig.align="center", results='asis'}
+  show_image(file.path(getwd(), "integrated_data_set_harmonized_embryos.svg"), "UMAP plot - sets")
+```
+
+\
+
+```{r echo=FALSE, out.width = '100%', fig.align="center", results='asis'}
+  show_image(file.path(getwd(), "integrated_data_subtypes_harmonized_embryos.svg"), "UMAP plot - subtypes")
+```
+
+
+\
+
+### Dimensionality reduction - UMAP - non-harmonized data
+
+
+\
+
+```{r echo=FALSE, out.width = '100%', fig.align="center", results='asis'}
+  show_image(file.path(getwd(), "integrated_data_set_embryos.svg"), "UMAP plot - sets")
+```
+
+\
+
+```{r echo=FALSE, out.width = '100%', fig.align="center", results='asis'}
+  show_image(file.path(getwd(), "integrated_data_subtypes_harmonized_embryos.svg"), "UMAP plot - subtypes")
+```
+
+
+
+\
+
+
+### Subtypes similarity
+
+
+\
+
+```{r echo=FALSE, out.width = '100%', fig.align="center", results='asis'}
+  show_image(file.path(getwd(), "similarity_umap_embryos.svg"), "UMAP - cor~disatance similarity")
+```
+
+
+---
+
+\
+
+# Disclaimer
+
+The analysis was performed through the non-profit and open-source library **JDtI**.
+Remember, *in silico* analysis must be validated *in vitro* or *in vivo*. For more information, visit [GitHub](https://github.com/jkubis96/JDtI) or contact us. 
+
+---
+
+\

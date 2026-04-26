@@ -70,43 +70,44 @@
   </style>
 </head>
 <body>
-  <header>Raporty HTML – Index</header>
+  <header>Reports of scRNA-seq Analysis of HD Models via JSEQ_scRNAseq Software</header>
 
   <div class="tabs">
     <div class="tab active" onclick="openTab('fused')">Fused organoids</div>
-    <div class="tab" onclick="openTab('embryos')">Embryos E13.5</div>
     <div class="tab" onclick="openTab('mosaic')">Mosaic fused organoids</div>
+    <div class="tab" onclick="openTab('embryos')">Embryos E13.5</div>
   </div>
 
   <div id="fused" class="section active">
     <h2>Fused organoids</h2>
     <ul>
-      <li><a href="organoids_17ventral_17dorsal.html">organoids_17ventral_17dorsal</a></li>
-      <li><a href="organoids_21ventral_21dorsal.html">organoids_21ventral_21dorsal</a></li>
-      <li><a href="organoids_71ventral_71dorsal.html">organoids_71ventral_71dorsal</a></li>
-      <li><a href="organoids_77ventral_77dorsal.html">organoids_77ventral_77dorsal</a></li>
+      <li><a href="report/organoids_17ventral_17dorsal.html">17D17V</a></li>
+      <li><a href="report/organoids_21ventral_21dorsal.html">21D21V</a></li>
+      <li><a href="report/organoids_71ventral_71dorsal.html">71D71V</a></li>
+      <li><a href="report/organoids_77ventral_77dorsal.html">77D77V</a></li>
+    </ul>
+  </div>
+
+    <div id="mosaic" class="section">
+    <h2>Mosaic fused organoids</h2>
+    <ul>
+      <li><a href="report/mosaic_organoids_21ventral_71dorsal.html.html">71D21V</a></li>
+      <li><a href="report/mosaic_organoids_71ventral_21dorsal.html">21D71V</a></li>
     </ul>
   </div>
 
   <div id="embryos" class="section">
     <h2>Embryos E13.5</h2>
     <ul>
-      <li><a href="bac_21_dorsal.html">bac_21_dorsal</a></li>
-      <li><a href="bac_21_ventral.html">bac_21_ventral</a></li>
-      <li><a href="hu_128-21_dorsal.html.html">hu_128-21_dorsal</a></li>
-      <li><a href="hu_128-21_ventral.html">hu_128-21_ventral</a></li>
-      <li><a href="yac_128_dorsal.html">yac_128_dorsal</a></li>
-      <li><a href="yac_128_ventral.html">yac_128_ventral</a></li>
+      <li><a href="report/bac_21_dorsal.html">BAC21D</a></li>
+      <li><a href="report/bac_21_ventral.html">BAC21V</a></li>
+      <li><a href="report/hu_128-21_dorsal.html.html">HU128/21D</a></li>
+      <li><a href="report/hu_128-21_ventral.html">HU128/21V</a></li>
+      <li><a href="report/yac_128_dorsal.html">YAC128D</a></li>
+      <li><a href="report/yac_128_ventral.html">YAC128V</a></li>
     </ul>
   </div>
 
-  <div id="mosaic" class="section">
-    <h2>Mosaic fused organoids</h2>
-    <ul>
-      <li><a href="mosaic_organoids_21ventral_71dorsal.html.html">mosaic_organoids_21ventral_71dorsal</a></li>
-      <li><a href="mosaic_organoids_71ventral_21dorsal.html">mosaic_organoids_71ventral_21dorsal</a></li>
-    </ul>
-  </div>
 
   <script>
     function openTab(id) {

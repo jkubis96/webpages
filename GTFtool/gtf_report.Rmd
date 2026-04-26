@@ -1,0 +1,470 @@
+---
+title: "GTF-tool - extending 5' & 3' UTR"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    theme: flatly       
+    highlight: tango
+    toc: true
+    toc_float: true
+    number_sections: true
+    df_print: paged
+    self_contained: true
+---
+
+
+```{r setup, include=FALSE}
+install_if_missing <- function(pkg) {
+  if (!require(pkg, character.only = TRUE)) {
+    install.packages(pkg, dependencies = TRUE)
+  }
+}
+
+packages <- c("knitr", "dplyr", "kableExtra")
+lapply(packages, install_if_missing)
+
+library(knitr)
+library(dplyr)
+library(kableExtra)
+
+set.seed(123)
+
+
+
+```
+
+
+---
+
+
+# IGV visualization of reads mapped to extended UTR regions
+
+
+---
+
+\
+
+## Top 5 genes with the highest number of additional reads mapped to the 3′ UTR
+
+### NDUFB10
+
+\
+
+```{r echo=FALSE, out.width = '100%', fig.align="center"}
+
+knitr::include_graphics(file.path(getwd(), "gtf/UTR3/NDUFB10.png"), auto_pdf = F)
+
+```
+
+```{r echo=FALSE, results='asis'}
+
+cat(sprintf('
+<div style="text-align:center; margin:10px 0;">
+  <a href="%s" target="_blank"
+     style="
+       display:inline-block;
+       padding:12px 20px;
+       font-size:15px;
+       font-weight:600;
+       color:#fff;
+       background:linear-gradient(135deg,#6A11CB,#2575FC);
+       border-radius:8px;
+       text-decoration:none;
+       box-shadow:0 4px 10px rgba(0,0,0,0.15);
+       transition:0.2s ease;
+     "
+     onmouseover="this.style.transform=\'scale(1.05)\'"
+     onmouseout="this.style.transform=\'scale(1)\'"
+  >
+    Display %s
+  </a>
+</div>
+', 'gtf/UTR3/NDUFB10.pdf', 'PDF'))
+
+```
+
+\
+
+
+### BEST1
+
+\
+
+```{r echo=FALSE, out.width = '100%', fig.align="center"}
+
+knitr::include_graphics(file.path(getwd(), "gtf/UTR3/BEST1.png"), auto_pdf = F)
+
+```
+
+```{r echo=FALSE, results='asis'}
+
+cat(sprintf('
+<div style="text-align:center; margin:10px 0;">
+  <a href="%s" target="_blank"
+     style="
+       display:inline-block;
+       padding:12px 20px;
+       font-size:15px;
+       font-weight:600;
+       color:#fff;
+       background:linear-gradient(135deg,#6A11CB,#2575FC);
+       border-radius:8px;
+       text-decoration:none;
+       box-shadow:0 4px 10px rgba(0,0,0,0.15);
+       transition:0.2s ease;
+     "
+     onmouseover="this.style.transform=\'scale(1.05)\'"
+     onmouseout="this.style.transform=\'scale(1)\'"
+  >
+    Display %s
+  </a>
+</div>
+', 'gtf/UTR3/BEST1.pdf', 'PDF'))
+
+```
+
+
+\
+
+
+### NUP210L
+
+\
+
+```{r echo=FALSE, out.width = '100%', fig.align="center"}
+
+knitr::include_graphics(file.path(getwd(), "gtf/UTR3/NUP210L.png"), auto_pdf = F)
+
+```
+
+```{r echo=FALSE, results='asis'}
+
+cat(sprintf('
+<div style="text-align:center; margin:10px 0;">
+  <a href="%s" target="_blank"
+     style="
+       display:inline-block;
+       padding:12px 20px;
+       font-size:15px;
+       font-weight:600;
+       color:#fff;
+       background:linear-gradient(135deg,#6A11CB,#2575FC);
+       border-radius:8px;
+       text-decoration:none;
+       box-shadow:0 4px 10px rgba(0,0,0,0.15);
+       transition:0.2s ease;
+     "
+     onmouseover="this.style.transform=\'scale(1.05)\'"
+     onmouseout="this.style.transform=\'scale(1)\'"
+  >
+    Display %s
+  </a>
+</div>
+', 'gtf/UTR3/NUP210L.pdf', 'PDF'))
+
+```
+
+\
+
+### PTMA
+
+\
+
+```{r echo=FALSE, out.width = '100%', fig.align="center"}
+
+knitr::include_graphics(file.path(getwd(), "gtf/UTR3/PTMA.png"), auto_pdf = F)
+
+```
+
+```{r echo=FALSE, results='asis'}
+
+cat(sprintf('
+<div style="text-align:center; margin:10px 0;">
+  <a href="%s" target="_blank"
+     style="
+       display:inline-block;
+       padding:12px 20px;
+       font-size:15px;
+       font-weight:600;
+       color:#fff;
+       background:linear-gradient(135deg,#6A11CB,#2575FC);
+       border-radius:8px;
+       text-decoration:none;
+       box-shadow:0 4px 10px rgba(0,0,0,0.15);
+       transition:0.2s ease;
+     "
+     onmouseover="this.style.transform=\'scale(1.05)\'"
+     onmouseout="this.style.transform=\'scale(1)\'"
+  >
+    Display %s
+  </a>
+</div>
+', 'gtf/UTR3/PTMA.pdf', 'PDF'))
+
+```
+
+\
+
+### DIPK1A
+
+\
+
+```{r echo=FALSE, out.width = '100%', fig.align="center"}
+
+knitr::include_graphics(file.path(getwd(), "gtf/UTR3/DIPK1A.png"), auto_pdf = F)
+
+```
+
+```{r echo=FALSE, results='asis'}
+
+cat(sprintf('
+<div style="text-align:center; margin:10px 0;">
+  <a href="%s" target="_blank"
+     style="
+       display:inline-block;
+       padding:12px 20px;
+       font-size:15px;
+       font-weight:600;
+       color:#fff;
+       background:linear-gradient(135deg,#6A11CB,#2575FC);
+       border-radius:8px;
+       text-decoration:none;
+       box-shadow:0 4px 10px rgba(0,0,0,0.15);
+       transition:0.2s ease;
+     "
+     onmouseover="this.style.transform=\'scale(1.05)\'"
+     onmouseout="this.style.transform=\'scale(1)\'"
+  >
+    Display %s
+  </a>
+</div>
+', 'gtf/UTR3/DIPK1A.pdf', 'PDF'))
+
+```
+
+\
+
+\
+
+---
+
+\
+
+## Top 5 genes with the highest number of additional reads mapped to the 5′ UTR
+
+### ARGLU1
+
+\
+
+```{r echo=FALSE, out.width = '100%', fig.align="center"}
+
+knitr::include_graphics(file.path(getwd(), "gtf/UTR5/ARGLU1.png"), auto_pdf = T)
+
+```
+
+```{r echo=FALSE, results='asis'}
+
+cat(sprintf('
+<div style="text-align:center; margin:10px 0;">
+  <a href="%s" target="_blank"
+     style="
+       display:inline-block;
+       padding:12px 20px;
+       font-size:15px;
+       font-weight:600;
+       color:#fff;
+       background:linear-gradient(135deg,#6A11CB,#2575FC);
+       border-radius:8px;
+       text-decoration:none;
+       box-shadow:0 4px 10px rgba(0,0,0,0.15);
+       transition:0.2s ease;
+     "
+     onmouseover="this.style.transform=\'scale(1.05)\'"
+     onmouseout="this.style.transform=\'scale(1)\'"
+  >
+    Display %s
+  </a>
+</div>
+', 'gtf/UTR3/ARGLU1.pdf', 'PDF'))
+
+```
+
+
+\
+
+
+### TXNIP
+
+\
+
+```{r echo=FALSE, out.width = '100%', fig.align="center"}
+
+knitr::include_graphics(file.path(getwd(), "gtf/UTR5/TXNIP.png"), auto_pdf = F)
+
+```
+
+```{r echo=FALSE, results='asis'}
+
+cat(sprintf('
+<div style="text-align:center; margin:10px 0;">
+  <a href="%s" target="_blank"
+     style="
+       display:inline-block;
+       padding:12px 20px;
+       font-size:15px;
+       font-weight:600;
+       color:#fff;
+       background:linear-gradient(135deg,#6A11CB,#2575FC);
+       border-radius:8px;
+       text-decoration:none;
+       box-shadow:0 4px 10px rgba(0,0,0,0.15);
+       transition:0.2s ease;
+     "
+     onmouseover="this.style.transform=\'scale(1.05)\'"
+     onmouseout="this.style.transform=\'scale(1)\'"
+  >
+    Display %s
+  </a>
+</div>
+', 'gtf/UTR3/TXNIP.pdf', 'PDF'))
+
+```
+
+\
+
+
+### NACA
+
+\
+
+```{r echo=FALSE, out.width = '100%', fig.align="center"}
+
+knitr::include_graphics(file.path(getwd(), "gtf/UTR5/NACA.png"), auto_pdf = F)
+
+```
+
+```{r echo=FALSE, results='asis'}
+
+cat(sprintf('
+<div style="text-align:center; margin:10px 0;">
+  <a href="%s" target="_blank"
+     style="
+       display:inline-block;
+       padding:12px 20px;
+       font-size:15px;
+       font-weight:600;
+       color:#fff;
+       background:linear-gradient(135deg,#6A11CB,#2575FC);
+       border-radius:8px;
+       text-decoration:none;
+       box-shadow:0 4px 10px rgba(0,0,0,0.15);
+       transition:0.2s ease;
+     "
+     onmouseover="this.style.transform=\'scale(1.05)\'"
+     onmouseout="this.style.transform=\'scale(1)\'"
+  >
+    Display %s
+  </a>
+</div>
+', 'gtf/UTR3/NACA.pdf', 'PDF'))
+
+```
+
+\
+
+### RACK1
+
+\
+
+```{r echo=FALSE, out.width = '100%', fig.align="center"}
+
+knitr::include_graphics(file.path(getwd(), "gtf/UTR5/RACK1.png"), auto_pdf = F)
+
+```
+
+```{r echo=FALSE, results='asis'}
+
+cat(sprintf('
+<div style="text-align:center; margin:10px 0;">
+  <a href="%s" target="_blank"
+     style="
+       display:inline-block;
+       padding:12px 20px;
+       font-size:15px;
+       font-weight:600;
+       color:#fff;
+       background:linear-gradient(135deg,#6A11CB,#2575FC);
+       border-radius:8px;
+       text-decoration:none;
+       box-shadow:0 4px 10px rgba(0,0,0,0.15);
+       transition:0.2s ease;
+     "
+     onmouseover="this.style.transform=\'scale(1.05)\'"
+     onmouseout="this.style.transform=\'scale(1)\'"
+  >
+    Display %s
+  </a>
+</div>
+', 'gtf/UTR3/RACK1.pdf', 'PDF'))
+
+```
+
+
+\
+
+### MYL6
+
+\
+
+```{r echo=FALSE, out.width = '100%', fig.align="center"}
+
+knitr::include_graphics(file.path(getwd(), "gtf/UTR5/MYL6.png"), auto_pdf = F)
+
+```
+
+
+```{r echo=FALSE, results='asis'}
+
+cat(sprintf('
+<div style="text-align:center; margin:10px 0;">
+  <a href="%s" target="_blank"
+     style="
+       display:inline-block;
+       padding:12px 20px;
+       font-size:15px;
+       font-weight:600;
+       color:#fff;
+       background:linear-gradient(135deg,#6A11CB,#2575FC);
+       border-radius:8px;
+       text-decoration:none;
+       box-shadow:0 4px 10px rgba(0,0,0,0.15);
+       transition:0.2s ease;
+     "
+     onmouseover="this.style.transform=\'scale(1.05)\'"
+     onmouseout="this.style.transform=\'scale(1)\'"
+  >
+    Display %s
+  </a>
+</div>
+', 'gtf/UTR3/MYL6.pdf', 'PDF'))
+
+```
+
+
+\
+
+
+
+---
+
+\
+
+# Disclaimer
+
+The analysis was performed through the non-profit and open-source library **GTF-tool**.
+Remember, *in silico* analysis must be validated *in vitro* or *in vivo*. For more information, visit [GitHub](https://github.com/jkubis96/GTF-tool) or contact us. 
+
+---
+
+\
+

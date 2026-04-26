@@ -1,0 +1,674 @@
+<html>
+    <head>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 1900px;
+                 height: 864px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+             #loadingBar {
+                 position:absolute;
+                 top:0px;
+                 left:0px;
+                 width: 1900px;
+                 height: 864px;
+                 background-color:rgba(200,200,200,0.8);
+                 -webkit-transition: all 0.5s ease;
+                 -moz-transition: all 0.5s ease;
+                 -ms-transition: all 0.5s ease;
+                 -o-transition: all 0.5s ease;
+                 transition: all 0.5s ease;
+                 opacity:1;
+             }
+
+             #bar {
+                 position:absolute;
+                 top:0px;
+                 left:0px;
+                 width:20px;
+                 height:20px;
+                 margin:auto auto auto auto;
+                 border-radius:11px;
+                 border:2px solid rgba(30,30,30,0.05);
+                 background: rgb(0, 173, 246); /* Old browsers */
+                 box-shadow: 2px 0px 4px rgba(0,0,0,0.4);
+             }
+
+             #border {
+                 position:absolute;
+                 top:10px;
+                 left:10px;
+                 width:500px;
+                 height:23px;
+                 margin:auto auto auto auto;
+                 box-shadow: 0px 0px 4px rgba(0,0,0,0.2);
+                 border-radius:10px;
+             }
+
+             #text {
+                 position:absolute;
+                 top:8px;
+                 left:530px;
+                 width:30px;
+                 height:50px;
+                 margin:auto auto auto auto;
+                 font-size:22px;
+                 color: #000000;
+             }
+
+             div.outerBorder {
+                 position:relative;
+                 top:400px;
+                 width:600px;
+                 height:44px;
+                 margin:auto auto auto auto;
+                 border:8px solid rgba(0,0,0,0.1);
+                 background: rgb(252,252,252); /* Old browsers */
+                 background: -moz-linear-gradient(top,  rgba(252,252,252,1) 0%, rgba(237,237,237,1) 100%); /* FF3.6+ */
+                 background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(252,252,252,1)), color-stop(100%,rgba(237,237,237,1))); /* Chrome,Safari4+ */
+                 background: -webkit-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Chrome10+,Safari5.1+ */
+                 background: -o-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Opera 11.10+ */
+                 background: -ms-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* IE10+ */
+                 background: linear-gradient(to bottom,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* W3C */
+                 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfcfc', endColorstr='#ededed',GradientType=0 ); /* IE6-9 */
+                 border-radius:72px;
+                 box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+             }
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+            <div id="loadingBar">
+              <div class="outerBorder">
+                <div id="text">0%</div>
+                <div id="border">
+                  <div id="bar"></div>
+                </div>
+              </div>
+            </div>
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "orangered", "id": "Metabolism", "label": "Metabolism", "shape": "dot", "size": 42}, {"color": "turquoise", "id": "NDUFA11", "label": "NDUFA11", "shape": "dot", "size": 17}, {"color": "turquoise", "id": "GAPDH", "label": "GAPDH", "shape": "dot", "size": 16}, {"color": "turquoise", "id": "PSMB3", "label": "PSMB3", "shape": "dot", "size": 23}, {"color": "turquoise", "id": "PSMD8", "label": "PSMD8", "shape": "dot", "size": 23}, {"color": "mediumblue", "id": "CYCS", "label": "CYCS", "shape": "dot", "size": 20}, {"color": "mediumblue", "id": "NDUFS4", "label": "NDUFS4", "shape": "dot", "size": 17}, {"color": "mediumblue", "id": "UQCRB", "label": "UQCRB", "shape": "dot", "size": 17}, {"color": "mediumblue", "id": "HADHA", "label": "HADHA", "shape": "dot", "size": 16}, {"color": "mediumblue", "id": "DTYMK", "label": "DTYMK", "shape": "dot", "size": 15}, {"color": "mediumblue", "id": "CHD9", "label": "CHD9", "shape": "dot", "size": 19}, {"color": "mediumblue", "id": "MED16", "label": "MED16", "shape": "dot", "size": 20}, {"color": "mediumblue", "id": "MED4", "label": "MED4", "shape": "dot", "size": 20}, {"color": "mediumblue", "id": "NCOA3", "label": "NCOA3", "shape": "dot", "size": 21}, {"color": "mediumblue", "id": "SREBF2", "label": "SREBF2", "shape": "dot", "size": 18}, {"color": "mediumblue", "id": "AGPAT3", "label": "AGPAT3", "shape": "dot", "size": 17}, {"color": "mediumblue", "id": "PIP4K2B", "label": "PIP4K2B", "shape": "dot", "size": 21}, {"color": "mediumblue", "id": "UGP2", "label": "UGP2", "shape": "dot", "size": 15}, {"color": "mediumblue", "id": "UBC", "label": "UBC", "shape": "dot", "size": 24}, {"color": "mediumblue", "id": "WDR26", "label": "WDR26", "shape": "dot", "size": 16}, {"color": "mediumblue", "id": "PSMD7", "label": "PSMD7", "shape": "dot", "size": 23}, {"color": "mediumblue", "id": "HIBCH", "label": "HIBCH", "shape": "dot", "size": 15}, {"color": "orangered", "id": "Signal Transduction", "label": "Signal Transduction", "shape": "dot", "size": 52}, {"color": "turquoise", "id": "POLR2I", "label": "POLR2I", "shape": "dot", "size": 23}, {"color": "turquoise", "id": "RBX1", "label": "RBX1", "shape": "dot", "size": 23}, {"color": "turquoise", "id": "TUBA1B", "label": "TUBA1B", "shape": "dot", "size": 22}, {"color": "turquoise", "id": "PFN1", "label": "PFN1", "shape": "dot", "size": 19}, {"color": "mediumblue", "id": "AGO4", "label": "AGO4", "shape": "dot", "size": 22}, {"color": "mediumblue", "id": "MTA3", "label": "MTA3", "shape": "dot", "size": 21}, {"color": "mediumblue", "id": "NRG3", "label": "NRG3", "shape": "dot", "size": 22}, {"color": "mediumblue", "id": "PHLPP2", "label": "PHLPP2", "shape": "dot", "size": 19}, {"color": "mediumblue", "id": "PREX2", "label": "PREX2", "shape": "dot", "size": 20}, {"color": "mediumblue", "id": "RRAGB", "label": "RRAGB", "shape": "dot", "size": 21}, {"color": "mediumblue", "id": "WWP2", "label": "WWP2", "shape": "dot", "size": 20}, {"color": "mediumblue", "id": "VAV2", "label": "VAV2", "shape": "dot", "size": 21}, {"color": "mediumblue", "id": "GTF2F1", "label": "GTF2F1", "shape": "dot", "size": 23}, {"color": "mediumblue", "id": "POLR2D", "label": "POLR2D", "shape": "dot", "size": 23}, {"color": "mediumblue", "id": "RUNX1", "label": "RUNX1", "shape": "dot", "size": 22}, {"color": "mediumblue", "id": "YY1", "label": "YY1", "shape": "dot", "size": 20}, {"color": "mediumblue", "id": "TIAL1", "label": "TIAL1", "shape": "dot", "size": 18}, {"color": "mediumblue", "id": "PTPN12", "label": "PTPN12", "shape": "dot", "size": 20}, {"color": "mediumblue", "id": "MAPK14", "label": "MAPK14", "shape": "dot", "size": 21}, {"color": "mediumblue", "id": "RASA2", "label": "RASA2", "shape": "dot", "size": 20}, {"color": "mediumblue", "id": "CAMK2G", "label": "CAMK2G", "shape": "dot", "size": 22}, {"color": "mediumblue", "id": "RAF1", "label": "RAF1", "shape": "dot", "size": 21}, {"color": "mediumblue", "id": "DLG1", "label": "DLG1", "shape": "dot", "size": 21}, {"color": "mediumblue", "id": "DLG3", "label": "DLG3", "shape": "dot", "size": 21}, {"color": "mediumblue", "id": "SPTAN1", "label": "SPTAN1", "shape": "dot", "size": 21}, {"color": "mediumblue", "id": "TLN1", "label": "TLN1", "shape": "dot", "size": 21}, {"color": "mediumblue", "id": "PTK6", "label": "PTK6", "shape": "dot", "size": 20}, {"color": "mediumblue", "id": "NEDD4L", "label": "NEDD4L", "shape": "dot", "size": 19}, {"color": "mediumblue", "id": "WASL", "label": "WASL", "shape": "dot", "size": 20}, {"color": "mediumblue", "id": "XPO1", "label": "XPO1", "shape": "dot", "size": 21}, {"color": "mediumblue", "id": "SH2B1", "label": "SH2B1", "shape": "dot", "size": 18}, {"color": "mediumblue", "id": "CAMKK2", "label": "CAMKK2", "shape": "dot", "size": 19}, {"color": "mediumblue", "id": "NBEA", "label": "NBEA", "shape": "dot", "size": 18}, {"color": "mediumblue", "id": "NOTCH2", "label": "NOTCH2", "shape": "dot", "size": 19}, {"color": "mediumblue", "id": "RBPJ", "label": "RBPJ", "shape": "dot", "size": 20}, {"color": "mediumblue", "id": "PPP3CA", "label": "PPP3CA", "shape": "dot", "size": 19}, {"color": "mediumblue", "id": "AKAP13", "label": "AKAP13", "shape": "dot", "size": 18}, {"color": "mediumblue", "id": "ITSN1", "label": "ITSN1", "shape": "dot", "size": 20}, {"color": "mediumblue", "id": "KALRN", "label": "KALRN", "shape": "dot", "size": 20}, {"color": "mediumblue", "id": "MCF2L", "label": "MCF2L", "shape": "dot", "size": 19}, {"color": "mediumblue", "id": "MAPK8", "label": "MAPK8", "shape": "dot", "size": 21}, {"color": "mediumblue", "id": "COL5A2", "label": "COL5A2", "shape": "dot", "size": 20}, {"color": "mediumblue", "id": "LAMB1", "label": "LAMB1", "shape": "dot", "size": 19}, {"color": "mediumblue", "id": "ADAM17", "label": "ADAM17", "shape": "dot", "size": 20}, {"color": "mediumblue", "id": "SPARC", "label": "SPARC", "shape": "dot", "size": 19}, {"color": "mediumblue", "id": "WWOX", "label": "WWOX", "shape": "dot", "size": 18}, {"color": "mediumblue", "id": "OPTN", "label": "OPTN", "shape": "dot", "size": 20}, {"color": "mediumblue", "id": "UBE2L3", "label": "UBE2L3", "shape": "dot", "size": 20}, {"color": "mediumblue", "id": "TCF7L1", "label": "TCF7L1", "shape": "dot", "size": 19}, {"color": "mediumblue", "id": "USP34", "label": "USP34", "shape": "dot", "size": 18}, {"color": "mediumblue", "id": "ADAM10", "label": "ADAM10", "shape": "dot", "size": 19}, {"color": "mediumblue", "id": "HDAC9", "label": "HDAC9", "shape": "dot", "size": 18}, {"color": "mediumblue", "id": "FUZ", "label": "FUZ", "shape": "dot", "size": 16}, {"color": "mediumblue", "id": "CAB39L", "label": "CAB39L", "shape": "dot", "size": 17}, {"color": "mediumblue", "id": "MYH10", "label": "MYH10", "shape": "dot", "size": 19}, {"color": "mediumblue", "id": "SRGAP2", "label": "SRGAP2", "shape": "dot", "size": 19}, {"color": "mediumblue", "id": "IGF2BP1", "label": "IGF2BP1", "shape": "dot", "size": 17}, {"color": "mediumblue", "id": "ARFGAP3", "label": "ARFGAP3", "shape": "dot", "size": 20}, {"color": "mediumblue", "id": "ARHGAP1", "label": "ARHGAP1", "shape": "dot", "size": 19}, {"color": "mediumblue", "id": "RALBP1", "label": "RALBP1", "shape": "dot", "size": 18}, {"color": "mediumblue", "id": "FLRT1", "label": "FLRT1", "shape": "dot", "size": 14}, {"color": "mediumblue", "id": "FLRT3", "label": "FLRT3", "shape": "dot", "size": 16}, {"color": "mediumblue", "id": "NISCH", "label": "NISCH", "shape": "dot", "size": 17}, {"color": "mediumblue", "id": "SLC1A5", "label": "SLC1A5", "shape": "dot", "size": 18}, {"color": "mediumblue", "id": "DBN1", "label": "DBN1", "shape": "dot", "size": 16}, {"color": "mediumblue", "id": "STX5", "label": "STX5", "shape": "dot", "size": 20}, {"color": "mediumblue", "id": "DST", "label": "DST", "shape": "dot", "size": 17}, {"color": "mediumblue", "id": "OS9", "label": "OS9", "shape": "dot", "size": 19}, {"color": "mediumblue", "id": "BASP1", "label": "BASP1", "shape": "dot", "size": 14}, {"color": "orangered", "id": "Immune System", "label": "Immune System", "shape": "dot", "size": 48}, {"color": "turquoise", "id": "HNRNPA2B1", "label": "HNRNPA2B1", "shape": "dot", "size": 19}, {"color": "mediumblue", "id": "PDIA3", "label": "PDIA3", "shape": "dot", "size": 18}, {"color": "mediumblue", "id": "KPNA1", "label": "KPNA1", "shape": "dot", "size": 19}, {"color": "mediumblue", "id": "EIF2S2", "label": "EIF2S2", "shape": "dot", "size": 19}, {"color": "mediumblue", "id": "TRIM5", "label": "TRIM5", "shape": "dot", "size": 16}, {"color": "mediumblue", "id": "HSP90B1", "label": "HSP90B1", "shape": "dot", "size": 18}, {"color": "mediumblue", "id": "ZEB1", "label": "ZEB1", "shape": "dot", "size": 17}, {"color": "mediumblue", "id": "GLMN", "label": "GLMN", "shape": "dot", "size": 17}, {"color": "mediumblue", "id": "HECTD1", "label": "HECTD1", "shape": "dot", "size": 17}, {"color": "mediumblue", "id": "UBE4A", "label": "UBE4A", "shape": "dot", "size": 17}, {"color": "mediumblue", "id": "VHL", "label": "VHL", "shape": "dot", "size": 19}, {"color": "orangered", "id": "Disease", "label": "Disease", "shape": "dot", "size": 50}, {"color": "turquoise", "id": "EXO1", "label": "EXO1", "shape": "dot", "size": 21}, {"color": "mediumblue", "id": "VPS41", "label": "VPS41", "shape": "dot", "size": 13}, {"color": "mediumblue", "id": "PABPN1", "label": "PABPN1", "shape": "dot", "size": 19}, {"color": "mediumblue", "id": "NELFA", "label": "NELFA", "shape": "dot", "size": 22}, {"color": "mediumblue", "id": "LMNA", "label": "LMNA", "shape": "dot", "size": 19}, {"color": "mediumblue", "id": "ARID4B", "label": "ARID4B", "shape": "dot", "size": 19}, {"color": "mediumblue", "id": "ATP1A2", "label": "ATP1A2", "shape": "dot", "size": 19}, {"color": "mediumblue", "id": "PRIM2", "label": "PRIM2", "shape": "dot", "size": 20}, {"color": "mediumblue", "id": "GCC2", "label": "GCC2", "shape": "dot", "size": 19}, {"color": "mediumblue", "id": "HIP1", "label": "HIP1", "shape": "dot", "size": 19}, {"color": "mediumblue", "id": "PALB2", "label": "PALB2", "shape": "dot", "size": 20}, {"color": "royalblue", "id": "Hemostasis", "label": "Hemostasis", "shape": "dot", "size": 41}, {"color": "mediumblue", "id": "KIF1A", "label": "KIF1A", "shape": "dot", "size": 18}, {"color": "mediumblue", "id": "CDC37L1", "label": "CDC37L1", "shape": "dot", "size": 17}, {"color": "mediumblue", "id": "GUCY1A2", "label": "GUCY1A2", "shape": "dot", "size": 17}, {"color": "mediumblue", "id": "PDE9A", "label": "PDE9A", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Vesicle-mediated transport", "label": "Vesicle-mediated transport", "shape": "dot", "size": 45}, {"color": "mediumblue", "id": "KDELR1", "label": "KDELR1", "shape": "dot", "size": 19}, {"color": "mediumblue", "id": "VPS54", "label": "VPS54", "shape": "dot", "size": 16}, {"color": "mediumblue", "id": "AP4S1", "label": "AP4S1", "shape": "dot", "size": 16}, {"color": "mediumblue", "id": "CLINT1", "label": "CLINT1", "shape": "dot", "size": 16}, {"color": "mediumblue", "id": "DTNBP1", "label": "DTNBP1", "shape": "dot", "size": 16}, {"color": "mediumblue", "id": "CYTH2", "label": "CYTH2", "shape": "dot", "size": 15}, {"color": "mediumblue", "id": "ANK3", "label": "ANK3", "shape": "dot", "size": 19}, {"color": "mediumblue", "id": "RAB18", "label": "RAB18", "shape": "dot", "size": 18}, {"color": "mediumblue", "id": "RIN3", "label": "RIN3", "shape": "dot", "size": 17}, {"color": "mediumblue", "id": "TRAPPC12", "label": "TRAPPC12", "shape": "dot", "size": 17}, {"color": "mediumblue", "id": "PPP6R3", "label": "PPP6R3", "shape": "dot", "size": 18}, {"color": "mediumblue", "id": "HSPH1", "label": "HSPH1", "shape": "dot", "size": 19}, {"color": "orangered", "id": "Metabolism of proteins", "label": "Metabolism of proteins", "shape": "dot", "size": 46}, {"color": "mediumblue", "id": "COMMD6", "label": "COMMD6", "shape": "dot", "size": 18}, {"color": "mediumblue", "id": "PUM2", "label": "PUM2", "shape": "dot", "size": 18}, {"color": "mediumblue", "id": "CHGB", "label": "CHGB", "shape": "dot", "size": 15}, {"color": "mediumblue", "id": "NSMCE2", "label": "NSMCE2", "shape": "dot", "size": 16}, {"color": "mediumblue", "id": "SMC5", "label": "SMC5", "shape": "dot", "size": 16}, {"color": "mediumblue", "id": "PIGK", "label": "PIGK", "shape": "dot", "size": 14}, {"color": "mediumblue", "id": "TTL", "label": "TTL", "shape": "dot", "size": 16}, {"color": "mediumblue", "id": "PDCL", "label": "PDCL", "shape": "dot", "size": 15}, {"color": "mediumblue", "id": "USP48", "label": "USP48", "shape": "dot", "size": 17}, {"color": "mediumblue", "id": "ERO1B", "label": "ERO1B", "shape": "dot", "size": 15}, {"color": "mediumblue", "id": "HIPK2", "label": "HIPK2", "shape": "dot", "size": 20}, {"color": "mediumblue", "id": "ING2", "label": "ING2", "shape": "dot", "size": 18}, {"color": "mediumblue", "id": "IARS1", "label": "IARS1", "shape": "dot", "size": 17}, {"color": "mediumblue", "id": "VBP1", "label": "VBP1", "shape": "dot", "size": 15}, {"color": "mediumblue", "id": "MRPL22", "label": "MRPL22", "shape": "dot", "size": 16}, {"color": "mediumblue", "id": "SEMA5A", "label": "SEMA5A", "shape": "dot", "size": 16}, {"color": "mediumblue", "id": "SEMA5B", "label": "SEMA5B", "shape": "dot", "size": 14}, {"color": "mediumblue", "id": "ZC3H15", "label": "ZC3H15", "shape": "dot", "size": 14}, {"color": "mediumblue", "id": "EIF2B4", "label": "EIF2B4", "shape": "dot", "size": 15}, {"color": "mediumblue", "id": "RAB29", "label": "RAB29", "shape": "dot", "size": 13}, {"color": "mediumblue", "id": "LSAMP", "label": "LSAMP", "shape": "dot", "size": 14}, {"color": "mediumblue", "id": "ALDH2", "label": "ALDH2", "shape": "dot", "size": 17}, {"color": "orangered", "id": "Gene expression (Transcription)", "label": "Gene expression (Transcription)", "shape": "dot", "size": 50}, {"color": "mediumblue", "id": "TET3", "label": "TET3", "shape": "dot", "size": 16}, {"color": "mediumblue", "id": "GRIA2", "label": "GRIA2", "shape": "dot", "size": 19}, {"color": "mediumblue", "id": "DROSHA", "label": "DROSHA", "shape": "dot", "size": 16}, {"color": "mediumblue", "id": "GADD45A", "label": "GADD45A", "shape": "dot", "size": 18}, {"color": "mediumblue", "id": "JARID2", "label": "JARID2", "shape": "dot", "size": 19}, {"color": "mediumblue", "id": "EPC1", "label": "EPC1", "shape": "dot", "size": 18}, {"color": "mediumblue", "id": "DEK", "label": "DEK", "shape": "dot", "size": 20}, {"color": "mediumblue", "id": "NLRC4", "label": "NLRC4", "shape": "dot", "size": 18}, {"color": "mediumblue", "id": "SMARCA2", "label": "SMARCA2", "shape": "dot", "size": 20}, {"color": "mediumblue", "id": "ZNF432", "label": "ZNF432", "shape": "dot", "size": 17}, {"color": "orangered", "id": "Metabolism of RNA", "label": "Metabolism of RNA", "shape": "dot", "size": 46}, {"color": "turquoise", "id": "LSM4", "label": "LSM4", "shape": "dot", "size": 19}, {"color": "mediumblue", "id": "DDX42", "label": "DDX42", "shape": "dot", "size": 19}, {"color": "mediumblue", "id": "FUS", "label": "FUS", "shape": "dot", "size": 19}, {"color": "mediumblue", "id": "HNRNPD", "label": "HNRNPD", "shape": "dot", "size": 19}, {"color": "mediumblue", "id": "SF1", "label": "SF1", "shape": "dot", "size": 19}, {"color": "mediumblue", "id": "TCERG1", "label": "TCERG1", "shape": "dot", "size": 19}, {"color": "mediumblue", "id": "TSEN2", "label": "TSEN2", "shape": "dot", "size": 16}, {"color": "mediumblue", "id": "KHSRP", "label": "KHSRP", "shape": "dot", "size": 16}, {"color": "mediumblue", "id": "IGF2BP3", "label": "IGF2BP3", "shape": "dot", "size": 13}, {"color": "mediumblue", "id": "DDX52", "label": "DDX52", "shape": "dot", "size": 17}, {"color": "mediumblue", "id": "NHP2", "label": "NHP2", "shape": "dot", "size": 17}, {"color": "orangered", "id": "DNA Repair", "label": "DNA Repair", "shape": "dot", "size": 47}, {"color": "mediumblue", "id": "USP1", "label": "USP1", "shape": "dot", "size": 18}, {"color": "orangered", "id": "Cell Cycle", "label": "Cell Cycle", "shape": "dot", "size": 48}, {"color": "turquoise", "id": "NCAPG", "label": "NCAPG", "shape": "dot", "size": 17}, {"color": "mediumblue", "id": "MCM8", "label": "MCM8", "shape": "dot", "size": 20}, {"color": "mediumblue", "id": "ODF2", "label": "ODF2", "shape": "dot", "size": 19}, {"color": "mediumblue", "id": "PCNT", "label": "PCNT", "shape": "dot", "size": 20}, {"color": "orangered", "id": "Developmental Biology", "label": "Developmental Biology", "shape": "dot", "size": 46}, {"color": "mediumblue", "id": "PRNP", "label": "PRNP", "shape": "dot", "size": 17}, {"color": "mediumblue", "id": "MSI1", "label": "MSI1", "shape": "dot", "size": 18}, {"color": "mediumblue", "id": "CDH4", "label": "CDH4", "shape": "dot", "size": 16}, {"color": "mediumblue", "id": "SCN3B", "label": "SCN3B", "shape": "dot", "size": 17}, {"color": "mediumblue", "id": "OTX2", "label": "OTX2", "shape": "dot", "size": 14}, {"color": "orangered", "id": "Cellular responses to stimuli", "label": "Cellular responses to stimuli", "shape": "dot", "size": 46}, {"color": "mediumblue", "id": "HSPA4L", "label": "HSPA4L", "shape": "dot", "size": 18}, {"color": "mediumblue", "id": "ITFG2", "label": "ITFG2", "shape": "dot", "size": 17}, {"color": "mediumblue", "id": "FBXL17", "label": "FBXL17", "shape": "dot", "size": 17}, {"color": "mediumblue", "id": "CEBPG", "label": "CEBPG", "shape": "dot", "size": 17}, {"color": "orangered", "id": "Autophagy", "label": "Autophagy", "shape": "dot", "size": 42}, {"color": "mediumblue", "id": "ATG10", "label": "ATG10", "shape": "dot", "size": 17}, {"color": "mediumblue", "id": "WIPI2", "label": "WIPI2", "shape": "dot", "size": 17}, {"color": "orangered", "id": "DNA Replication", "label": "DNA Replication", "shape": "dot", "size": 43}, {"color": "royalblue", "id": "Neuronal System", "label": "Neuronal System", "shape": "dot", "size": 44}, {"color": "mediumblue", "id": "CASK", "label": "CASK", "shape": "dot", "size": 19}, {"color": "mediumblue", "id": "LIN7A", "label": "LIN7A", "shape": "dot", "size": 18}, {"color": "mediumblue", "id": "SLC38A2", "label": "SLC38A2", "shape": "dot", "size": 15}, {"color": "mediumblue", "id": "DLGAP4", "label": "DLGAP4", "shape": "dot", "size": 15}, {"color": "mediumblue", "id": "HOMER2", "label": "HOMER2", "shape": "dot", "size": 15}, {"color": "royalblue", "id": "Organelle biogenesis and maintenance", "label": "Organelle biogenesis and maintenance", "shape": "dot", "size": 38}, {"color": "mediumblue", "id": "AHI1", "label": "AHI1", "shape": "dot", "size": 16}, {"color": "mediumblue", "id": "BBS7", "label": "BBS7", "shape": "dot", "size": 15}, {"color": "mediumblue", "id": "CLUAP1", "label": "CLUAP1", "shape": "dot", "size": 16}, {"color": "orangered", "id": "Transport of small molecules", "label": "Transport of small molecules", "shape": "dot", "size": 41}, {"color": "royalblue", "id": "Programmed Cell Death", "label": "Programmed Cell Death", "shape": "dot", "size": 41}, {"color": "mediumblue", "id": "DFFA", "label": "DFFA", "shape": "dot", "size": 15}, {"color": "mediumblue", "id": "APPL1", "label": "APPL1", "shape": "dot", "size": 14}, {"color": "royalblue", "id": "Extracellular matrix organization", "label": "Extracellular matrix organization", "shape": "dot", "size": 43}, {"color": "mediumblue", "id": "LRP4", "label": "LRP4", "shape": "dot", "size": 18}, {"color": "mediumblue", "id": "SGCE", "label": "SGCE", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "Muscle contraction", "label": "Muscle contraction", "shape": "dot", "size": 39}, {"color": "royalblue", "id": "Chromatin organization", "label": "Chromatin organization", "shape": "dot", "size": 36}, {"color": "mediumblue", "id": "KMT5B", "label": "KMT5B", "shape": "dot", "size": 16}, {"color": "royalblue", "id": "Reproduction", "label": "Reproduction", "shape": "dot", "size": 33}, {"color": "royalblue", "id": "Cell-Cell communication", "label": "Cell-Cell communication", "shape": "dot", "size": 36}, {"color": "royalblue", "id": "Circadian Clock", "label": "Circadian Clock", "shape": "dot", "size": 31}, {"color": "royalblue", "id": "Sensory Perception", "label": "Sensory Perception", "shape": "dot", "size": 33}, {"color": "orangered", "id": "Protein localization", "label": "Protein localization", "shape": "dot", "size": 33}]);
+                  edges = new vis.DataSet([{"color": "gray", "from": "Metabolism", "to": "NDUFA11", "width": 1}, {"color": "gray", "from": "Metabolism", "to": "GAPDH", "width": 1}, {"color": "gray", "from": "Metabolism", "to": "PSMB3", "width": 1}, {"color": "gray", "from": "Metabolism", "to": "PSMD8", "width": 1}, {"color": "gray", "from": "Metabolism", "to": "CYCS", "width": 1}, {"color": "gray", "from": "Metabolism", "to": "NDUFS4", "width": 1}, {"color": "gray", "from": "Metabolism", "to": "UQCRB", "width": 1}, {"color": "gray", "from": "Metabolism", "to": "HADHA", "width": 1}, {"color": "gray", "from": "Metabolism", "to": "DTYMK", "width": 1}, {"color": "gray", "from": "Metabolism", "to": "CHD9", "width": 1}, {"color": "gray", "from": "Metabolism", "to": "MED16", "width": 1}, {"color": "gray", "from": "Metabolism", "to": "MED4", "width": 1}, {"color": "gray", "from": "Metabolism", "to": "NCOA3", "width": 1}, {"color": "gray", "from": "Metabolism", "to": "SREBF2", "width": 1}, {"color": "gray", "from": "Metabolism", "to": "AGPAT3", "width": 1}, {"color": "gray", "from": "Metabolism", "to": "PIP4K2B", "width": 1}, {"color": "gray", "from": "Metabolism", "to": "UGP2", "width": 1}, {"color": "gray", "from": "Metabolism", "to": "UBC", "width": 1}, {"color": "gray", "from": "Metabolism", "to": "WDR26", "width": 1}, {"color": "gray", "from": "Metabolism", "to": "PSMD7", "width": 1}, {"color": "gray", "from": "Metabolism", "to": "HIBCH", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "PSMB3", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "PSMD8", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "POLR2I", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "RBX1", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "TUBA1B", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "PFN1", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "AGO4", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "MTA3", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "NRG3", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "PHLPP2", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "PIP4K2B", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "PREX2", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "PSMD7", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "RRAGB", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "UBC", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "WWP2", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "VAV2", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "GTF2F1", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "NCOA3", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "POLR2D", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "RUNX1", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "YY1", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "TIAL1", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "PTPN12", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "MAPK14", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "RASA2", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "CAMK2G", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "RAF1", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "DLG1", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "DLG3", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "SPTAN1", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "TLN1", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "PTK6", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "NEDD4L", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "WASL", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "XPO1", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "SH2B1", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "CAMKK2", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "NBEA", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "NOTCH2", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "RBPJ", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "PPP3CA", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "AKAP13", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "ITSN1", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "KALRN", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "MCF2L", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "MAPK8", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "COL5A2", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "LAMB1", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "ADAM17", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "SPARC", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "WWOX", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "OPTN", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "UBE2L3", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "TCF7L1", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "USP34", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "ADAM10", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "HDAC9", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "FUZ", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "CAB39L", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "MYH10", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "SRGAP2", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "IGF2BP1", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "ARFGAP3", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "ARHGAP1", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "RALBP1", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "FLRT1", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "FLRT3", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "NISCH", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "SLC1A5", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "DBN1", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "STX5", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "DST", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "OS9", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "BASP1", "width": 1}, {"color": "gray", "from": "Immune System", "to": "PSMB3", "width": 1}, {"color": "gray", "from": "Immune System", "to": "PSMD8", "width": 1}, {"color": "gray", "from": "Immune System", "to": "RBX1", "width": 1}, {"color": "gray", "from": "Immune System", "to": "TUBA1B", "width": 1}, {"color": "gray", "from": "Immune System", "to": "HNRNPA2B1", "width": 1}, {"color": "gray", "from": "Immune System", "to": "UBC", "width": 1}, {"color": "gray", "from": "Immune System", "to": "MAPK14", "width": 1}, {"color": "gray", "from": "Immune System", "to": "PSMD7", "width": 1}, {"color": "gray", "from": "Immune System", "to": "PDIA3", "width": 1}, {"color": "gray", "from": "Immune System", "to": "MAPK8", "width": 1}, {"color": "gray", "from": "Immune System", "to": "KPNA1", "width": 1}, {"color": "gray", "from": "Immune System", "to": "EIF2S2", "width": 1}, {"color": "gray", "from": "Immune System", "to": "CAMK2G", "width": 1}, {"color": "gray", "from": "Immune System", "to": "RAF1", "width": 1}, {"color": "gray", "from": "Immune System", "to": "TRIM5", "width": 1}, {"color": "gray", "from": "Immune System", "to": "VAV2", "width": 1}, {"color": "gray", "from": "Immune System", "to": "HSP90B1", "width": 1}, {"color": "gray", "from": "Immune System", "to": "ZEB1", "width": 1}, {"color": "gray", "from": "Immune System", "to": "SH2B1", "width": 1}, {"color": "gray", "from": "Immune System", "to": "ADAM17", "width": 1}, {"color": "gray", "from": "Immune System", "to": "PPP3CA", "width": 1}, {"color": "gray", "from": "Immune System", "to": "OPTN", "width": 1}, {"color": "gray", "from": "Immune System", "to": "GLMN", "width": 1}, {"color": "gray", "from": "Immune System", "to": "HECTD1", "width": 1}, {"color": "gray", "from": "Immune System", "to": "NEDD4L", "width": 1}, {"color": "gray", "from": "Immune System", "to": "UBE2L3", "width": 1}, {"color": "gray", "from": "Immune System", "to": "UBE4A", "width": 1}, {"color": "gray", "from": "Immune System", "to": "VHL", "width": 1}, {"color": "gray", "from": "Immune System", "to": "PTPN12", "width": 1}, {"color": "gray", "from": "Disease", "to": "POLR2I", "width": 1}, {"color": "gray", "from": "Disease", "to": "TUBA1B", "width": 1}, {"color": "gray", "from": "Disease", "to": "RBX1", "width": 1}, {"color": "gray", "from": "Disease", "to": "PSMB3", "width": 1}, {"color": "gray", "from": "Disease", "to": "PSMD8", "width": 1}, {"color": "gray", "from": "Disease", "to": "EXO1", "width": 1}, {"color": "gray", "from": "Disease", "to": "VHL", "width": 1}, {"color": "gray", "from": "Disease", "to": "RUNX1", "width": 1}, {"color": "gray", "from": "Disease", "to": "UBC", "width": 1}, {"color": "gray", "from": "Disease", "to": "VPS41", "width": 1}, {"color": "gray", "from": "Disease", "to": "KPNA1", "width": 1}, {"color": "gray", "from": "Disease", "to": "PABPN1", "width": 1}, {"color": "gray", "from": "Disease", "to": "XPO1", "width": 1}, {"color": "gray", "from": "Disease", "to": "GTF2F1", "width": 1}, {"color": "gray", "from": "Disease", "to": "POLR2D", "width": 1}, {"color": "gray", "from": "Disease", "to": "NEDD4L", "width": 1}, {"color": "gray", "from": "Disease", "to": "NELFA", "width": 1}, {"color": "gray", "from": "Disease", "to": "NRG3", "width": 1}, {"color": "gray", "from": "Disease", "to": "CAMK2G", "width": 1}, {"color": "gray", "from": "Disease", "to": "RAF1", "width": 1}, {"color": "gray", "from": "Disease", "to": "TLN1", "width": 1}, {"color": "gray", "from": "Disease", "to": "LMNA", "width": 1}, {"color": "gray", "from": "Disease", "to": "PTPN12", "width": 1}, {"color": "gray", "from": "Disease", "to": "VAV2", "width": 1}, {"color": "gray", "from": "Disease", "to": "WASL", "width": 1}, {"color": "gray", "from": "Disease", "to": "AGO4", "width": 1}, {"color": "gray", "from": "Disease", "to": "ARID4B", "width": 1}, {"color": "gray", "from": "Disease", "to": "ATP1A2", "width": 1}, {"color": "gray", "from": "Disease", "to": "MTA3", "width": 1}, {"color": "gray", "from": "Disease", "to": "MED16", "width": 1}, {"color": "gray", "from": "Disease", "to": "MED4", "width": 1}, {"color": "gray", "from": "Disease", "to": "ADAM10", "width": 1}, {"color": "gray", "from": "Disease", "to": "ADAM17", "width": 1}, {"color": "gray", "from": "Disease", "to": "HDAC9", "width": 1}, {"color": "gray", "from": "Disease", "to": "RBPJ", "width": 1}, {"color": "gray", "from": "Disease", "to": "PSMD7", "width": 1}, {"color": "gray", "from": "Disease", "to": "PRIM2", "width": 1}, {"color": "gray", "from": "Disease", "to": "GCC2", "width": 1}, {"color": "gray", "from": "Disease", "to": "HIP1", "width": 1}, {"color": "gray", "from": "Disease", "to": "MAPK8", "width": 1}, {"color": "gray", "from": "Disease", "to": "OS9", "width": 1}, {"color": "gray", "from": "Disease", "to": "PALB2", "width": 1}, {"color": "gray", "from": "Hemostasis", "to": "TUBA1B", "width": 1}, {"color": "gray", "from": "Hemostasis", "to": "PFN1", "width": 1}, {"color": "gray", "from": "Hemostasis", "to": "KIF1A", "width": 1}, {"color": "gray", "from": "Hemostasis", "to": "SH2B1", "width": 1}, {"color": "gray", "from": "Hemostasis", "to": "CDC37L1", "width": 1}, {"color": "gray", "from": "Hemostasis", "to": "SPARC", "width": 1}, {"color": "gray", "from": "Hemostasis", "to": "TLN1", "width": 1}, {"color": "gray", "from": "Hemostasis", "to": "VAV2", "width": 1}, {"color": "gray", "from": "Hemostasis", "to": "RAF1", "width": 1}, {"color": "gray", "from": "Hemostasis", "to": "GUCY1A2", "width": 1}, {"color": "gray", "from": "Hemostasis", "to": "MAPK14", "width": 1}, {"color": "gray", "from": "Hemostasis", "to": "PDE9A", "width": 1}, {"color": "gray", "from": "Vesicle-mediated transport", "to": "TUBA1B", "width": 1}, {"color": "gray", "from": "Vesicle-mediated transport", "to": "HSP90B1", "width": 1}, {"color": "gray", "from": "Vesicle-mediated transport", "to": "ARFGAP3", "width": 1}, {"color": "gray", "from": "Vesicle-mediated transport", "to": "KDELR1", "width": 1}, {"color": "gray", "from": "Vesicle-mediated transport", "to": "KIF1A", "width": 1}, {"color": "gray", "from": "Vesicle-mediated transport", "to": "GCC2", "width": 1}, {"color": "gray", "from": "Vesicle-mediated transport", "to": "VPS54", "width": 1}, {"color": "gray", "from": "Vesicle-mediated transport", "to": "OPTN", "width": 1}, {"color": "gray", "from": "Vesicle-mediated transport", "to": "ITSN1", "width": 1}, {"color": "gray", "from": "Vesicle-mediated transport", "to": "UBC", "width": 1}, {"color": "gray", "from": "Vesicle-mediated transport", "to": "HIP1", "width": 1}, {"color": "gray", "from": "Vesicle-mediated transport", "to": "WASL", "width": 1}, {"color": "gray", "from": "Vesicle-mediated transport", "to": "AP4S1", "width": 1}, {"color": "gray", "from": "Vesicle-mediated transport", "to": "CLINT1", "width": 1}, {"color": "gray", "from": "Vesicle-mediated transport", "to": "DTNBP1", "width": 1}, {"color": "gray", "from": "Vesicle-mediated transport", "to": "CYTH2", "width": 1}, {"color": "gray", "from": "Vesicle-mediated transport", "to": "STX5", "width": 1}, {"color": "gray", "from": "Vesicle-mediated transport", "to": "ANK3", "width": 1}, {"color": "gray", "from": "Vesicle-mediated transport", "to": "SPTAN1", "width": 1}, {"color": "gray", "from": "Vesicle-mediated transport", "to": "AGPAT3", "width": 1}, {"color": "gray", "from": "Vesicle-mediated transport", "to": "RAB18", "width": 1}, {"color": "gray", "from": "Vesicle-mediated transport", "to": "RIN3", "width": 1}, {"color": "gray", "from": "Vesicle-mediated transport", "to": "TRAPPC12", "width": 1}, {"color": "gray", "from": "Vesicle-mediated transport", "to": "PPP6R3", "width": 1}, {"color": "gray", "from": "Vesicle-mediated transport", "to": "HSPH1", "width": 1}, {"color": "gray", "from": "Metabolism of proteins", "to": "TUBA1B", "width": 1}, {"color": "gray", "from": "Metabolism of proteins", "to": "PSMB3", "width": 1}, {"color": "gray", "from": "Metabolism of proteins", "to": "PSMD8", "width": 1}, {"color": "gray", "from": "Metabolism of proteins", "to": "RBX1", "width": 1}, {"color": "gray", "from": "Metabolism of proteins", "to": "ANK3", "width": 1}, {"color": "gray", "from": "Metabolism of proteins", "to": "ARFGAP3", "width": 1}, {"color": "gray", "from": "Metabolism of proteins", "to": "KDELR1", "width": 1}, {"color": "gray", "from": "Metabolism of proteins", "to": "PPP6R3", "width": 1}, {"color": "gray", "from": "Metabolism of proteins", "to": "SPTAN1", "width": 1}, {"color": "gray", "from": "Metabolism of proteins", "to": "STX5", "width": 1}, {"color": "gray", "from": "Metabolism of proteins", "to": "COMMD6", "width": 1}, {"color": "gray", "from": "Metabolism of proteins", "to": "PALB2", "width": 1}, {"color": "gray", "from": "Metabolism of proteins", "to": "PSMD7", "width": 1}, {"color": "gray", "from": "Metabolism of proteins", "to": "PUM2", "width": 1}, {"color": "gray", "from": "Metabolism of proteins", "to": "UBC", "width": 1}, {"color": "gray", "from": "Metabolism of proteins", "to": "VHL", "width": 1}, {"color": "gray", "from": "Metabolism of proteins", "to": "ADAM10", "width": 1}, {"color": "gray", "from": "Metabolism of proteins", "to": "CHGB", "width": 1}, {"color": "gray", "from": "Metabolism of proteins", "to": "HSP90B1", "width": 1}, {"color": "gray", "from": "Metabolism of proteins", "to": "LAMB1", "width": 1}, {"color": "gray", "from": "Metabolism of proteins", "to": "EIF2S2", "width": 1}, {"color": "gray", "from": "Metabolism of proteins", "to": "NSMCE2", "width": 1}, {"color": "gray", "from": "Metabolism of proteins", "to": "SMC5", "width": 1}, {"color": "gray", "from": "Metabolism of proteins", "to": "PIGK", "width": 1}, {"color": "gray", "from": "Metabolism of proteins", "to": "YY1", "width": 1}, {"color": "gray", "from": "Metabolism of proteins", "to": "TTL", "width": 1}, {"color": "gray", "from": "Metabolism of proteins", "to": "PDCL", "width": 1}, {"color": "gray", "from": "Metabolism of proteins", "to": "USP34", "width": 1}, {"color": "gray", "from": "Metabolism of proteins", "to": "USP48", "width": 1}, {"color": "gray", "from": "Metabolism of proteins", "to": "ERO1B", "width": 1}, {"color": "gray", "from": "Metabolism of proteins", "to": "HIPK2", "width": 1}, {"color": "gray", "from": "Metabolism of proteins", "to": "ING2", "width": 1}, {"color": "gray", "from": "Metabolism of proteins", "to": "IARS1", "width": 1}, {"color": "gray", "from": "Metabolism of proteins", "to": "VBP1", "width": 1}, {"color": "gray", "from": "Metabolism of proteins", "to": "OS9", "width": 1}, {"color": "gray", "from": "Metabolism of proteins", "to": "PDIA3", "width": 1}, {"color": "gray", "from": "Metabolism of proteins", "to": "MRPL22", "width": 1}, {"color": "gray", "from": "Metabolism of proteins", "to": "SEMA5A", "width": 1}, {"color": "gray", "from": "Metabolism of proteins", "to": "SEMA5B", "width": 1}, {"color": "gray", "from": "Metabolism of proteins", "to": "UBE2L3", "width": 1}, {"color": "gray", "from": "Metabolism of proteins", "to": "ZC3H15", "width": 1}, {"color": "gray", "from": "Metabolism of proteins", "to": "EIF2B4", "width": 1}, {"color": "gray", "from": "Metabolism of proteins", "to": "RAB18", "width": 1}, {"color": "gray", "from": "Metabolism of proteins", "to": "RAB29", "width": 1}, {"color": "gray", "from": "Metabolism of proteins", "to": "LSAMP", "width": 1}, {"color": "gray", "from": "Metabolism of proteins", "to": "ALDH2", "width": 1}, {"color": "gray", "from": "Gene expression (Transcription)", "to": "POLR2I", "width": 1}, {"color": "gray", "from": "Gene expression (Transcription)", "to": "EXO1", "width": 1}, {"color": "gray", "from": "Gene expression (Transcription)", "to": "PSMB3", "width": 1}, {"color": "gray", "from": "Gene expression (Transcription)", "to": "PSMD8", "width": 1}, {"color": "gray", "from": "Gene expression (Transcription)", "to": "RBX1", "width": 1}, {"color": "gray", "from": "Gene expression (Transcription)", "to": "AGO4", "width": 1}, {"color": "gray", "from": "Gene expression (Transcription)", "to": "CYCS", "width": 1}, {"color": "gray", "from": "Gene expression (Transcription)", "to": "RRAGB", "width": 1}, {"color": "gray", "from": "Gene expression (Transcription)", "to": "GTF2F1", "width": 1}, {"color": "gray", "from": "Gene expression (Transcription)", "to": "NELFA", "width": 1}, {"color": "gray", "from": "Gene expression (Transcription)", "to": "POLR2D", "width": 1}, {"color": "gray", "from": "Gene expression (Transcription)", "to": "HIPK2", "width": 1}, {"color": "gray", "from": "Gene expression (Transcription)", "to": "MAPK14", "width": 1}, {"color": "gray", "from": "Gene expression (Transcription)", "to": "UBC", "width": 1}, {"color": "gray", "from": "Gene expression (Transcription)", "to": "ARID4B", "width": 1}, {"color": "gray", "from": "Gene expression (Transcription)", "to": "MTA3", "width": 1}, {"color": "gray", "from": "Gene expression (Transcription)", "to": "NEDD4L", "width": 1}, {"color": "gray", "from": "Gene expression (Transcription)", "to": "XPO1", "width": 1}, {"color": "gray", "from": "Gene expression (Transcription)", "to": "TET3", "width": 1}, {"color": "gray", "from": "Gene expression (Transcription)", "to": "PABPN1", "width": 1}, {"color": "gray", "from": "Gene expression (Transcription)", "to": "CAMK2G", "width": 1}, {"color": "gray", "from": "Gene expression (Transcription)", "to": "GRIA2", "width": 1}, {"color": "gray", "from": "Gene expression (Transcription)", "to": "PSMD7", "width": 1}, {"color": "gray", "from": "Gene expression (Transcription)", "to": "RUNX1", "width": 1}, {"color": "gray", "from": "Gene expression (Transcription)", "to": "RBPJ", "width": 1}, {"color": "gray", "from": "Gene expression (Transcription)", "to": "DROSHA", "width": 1}, {"color": "gray", "from": "Gene expression (Transcription)", "to": "GADD45A", "width": 1}, {"color": "gray", "from": "Gene expression (Transcription)", "to": "JARID2", "width": 1}, {"color": "gray", "from": "Gene expression (Transcription)", "to": "EPC1", "width": 1}, {"color": "gray", "from": "Gene expression (Transcription)", "to": "DEK", "width": 1}, {"color": "gray", "from": "Gene expression (Transcription)", "to": "HDAC9", "width": 1}, {"color": "gray", "from": "Gene expression (Transcription)", "to": "ING2", "width": 1}, {"color": "gray", "from": "Gene expression (Transcription)", "to": "MED16", "width": 1}, {"color": "gray", "from": "Gene expression (Transcription)", "to": "MED4", "width": 1}, {"color": "gray", "from": "Gene expression (Transcription)", "to": "NLRC4", "width": 1}, {"color": "gray", "from": "Gene expression (Transcription)", "to": "NOTCH2", "width": 1}, {"color": "gray", "from": "Gene expression (Transcription)", "to": "PIP4K2B", "width": 1}, {"color": "gray", "from": "Gene expression (Transcription)", "to": "SMARCA2", "width": 1}, {"color": "gray", "from": "Gene expression (Transcription)", "to": "TCF7L1", "width": 1}, {"color": "gray", "from": "Gene expression (Transcription)", "to": "WWOX", "width": 1}, {"color": "gray", "from": "Gene expression (Transcription)", "to": "YY1", "width": 1}, {"color": "gray", "from": "Gene expression (Transcription)", "to": "ZNF432", "width": 1}, {"color": "gray", "from": "Gene expression (Transcription)", "to": "NCOA3", "width": 1}, {"color": "gray", "from": "Metabolism of RNA", "to": "POLR2I", "width": 1}, {"color": "gray", "from": "Metabolism of RNA", "to": "HNRNPA2B1", "width": 1}, {"color": "gray", "from": "Metabolism of RNA", "to": "LSM4", "width": 1}, {"color": "gray", "from": "Metabolism of RNA", "to": "PSMB3", "width": 1}, {"color": "gray", "from": "Metabolism of RNA", "to": "PSMD8", "width": 1}, {"color": "gray", "from": "Metabolism of RNA", "to": "GTF2F1", "width": 1}, {"color": "gray", "from": "Metabolism of RNA", "to": "POLR2D", "width": 1}, {"color": "gray", "from": "Metabolism of RNA", "to": "DDX42", "width": 1}, {"color": "gray", "from": "Metabolism of RNA", "to": "FUS", "width": 1}, {"color": "gray", "from": "Metabolism of RNA", "to": "HNRNPD", "width": 1}, {"color": "gray", "from": "Metabolism of RNA", "to": "SF1", "width": 1}, {"color": "gray", "from": "Metabolism of RNA", "to": "TCERG1", "width": 1}, {"color": "gray", "from": "Metabolism of RNA", "to": "PABPN1", "width": 1}, {"color": "gray", "from": "Metabolism of RNA", "to": "TSEN2", "width": 1}, {"color": "gray", "from": "Metabolism of RNA", "to": "KHSRP", "width": 1}, {"color": "gray", "from": "Metabolism of RNA", "to": "MAPK14", "width": 1}, {"color": "gray", "from": "Metabolism of RNA", "to": "IGF2BP1", "width": 1}, {"color": "gray", "from": "Metabolism of RNA", "to": "IGF2BP3", "width": 1}, {"color": "gray", "from": "Metabolism of RNA", "to": "PSMD7", "width": 1}, {"color": "gray", "from": "Metabolism of RNA", "to": "UBC", "width": 1}, {"color": "gray", "from": "Metabolism of RNA", "to": "XPO1", "width": 1}, {"color": "gray", "from": "Metabolism of RNA", "to": "DDX52", "width": 1}, {"color": "gray", "from": "Metabolism of RNA", "to": "NHP2", "width": 1}, {"color": "gray", "from": "DNA Repair", "to": "RBX1", "width": 1}, {"color": "gray", "from": "DNA Repair", "to": "POLR2I", "width": 1}, {"color": "gray", "from": "DNA Repair", "to": "EXO1", "width": 1}, {"color": "gray", "from": "DNA Repair", "to": "UBC", "width": 1}, {"color": "gray", "from": "DNA Repair", "to": "POLR2D", "width": 1}, {"color": "gray", "from": "DNA Repair", "to": "USP1", "width": 1}, {"color": "gray", "from": "DNA Repair", "to": "MAPK8", "width": 1}, {"color": "gray", "from": "DNA Repair", "to": "YY1", "width": 1}, {"color": "gray", "from": "DNA Repair", "to": "PALB2", "width": 1}, {"color": "gray", "from": "Cell Cycle", "to": "PSMB3", "width": 1}, {"color": "gray", "from": "Cell Cycle", "to": "PSMD8", "width": 1}, {"color": "gray", "from": "Cell Cycle", "to": "TUBA1B", "width": 1}, {"color": "gray", "from": "Cell Cycle", "to": "RBX1", "width": 1}, {"color": "gray", "from": "Cell Cycle", "to": "NCAPG", "width": 1}, {"color": "gray", "from": "Cell Cycle", "to": "POLR2I", "width": 1}, {"color": "gray", "from": "Cell Cycle", "to": "EXO1", "width": 1}, {"color": "gray", "from": "Cell Cycle", "to": "MCM8", "width": 1}, {"color": "gray", "from": "Cell Cycle", "to": "PTK6", "width": 1}, {"color": "gray", "from": "Cell Cycle", "to": "UBC", "width": 1}, {"color": "gray", "from": "Cell Cycle", "to": "PSMD7", "width": 1}, {"color": "gray", "from": "Cell Cycle", "to": "ODF2", "width": 1}, {"color": "gray", "from": "Cell Cycle", "to": "OPTN", "width": 1}, {"color": "gray", "from": "Cell Cycle", "to": "PCNT", "width": 1}, {"color": "gray", "from": "Cell Cycle", "to": "XPO1", "width": 1}, {"color": "gray", "from": "Cell Cycle", "to": "PRIM2", "width": 1}, {"color": "gray", "from": "Cell Cycle", "to": "LMNA", "width": 1}, {"color": "gray", "from": "Cell Cycle", "to": "NHP2", "width": 1}, {"color": "gray", "from": "Cell Cycle", "to": "PPP6R3", "width": 1}, {"color": "gray", "from": "Cell Cycle", "to": "POLR2D", "width": 1}, {"color": "gray", "from": "Developmental Biology", "to": "POLR2I", "width": 1}, {"color": "gray", "from": "Developmental Biology", "to": "PSMB3", "width": 1}, {"color": "gray", "from": "Developmental Biology", "to": "PSMD8", "width": 1}, {"color": "gray", "from": "Developmental Biology", "to": "RBX1", "width": 1}, {"color": "gray", "from": "Developmental Biology", "to": "TUBA1B", "width": 1}, {"color": "gray", "from": "Developmental Biology", "to": "PFN1", "width": 1}, {"color": "gray", "from": "Developmental Biology", "to": "PABPN1", "width": 1}, {"color": "gray", "from": "Developmental Biology", "to": "COL5A2", "width": 1}, {"color": "gray", "from": "Developmental Biology", "to": "PRNP", "width": 1}, {"color": "gray", "from": "Developmental Biology", "to": "SPTAN1", "width": 1}, {"color": "gray", "from": "Developmental Biology", "to": "VAV2", "width": 1}, {"color": "gray", "from": "Developmental Biology", "to": "IARS1", "width": 1}, {"color": "gray", "from": "Developmental Biology", "to": "XPO1", "width": 1}, {"color": "gray", "from": "Developmental Biology", "to": "DEK", "width": 1}, {"color": "gray", "from": "Developmental Biology", "to": "RUNX1", "width": 1}, {"color": "gray", "from": "Developmental Biology", "to": "NCOA3", "width": 1}, {"color": "gray", "from": "Developmental Biology", "to": "POLR2D", "width": 1}, {"color": "gray", "from": "Developmental Biology", "to": "YY1", "width": 1}, {"color": "gray", "from": "Developmental Biology", "to": "MSI1", "width": 1}, {"color": "gray", "from": "Developmental Biology", "to": "PSMD7", "width": 1}, {"color": "gray", "from": "Developmental Biology", "to": "UBC", "width": 1}, {"color": "gray", "from": "Developmental Biology", "to": "ADAM10", "width": 1}, {"color": "gray", "from": "Developmental Biology", "to": "RBPJ", "width": 1}, {"color": "gray", "from": "Developmental Biology", "to": "ITSN1", "width": 1}, {"color": "gray", "from": "Developmental Biology", "to": "KALRN", "width": 1}, {"color": "gray", "from": "Developmental Biology", "to": "WASL", "width": 1}, {"color": "gray", "from": "Developmental Biology", "to": "SRGAP2", "width": 1}, {"color": "gray", "from": "Developmental Biology", "to": "CDH4", "width": 1}, {"color": "gray", "from": "Developmental Biology", "to": "MAPK14", "width": 1}, {"color": "gray", "from": "Developmental Biology", "to": "CHD9", "width": 1}, {"color": "gray", "from": "Developmental Biology", "to": "MED16", "width": 1}, {"color": "gray", "from": "Developmental Biology", "to": "MED4", "width": 1}, {"color": "gray", "from": "Developmental Biology", "to": "SREBF2", "width": 1}, {"color": "gray", "from": "Developmental Biology", "to": "ANK3", "width": 1}, {"color": "gray", "from": "Developmental Biology", "to": "SCN3B", "width": 1}, {"color": "gray", "from": "Developmental Biology", "to": "MTA3", "width": 1}, {"color": "gray", "from": "Developmental Biology", "to": "SEMA5A", "width": 1}, {"color": "gray", "from": "Developmental Biology", "to": "DLG1", "width": 1}, {"color": "gray", "from": "Developmental Biology", "to": "DLG3", "width": 1}, {"color": "gray", "from": "Developmental Biology", "to": "LAMB1", "width": 1}, {"color": "gray", "from": "Developmental Biology", "to": "TET3", "width": 1}, {"color": "gray", "from": "Developmental Biology", "to": "MYH10", "width": 1}, {"color": "gray", "from": "Developmental Biology", "to": "FLRT3", "width": 1}, {"color": "gray", "from": "Developmental Biology", "to": "TLN1", "width": 1}, {"color": "gray", "from": "Developmental Biology", "to": "TCF7L1", "width": 1}, {"color": "gray", "from": "Developmental Biology", "to": "SMARCA2", "width": 1}, {"color": "gray", "from": "Developmental Biology", "to": "AGO4", "width": 1}, {"color": "gray", "from": "Developmental Biology", "to": "ZEB1", "width": 1}, {"color": "gray", "from": "Developmental Biology", "to": "OTX2", "width": 1}, {"color": "gray", "from": "Cellular responses to stimuli", "to": "TUBA1B", "width": 1}, {"color": "gray", "from": "Cellular responses to stimuli", "to": "PSMB3", "width": 1}, {"color": "gray", "from": "Cellular responses to stimuli", "to": "PSMD8", "width": 1}, {"color": "gray", "from": "Cellular responses to stimuli", "to": "RBX1", "width": 1}, {"color": "gray", "from": "Cellular responses to stimuli", "to": "CHD9", "width": 1}, {"color": "gray", "from": "Cellular responses to stimuli", "to": "CYCS", "width": 1}, {"color": "gray", "from": "Cellular responses to stimuli", "to": "PTK6", "width": 1}, {"color": "gray", "from": "Cellular responses to stimuli", "to": "HSPA4L", "width": 1}, {"color": "gray", "from": "Cellular responses to stimuli", "to": "HSPH1", "width": 1}, {"color": "gray", "from": "Cellular responses to stimuli", "to": "AGO4", "width": 1}, {"color": "gray", "from": "Cellular responses to stimuli", "to": "MAPK14", "width": 1}, {"color": "gray", "from": "Cellular responses to stimuli", "to": "MAPK8", "width": 1}, {"color": "gray", "from": "Cellular responses to stimuli", "to": "UBC", "width": 1}, {"color": "gray", "from": "Cellular responses to stimuli", "to": "TLN1", "width": 1}, {"color": "gray", "from": "Cellular responses to stimuli", "to": "PSMD7", "width": 1}, {"color": "gray", "from": "Cellular responses to stimuli", "to": "VHL", "width": 1}, {"color": "gray", "from": "Cellular responses to stimuli", "to": "XPO1", "width": 1}, {"color": "gray", "from": "Cellular responses to stimuli", "to": "ITFG2", "width": 1}, {"color": "gray", "from": "Cellular responses to stimuli", "to": "RRAGB", "width": 1}, {"color": "gray", "from": "Cellular responses to stimuli", "to": "FBXL17", "width": 1}, {"color": "gray", "from": "Cellular responses to stimuli", "to": "PALB2", "width": 1}, {"color": "gray", "from": "Cellular responses to stimuli", "to": "HSP90B1", "width": 1}, {"color": "gray", "from": "Cellular responses to stimuli", "to": "CEBPG", "width": 1}, {"color": "gray", "from": "Cellular responses to stimuli", "to": "EIF2S2", "width": 1}, {"color": "gray", "from": "Cellular responses to stimuli", "to": "KHSRP", "width": 1}, {"color": "gray", "from": "Cellular responses to stimuli", "to": "LMNA", "width": 1}, {"color": "gray", "from": "Cellular responses to stimuli", "to": "CAMK2G", "width": 1}, {"color": "gray", "from": "Autophagy", "to": "TUBA1B", "width": 1}, {"color": "gray", "from": "Autophagy", "to": "PCNT", "width": 1}, {"color": "gray", "from": "Autophagy", "to": "UBC", "width": 1}, {"color": "gray", "from": "Autophagy", "to": "OPTN", "width": 1}, {"color": "gray", "from": "Autophagy", "to": "UBE2L3", "width": 1}, {"color": "gray", "from": "Autophagy", "to": "ATG10", "width": 1}, {"color": "gray", "from": "Autophagy", "to": "RRAGB", "width": 1}, {"color": "gray", "from": "Autophagy", "to": "WIPI2", "width": 1}, {"color": "gray", "from": "DNA Replication", "to": "PSMB3", "width": 1}, {"color": "gray", "from": "DNA Replication", "to": "PSMD8", "width": 1}, {"color": "gray", "from": "DNA Replication", "to": "RBX1", "width": 1}, {"color": "gray", "from": "DNA Replication", "to": "KPNA1", "width": 1}, {"color": "gray", "from": "DNA Replication", "to": "MCM8", "width": 1}, {"color": "gray", "from": "DNA Replication", "to": "PSMD7", "width": 1}, {"color": "gray", "from": "DNA Replication", "to": "UBC", "width": 1}, {"color": "gray", "from": "DNA Replication", "to": "PRIM2", "width": 1}, {"color": "gray", "from": "Neuronal System", "to": "TUBA1B", "width": 1}, {"color": "gray", "from": "Neuronal System", "to": "CAMK2G", "width": 1}, {"color": "gray", "from": "Neuronal System", "to": "DLG1", "width": 1}, {"color": "gray", "from": "Neuronal System", "to": "DLG3", "width": 1}, {"color": "gray", "from": "Neuronal System", "to": "CAMKK2", "width": 1}, {"color": "gray", "from": "Neuronal System", "to": "GRIA2", "width": 1}, {"color": "gray", "from": "Neuronal System", "to": "CASK", "width": 1}, {"color": "gray", "from": "Neuronal System", "to": "LIN7A", "width": 1}, {"color": "gray", "from": "Neuronal System", "to": "NBEA", "width": 1}, {"color": "gray", "from": "Neuronal System", "to": "SLC38A2", "width": 1}, {"color": "gray", "from": "Neuronal System", "to": "DLGAP4", "width": 1}, {"color": "gray", "from": "Neuronal System", "to": "HOMER2", "width": 1}, {"color": "gray", "from": "Organelle biogenesis and maintenance", "to": "TUBA1B", "width": 1}, {"color": "gray", "from": "Organelle biogenesis and maintenance", "to": "CHD9", "width": 1}, {"color": "gray", "from": "Organelle biogenesis and maintenance", "to": "CYCS", "width": 1}, {"color": "gray", "from": "Organelle biogenesis and maintenance", "to": "AHI1", "width": 1}, {"color": "gray", "from": "Organelle biogenesis and maintenance", "to": "BBS7", "width": 1}, {"color": "gray", "from": "Organelle biogenesis and maintenance", "to": "CLUAP1", "width": 1}, {"color": "gray", "from": "Organelle biogenesis and maintenance", "to": "ODF2", "width": 1}, {"color": "gray", "from": "Organelle biogenesis and maintenance", "to": "PCNT", "width": 1}, {"color": "gray", "from": "Transport of small molecules", "to": "PSMB3", "width": 1}, {"color": "gray", "from": "Transport of small molecules", "to": "PSMD8", "width": 1}, {"color": "gray", "from": "Transport of small molecules", "to": "UBC", "width": 1}, {"color": "gray", "from": "Transport of small molecules", "to": "NEDD4L", "width": 1}, {"color": "gray", "from": "Transport of small molecules", "to": "RAF1", "width": 1}, {"color": "gray", "from": "Transport of small molecules", "to": "SLC1A5", "width": 1}, {"color": "gray", "from": "Transport of small molecules", "to": "SLC38A2", "width": 1}, {"color": "gray", "from": "Transport of small molecules", "to": "ATP1A2", "width": 1}, {"color": "gray", "from": "Transport of small molecules", "to": "CAMK2G", "width": 1}, {"color": "gray", "from": "Transport of small molecules", "to": "EIF2S2", "width": 1}, {"color": "gray", "from": "Transport of small molecules", "to": "OS9", "width": 1}, {"color": "gray", "from": "Transport of small molecules", "to": "PSMD7", "width": 1}, {"color": "gray", "from": "Programmed Cell Death", "to": "PSMB3", "width": 1}, {"color": "gray", "from": "Programmed Cell Death", "to": "PSMD8", "width": 1}, {"color": "gray", "from": "Programmed Cell Death", "to": "UBC", "width": 1}, {"color": "gray", "from": "Programmed Cell Death", "to": "UBE2L3", "width": 1}, {"color": "gray", "from": "Programmed Cell Death", "to": "CYCS", "width": 1}, {"color": "gray", "from": "Programmed Cell Death", "to": "SPTAN1", "width": 1}, {"color": "gray", "from": "Programmed Cell Death", "to": "DFFA", "width": 1}, {"color": "gray", "from": "Programmed Cell Death", "to": "KPNA1", "width": 1}, {"color": "gray", "from": "Programmed Cell Death", "to": "LMNA", "width": 1}, {"color": "gray", "from": "Programmed Cell Death", "to": "MAPK8", "width": 1}, {"color": "gray", "from": "Programmed Cell Death", "to": "APPL1", "width": 1}, {"color": "gray", "from": "Programmed Cell Death", "to": "PSMD7", "width": 1}, {"color": "gray", "from": "Extracellular matrix organization", "to": "COL5A2", "width": 1}, {"color": "gray", "from": "Extracellular matrix organization", "to": "LAMB1", "width": 1}, {"color": "gray", "from": "Extracellular matrix organization", "to": "LRP4", "width": 1}, {"color": "gray", "from": "Extracellular matrix organization", "to": "SPARC", "width": 1}, {"color": "gray", "from": "Extracellular matrix organization", "to": "CASK", "width": 1}, {"color": "gray", "from": "Extracellular matrix organization", "to": "ADAM10", "width": 1}, {"color": "gray", "from": "Extracellular matrix organization", "to": "ADAM17", "width": 1}, {"color": "gray", "from": "Extracellular matrix organization", "to": "DST", "width": 1}, {"color": "gray", "from": "Extracellular matrix organization", "to": "SGCE", "width": 1}, {"color": "gray", "from": "Muscle contraction", "to": "ATP1A2", "width": 1}, {"color": "gray", "from": "Muscle contraction", "to": "CAMK2G", "width": 1}, {"color": "gray", "from": "Muscle contraction", "to": "ALDH2", "width": 1}, {"color": "gray", "from": "Muscle contraction", "to": "GUCY1A2", "width": 1}, {"color": "gray", "from": "Muscle contraction", "to": "TLN1", "width": 1}, {"color": "gray", "from": "Muscle contraction", "to": "SCN3B", "width": 1}, {"color": "gray", "from": "Chromatin organization", "to": "ARID4B", "width": 1}, {"color": "gray", "from": "Chromatin organization", "to": "EPC1", "width": 1}, {"color": "gray", "from": "Chromatin organization", "to": "KMT5B", "width": 1}, {"color": "gray", "from": "Chromatin organization", "to": "MTA3", "width": 1}, {"color": "gray", "from": "Chromatin organization", "to": "SMARCA2", "width": 1}, {"color": "gray", "from": "Reproduction", "to": "LMNA", "width": 1}, {"color": "gray", "from": "Cell-Cell communication", "to": "AGO4", "width": 1}, {"color": "gray", "from": "Cell-Cell communication", "to": "CDH4", "width": 1}, {"color": "gray", "from": "Cell-Cell communication", "to": "CASK", "width": 1}, {"color": "gray", "from": "Cell-Cell communication", "to": "SPTAN1", "width": 1}, {"color": "gray", "from": "Cell-Cell communication", "to": "WASL", "width": 1}, {"color": "gray", "from": "Circadian Clock", "to": "CHD9", "width": 1}, {"color": "gray", "from": "Sensory Perception", "to": "CASK", "width": 1}, {"color": "gray", "from": "Sensory Perception", "to": "SPTAN1", "width": 1}, {"color": "gray", "from": "Protein localization", "to": "UBC", "width": 1}, {"color": "gray", "from": "Protein localization", "to": "PRNP", "width": 1}, {"color": "gray", "from": "Protein localization", "to": "STX5", "width": 1}, {"color": "red", "from": "RIN3", "to": "NISCH", "width": 1}, {"color": "red", "from": "RIN3", "to": "ITSN1", "width": 1}, {"color": "red", "from": "RIN3", "to": "TLN1", "width": 1}, {"color": "red", "from": "HIP1", "to": "VPS54", "width": 1}, {"color": "red", "from": "HIP1", "to": "ATG10", "width": 1}, {"color": "red", "from": "VHL", "to": "EIF2B4", "width": 1}, {"color": "red", "from": "VHL", "to": "RALBP1", "width": 1}, {"color": "red", "from": "VHL", "to": "SMARCA2", "width": 1}, {"color": "red", "from": "VHL", "to": "VBP1", "width": 1}, {"color": "red", "from": "VHL", "to": "USP1", "width": 1}, {"color": "red", "from": "NCOA3", "to": "OPTN", "width": 1}, {"color": "red", "from": "NCOA3", "to": "MTA3", "width": 1}, {"color": "red", "from": "NCOA3", "to": "MAPK14", "width": 1}, {"color": "red", "from": "NCOA3", "to": "MAPK8", "width": 1}, {"color": "red", "from": "PCNT", "to": "KALRN", "width": 1}, {"color": "red", "from": "PCNT", "to": "SPTAN1", "width": 1}, {"color": "red", "from": "PCNT", "to": "SRGAP2", "width": 1}, {"color": "red", "from": "PCNT", "to": "DST", "width": 1}, {"color": "red", "from": "PCNT", "to": "KIF1A", "width": 1}, {"color": "red", "from": "RUNX1", "to": "TCERG1", "width": 1}, {"color": "red", "from": "ITSN1", "to": "TRIM5", "width": 1}, {"color": "red", "from": "ITSN1", "to": "MED4", "width": 1}, {"color": "red", "from": "ITSN1", "to": "SPTAN1", "width": 1}, {"color": "red", "from": "ITSN1", "to": "RALBP1", "width": 1}, {"color": "red", "from": "ITSN1", "to": "DST", "width": 1}, {"color": "red", "from": "ITSN1", "to": "WASL", "width": 1}, {"color": "red", "from": "RALBP1", "to": "DLG1", "width": 1}, {"color": "red", "from": "UBC", "to": "ING2", "width": 1}, {"color": "red", "from": "UBC", "to": "UBE2L3", "width": 1}, {"color": "red", "from": "UBC", "to": "PSMD7", "width": 1}, {"color": "red", "from": "UBC", "to": "USP1", "width": 1}, {"color": "red", "from": "UBC", "to": "WWP2", "width": 1}, {"color": "red", "from": "UBC", "to": "OPTN", "width": 1}, {"color": "red", "from": "UBC", "to": "USP34", "width": 1}, {"color": "red", "from": "UBC", "to": "NEDD4L", "width": 1}, {"color": "red", "from": "PSMD8", "to": "PSMB3", "width": 1}, {"color": "red", "from": "RBX1", "to": "POLR2I", "width": 1}, {"color": "red", "from": "GTF2F1", "to": "POLR2D", "width": 1}, {"color": "red", "from": "MAPK14", "to": "DLG1", "width": 1}, {"color": "red", "from": "MAPK14", "to": "MAPK8", "width": 1}, {"color": "red", "from": "KHSRP", "to": "HNRNPD", "width": 1}, {"color": "red", "from": "KHSRP", "to": "DROSHA", "width": 1}, {"color": "red", "from": "LIN7A", "to": "CASK", "width": 1}, {"color": "red", "from": "HSP90B1", "to": "PDIA3", "width": 1}, {"color": "red", "from": "HSP90B1", "to": "OS9", "width": 1}, {"color": "red", "from": "YY1", "to": "JARID2", "width": 1}, {"color": "red", "from": "DBN1", "to": "HOMER2", "width": 1}, {"color": "red", "from": "UQCRB", "to": "NDUFS4", "width": 1}, {"color": "red", "from": "UQCRB", "to": "CYCS", "width": 1}, {"color": "red", "from": "NDUFS4", "to": "PALB2", "width": 1}, {"color": "red", "from": "MED4", "to": "POLR2D", "width": 1}, {"color": "red", "from": "MED4", "to": "MED16", "width": 1}, {"color": "red", "from": "POLR2D", "to": "NELFA", "width": 1}, {"color": "red", "from": "NBEA", "to": "DLG3", "width": 1}, {"color": "red", "from": "RBPJ", "to": "NOTCH2", "width": 1}, {"color": "red", "from": "HIBCH", "to": "HADHA", "width": 1}, {"color": "red", "from": "HIBCH", "to": "MRPL22", "width": 1}, {"color": "red", "from": "SEMA5B", "to": "SEMA5A", "width": 1}, {"color": "red", "from": "ADAM10", "to": "DLG1", "width": 1}, {"color": "red", "from": "ADAM10", "to": "NOTCH2", "width": 1}, {"color": "red", "from": "ADAM10", "to": "ADAM17", "width": 1}, {"color": "red", "from": "DLG1", "to": "CASK", "width": 1}, {"color": "red", "from": "DLG1", "to": "DLG3", "width": 1}, {"color": "red", "from": "CAMK2G", "to": "GRIA2", "width": 1}, {"color": "red", "from": "GRIA2", "to": "DLG3", "width": 1}, {"color": "red", "from": "NSMCE2", "to": "SMC5", "width": 1}, {"color": "red", "from": "NOTCH2", "to": "ADAM17", "width": 1}, {"color": "red", "from": "AGO4", "to": "DROSHA", "width": 1}, {"color": "red", "from": "DLG3", "to": "NEDD4L", "width": 1}, {"color": "red", "from": "EIF2S2", "to": "EIF2B4", "width": 1}, {"color": "red", "from": "FUS", "to": "DROSHA", "width": 1}, {"color": "red", "from": "FUS", "to": "HNRNPD", "width": 1}, {"color": "red", "from": "FUS", "to": "OPTN", "width": 1}, {"color": "red", "from": "HSPH1", "to": "HSPA4L", "width": 1}, {"color": "red", "from": "UBE2L3", "to": "WWP2", "width": 1}, {"color": "red", "from": "UBE2L3", "to": "NEDD4L", "width": 1}, {"color": "red", "from": "IGF2BP3", "to": "IGF2BP1", "width": 1}, {"color": "red", "from": "ARID4B", "to": "ING2", "width": 1}, {"color": "red", "from": "ANK3", "to": "SPTAN1", "width": 1}, {"color": "red", "from": "TCERG1", "to": "SF1", "width": 1}, {"color": "red", "from": "GLMN", "to": "NLRC4", "width": 1}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "repulsion": {
+            "centralGravity": 0.2,
+            "damping": 0.09,
+            "nodeDistance": 150,
+            "springConstant": 0.05,
+            "springLength": 200
+        },
+        "solver": "repulsion",
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+                      network.on("stabilizationProgress", function(params) {
+                          document.getElementById('loadingBar').removeAttribute("style");
+                          var maxWidth = 496;
+                          var minWidth = 20;
+                          var widthFactor = params.iterations/params.total;
+                          var width = Math.max(minWidth,maxWidth * widthFactor);
+                          document.getElementById('bar').style.width = width + 'px';
+                          document.getElementById('text').innerHTML = Math.round(widthFactor*100) + '%';
+                      });
+                      network.once("stabilizationIterationsDone", function() {
+                          document.getElementById('text').innerHTML = '100%';
+                          document.getElementById('bar').style.width = '496px';
+                          document.getElementById('loadingBar').style.opacity = 0;
+                          // really clean the dom element
+                          setTimeout(function () {document.getElementById('loadingBar').style.display = 'none';}, 500);
+                      });
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+        <script type="text/javascript">
+        
+            let selectedNodes = [];
+            let previousStyles = {}; 
+            let undoStack = [];
+    
+            function saveNetworkState() {
+                const nodes = network.body.data.nodes.get();
+                const edges = network.body.data.edges.get();
+                const styles = {};
+            
+                nodes.forEach(node => {
+                    styles[node.id] = {
+                        color: previousStyles[node.id]?.color || node.color || null
+                    };
+                });
+            
+                undoStack.push(JSON.stringify({ nodes, edges, styles }));
+            }
+            
+            
+            function removeSelectedNodes() {
+                if (selectedNodes.length > 0) {
+                    saveNetworkState();
+            
+                    network.body.data.nodes.remove(selectedNodes.map(id => ({ id })));
+                    selectedNodes = [];
+                } else {
+                    alert("No nodes selected.");
+                }
+            }
+            
+            function undo() {
+                if (undoStack.length > 0) {
+                    const previousState = JSON.parse(undoStack.pop());
+            
+                    network.body.data.nodes.clear();
+                    network.body.data.edges.clear();
+                    network.body.data.nodes.add(previousState.nodes);
+                    network.body.data.edges.add(previousState.edges);
+            
+                    Object.keys(previousState.styles).forEach(nodeId => {
+                        network.body.data.nodes.update({
+                            id: nodeId,
+                            ...previousState.styles[nodeId]
+                        });
+                    });
+            
+                    selectedNodes = [];
+                    previousStyles = previousState.styles;
+                } else {
+                    alert("Nothing to undo.");
+                }
+            }
+            
+            network.on("selectNode", function (params) {
+                if (event.ctrlKey) {
+                    selectedNodes = [...new Set([...selectedNodes, ...params.nodes])];
+                } else {
+                    selectedNodes.forEach(nodeId => {
+                        if (previousStyles[nodeId]) {
+                            network.body.data.nodes.update({
+                                id: nodeId,
+                                ...previousStyles[nodeId]
+                            });
+                        }
+                    });
+                    selectedNodes = params.nodes;
+                }
+            
+                params.nodes.forEach(nodeId => {
+                    const nodeData = network.body.data.nodes.get(nodeId);
+                    if (!previousStyles[nodeId]) {
+                        previousStyles[nodeId] = {
+                            color: nodeData.color || null
+                        };
+                    }
+                    network.body.data.nodes.update({
+                        id: nodeId,
+                        color: "black"
+                    });
+                });
+            });
+            
+            network.on("deselectNode", function (params) {
+                if (!event.ctrlKey) {
+                    selectedNodes.forEach(nodeId => {
+                        if (previousStyles[nodeId]) {
+                            network.body.data.nodes.update({
+                                id: nodeId,
+                                ...previousStyles[nodeId]
+                            });
+                        }
+                    });
+                    selectedNodes = [];
+                } else {
+                    params.nodes.forEach(nodeId => {
+                        if (previousStyles[nodeId]) {
+                            network.body.data.nodes.update({
+                                id: nodeId,
+                                ...previousStyles[nodeId]
+                            });
+                        }
+                    });
+                }
+            });
+                    
+                    
+            
+            
+            
+            function changePhysics(value) {
+                network.setOptions({
+                    physics: {
+                        solver: 'repulsion',
+                        repulsion: {
+                            nodeDistance: parseInt(value),
+                        },
+                    },
+                });
+            }
+            
+            
+            
+            
+            
+                            
+            let originalNodeSizes = {};
+            
+            function initializeOriginalNodeSizes() {
+                network.body.data.nodes.get().forEach(node => {
+                    if (!originalNodeSizes[node.id]) {
+                        originalNodeSizes[node.id] = node.size || 1; 
+                    }
+                });
+            }
+            
+            function scaleNetworkSize(scaleFactor) {
+                initializeOriginalNodeSizes(); 
+            
+                network.body.data.nodes.update(
+                    network.body.data.nodes.get().map(node => ({
+                        id: node.id,
+                        size: originalNodeSizes[node.id] * scaleFactor 
+                    }))
+                );
+            }
+                            
+                        
+            
+            function changeFontSize(size) {
+                network.body.data.nodes.update(
+                    network.body.data.nodes.get().map(node => ({
+                        id: node.id,
+                        font: { size: size }
+                    }))
+                );
+            }
+            
+            
+            let physicsEnabled = true;
+            
+            function togglePhysics() {
+                physicsEnabled = !physicsEnabled;
+            
+                network.setOptions({
+                    physics: physicsEnabled
+                });
+            
+
+                document.getElementById("togglePhysicsButton").innerText = physicsEnabled
+                    ? "Disable Physics"
+                    : "Enable Physics";
+            }
+
+
+
+            function downloadFile(blob, filename) {
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = filename;
+                link.click();
+    
+                URL.revokeObjectURL(link.href);
+            }
+
+
+            function saveGraph(format, resolution = 96) {
+                
+                if (format === "svg") {
+
+                    const positions = network.getPositions();
+
+                    const nodes = network.body.data.nodes.get();
+                    const edges = network.body.data.edges.get();
+                
+                    let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+                    Object.values(positions).forEach(pos => {
+                        minX = Math.min(minX, pos.x);
+                        maxX = Math.max(maxX, pos.x);
+                        minY = Math.min(minY, pos.y);
+                        maxY = Math.max(maxY, pos.y);
+                    });
+                
+                    const margin = 600; 
+                    const width = maxX - minX + margin * 2.5; 
+                    const height = maxY - minY + margin * 1.5; 
+                
+                    const offsetX = margin - minX; 
+                    const offsetY = margin - minY; 
+                
+                    let svgContent = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">`;
+                
+                    edges.forEach((edge) => {
+                        const from = positions[edge.from];
+                        const to = positions[edge.to];
+                        if (from && to) {
+                            const controlX = (from.x + to.x) / 2; 
+                            const controlY = (from.y + to.y) / 2 - 50; 
+                    
+                            const pathData = `M${from.x + offsetX},${from.y + offsetY} C${controlX + offsetX},${controlY + offsetY} ${controlX + offsetX},${controlY + offsetY} ${to.x + offsetX},${to.y + offsetY}`;
+                            const color = edge.color || "black"; 
+                            const width = edge.width || 2; 
+                            svgContent += `<path d="${pathData}" stroke="${color}" stroke-width="${width}" fill="none"/>`;
+                        }
+                    });
+                
+
+                    nodes.forEach((node) => {
+                        const pos = positions[node.id];
+                        if (pos) {
+                            const size = (node.size || 10); 
+                            const color = node.color || "blue"; 
+                            svgContent += `<circle cx="${pos.x + offsetX}" cy="${pos.y + offsetY}" r="${size}" fill="${color}" />`;
+                
+                            const labelColor = node.font?.color || "black"; 
+                            const labelFontSize = node.font?.size || 12; 
+                            svgContent += `<text x="${pos.x + offsetX + size + 5}" y="${pos.y + offsetY}" font-size="${labelFontSize}" fill="${labelColor}">${node.label || node.id}</text>`;
+                        }
+                    });
+                
+                    svgContent += `</svg>`;
+                
+                    const blob = new Blob([svgContent], { type: "image/svg+xml;charset=utf-8" });
+                    const link = document.createElement("a");
+                    link.href = URL.createObjectURL(blob);
+                    link.download = "graph.svg";
+                    link.click();
+                                            
+                    
+                } else {
+                    
+                    const positions = network.getPositions();
+
+                    const nodes = network.body.data.nodes.get();
+                    const edges = network.body.data.edges.get();
+                
+                    let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+                    Object.values(positions).forEach(pos => {
+                        minX = Math.min(minX, pos.x);
+                        maxX = Math.max(maxX, pos.x);
+                        minY = Math.min(minY, pos.y);
+                        maxY = Math.max(maxY, pos.y);
+                    });
+                
+                    const margin = 600;  
+                    const width = maxX - minX + margin * 2.5; 
+                    const height = maxY - minY + margin * 1.5; 
+                
+                    const offsetX = margin - minX; 
+                    const offsetY = margin - minY; 
+                
+                    let svgContent = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">`;
+                
+                    edges.forEach((edge) => {
+                        const from = positions[edge.from];
+                        const to = positions[edge.to];
+                        if (from && to) {
+                            const controlX = (from.x + to.x) / 2; 
+                            const controlY = (from.y + to.y) / 2 - 50; 
+                    
+                            const pathData = `M${from.x + offsetX},${from.y + offsetY} C${controlX + offsetX},${controlY + offsetY} ${controlX + offsetX},${controlY + offsetY} ${to.x + offsetX},${to.y + offsetY}`;
+                            const color = edge.color || "black"; 
+                            const width = edge.width || 2; 
+                            svgContent += `<path d="${pathData}" stroke="${color}" stroke-width="${width}" fill="none"/>`;
+                        }
+                    });
+                
+                    nodes.forEach((node) => {
+                        const pos = positions[node.id];
+                        if (pos) {
+                            const size = (node.size || 10); 
+                            const color = node.color || "blue"; 
+                            svgContent += `<circle cx="${pos.x + offsetX}" cy="${pos.y + offsetY}" r="${size}" fill="${color}" />`;
+                
+                            const labelColor = node.font?.color || "black"; 
+                            const labelFontSize = node.font?.size || 12; 
+                            svgContent += `<text x="${pos.x + offsetX + size + 5}" y="${pos.y + offsetY}" font-size="${labelFontSize}" fill="${labelColor}">${node.label || node.id}</text>`;
+                        }
+                    });
+                
+                    svgContent += `</svg>`;
+                    
+                    const svgBlob = new Blob([svgContent], { type: 'image/svg+xml' });
+                    const svgUrl = URL.createObjectURL(svgBlob);
+                    
+                    const getScaleFactor = (resolution = 300) => {
+                        const defaultDPI = 96;
+                        return resolution / defaultDPI;
+                    };
+                    
+                    const scaleFactor = getScaleFactor(resolution || 300);
+                    
+                    const canvas = document.createElement('canvas');
+                    const context = canvas.getContext('2d');
+                    const img = new Image();
+                    
+                    img.onload = () => {
+                        try {
+                            canvas.width = width * scaleFactor;
+                            canvas.height = height * scaleFactor;
+                    
+                            context.setTransform(scaleFactor, 0, 0, scaleFactor, 0, 0);
+                    
+                            if (format === 'jpeg' || format === 'jpg') {
+                                context.fillStyle = 'white';
+                                context.fillRect(0, 0, canvas.width, canvas.height);
+                            }
+                    
+                            context.drawImage(img, 0, 0, width, height);
+                    
+                            canvas.toBlob((blob) => {
+                                if (blob) {
+                                    downloadFile(blob, `image.${format}`);
+                                } else {
+                                    console.error('Błąd: Blob jest pusty!');
+                                }
+                            }, `image/${format}`);
+                        } catch (error) {
+                            console.error('Błąd podczas rysowania na canvasie:', error);
+                        }
+                    };
+                    
+                    img.onerror = (error) => {
+                        console.error('Nie udało się załadować obrazu SVG jako źródła:', error);
+                    };
+                    
+                    img.src = svgUrl;
+                    
+
+                        
+                        
+                }
+            }
+                        
+                        
+                        
+    
+    
+            document.body.insertAdjacentHTML('beforeend', `
+                <div style="position: fixed; top: 0; left: 0; width: 100%; background: #353834; padding: 10px; z-index: 1000; display: flex; gap: 10px; align-items: center; border-bottom: 1px solid #ddd;">
+                    <button onclick="removeSelectedNodes()">
+                        <i class="fa-solid fa-eraser"></i>
+                    </button>
+                    
+                    
+
+                    
+                    
+                    <button onclick="undo()">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </button>
+                    
+
+                    <label for="formatSelect" style="color: white;">Save As:</label>
+                    <select id="formatSelect">
+                        <option value="png">PNG</option>
+                        <option value="jpg">JPEG</option>
+                        <option value="svg">SVG</option>
+
+                    </select>
+                    
+                    <label for="resolutionSelect" style="color: white;">Resolution (DPI):</label>
+                    <select id="resolutionSelect">
+                        <option value="200">300 DPI</option>
+                        <option value="300">300 DPI</option>
+                        <option value="600">600 DPI</option>
+
+                    </select>
+                    
+                    <button onclick="saveGraph(
+                        document.getElementById('formatSelect').value,
+                        parseInt(document.getElementById('resolutionSelect').value)
+                    )">
+                        Export Graph
+                    </button>
+                    
+
+        
+                    <label style="color: white;">Font Size:</label>
+                    <input type="range" min="10" max="50" value="14" onchange="changeFontSize(this.value)">
+                    <label style="color: white;">Node Size:</label>
+                    <input type="range" min="0.1" max="10" value="0.1" onchange="scaleNetworkSize(this.value)">
+                    
+                    <button id="togglePhysicsButton" onclick="togglePhysics()">Disable Physics</button>
+
+                    <label style="color: white;">Physics:</label>
+                    <input type="range" min="50" max="500" value="200" step="10" onchange="changePhysics(this.value)">
+               
+                </div>
+            `);
+        </script>
+        </body>
+</html>

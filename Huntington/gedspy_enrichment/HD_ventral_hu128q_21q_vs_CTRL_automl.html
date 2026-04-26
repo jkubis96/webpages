@@ -1,0 +1,674 @@
+<html>
+    <head>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 1900px;
+                 height: 864px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+             #loadingBar {
+                 position:absolute;
+                 top:0px;
+                 left:0px;
+                 width: 1900px;
+                 height: 864px;
+                 background-color:rgba(200,200,200,0.8);
+                 -webkit-transition: all 0.5s ease;
+                 -moz-transition: all 0.5s ease;
+                 -ms-transition: all 0.5s ease;
+                 -o-transition: all 0.5s ease;
+                 transition: all 0.5s ease;
+                 opacity:1;
+             }
+
+             #bar {
+                 position:absolute;
+                 top:0px;
+                 left:0px;
+                 width:20px;
+                 height:20px;
+                 margin:auto auto auto auto;
+                 border-radius:11px;
+                 border:2px solid rgba(30,30,30,0.05);
+                 background: rgb(0, 173, 246); /* Old browsers */
+                 box-shadow: 2px 0px 4px rgba(0,0,0,0.4);
+             }
+
+             #border {
+                 position:absolute;
+                 top:10px;
+                 left:10px;
+                 width:500px;
+                 height:23px;
+                 margin:auto auto auto auto;
+                 box-shadow: 0px 0px 4px rgba(0,0,0,0.2);
+                 border-radius:10px;
+             }
+
+             #text {
+                 position:absolute;
+                 top:8px;
+                 left:530px;
+                 width:30px;
+                 height:50px;
+                 margin:auto auto auto auto;
+                 font-size:22px;
+                 color: #000000;
+             }
+
+             div.outerBorder {
+                 position:relative;
+                 top:400px;
+                 width:600px;
+                 height:44px;
+                 margin:auto auto auto auto;
+                 border:8px solid rgba(0,0,0,0.1);
+                 background: rgb(252,252,252); /* Old browsers */
+                 background: -moz-linear-gradient(top,  rgba(252,252,252,1) 0%, rgba(237,237,237,1) 100%); /* FF3.6+ */
+                 background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(252,252,252,1)), color-stop(100%,rgba(237,237,237,1))); /* Chrome,Safari4+ */
+                 background: -webkit-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Chrome10+,Safari5.1+ */
+                 background: -o-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Opera 11.10+ */
+                 background: -ms-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* IE10+ */
+                 background: linear-gradient(to bottom,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* W3C */
+                 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfcfc', endColorstr='#ededed',GradientType=0 ); /* IE6-9 */
+                 border-radius:72px;
+                 box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+             }
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+            <div id="loadingBar">
+              <div class="outerBorder">
+                <div id="text">0%</div>
+                <div id="border">
+                  <div id="bar"></div>
+                </div>
+              </div>
+            </div>
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "orangered", "id": "MF : GTPase activity", "label": "MF : GTPase activity", "shape": "dot", "size": 29}, {"color": "mediumblue", "id": "Eef1a1", "label": "Eef1a1", "shape": "dot", "size": 18}, {"color": "orangered", "id": "CC : protein-containing complex", "label": "CC : protein-containing complex", "shape": "dot", "size": 30}, {"color": "royalblue", "id": "CC : transcription regulator complex", "label": "CC : transcription regulator complex", "shape": "dot", "size": 25}, {"color": "orangered", "id": "CC : microtubule associated complex", "label": "CC : microtubule associated complex", "shape": "dot", "size": 27}, {"color": "royalblue", "id": "CC : ribonucleoprotein complex", "label": "CC : ribonucleoprotein complex", "shape": "dot", "size": 25}, {"color": "mediumblue", "id": "Hsp90ab1", "label": "Hsp90ab1", "shape": "dot", "size": 21}, {"color": "mediumblue", "id": "Map1b", "label": "Map1b", "shape": "dot", "size": 16}, {"color": "mediumblue", "id": "Eef1b2", "label": "Eef1b2", "shape": "dot", "size": 13}, {"color": "mediumblue", "id": "Psma7", "label": "Psma7", "shape": "dot", "size": 23}, {"color": "royalblue", "id": "CC : spliceosomal complex", "label": "CC : spliceosomal complex", "shape": "dot", "size": 27}, {"color": "mediumblue", "id": "Ncl", "label": "Ncl", "shape": "dot", "size": 16}, {"color": "gold", "id": "BP : immune system process", "label": "BP : immune system process", "shape": "dot", "size": 21}, {"color": "mediumblue", "id": "Rab6a", "label": "Rab6a", "shape": "dot", "size": 18}, {"color": "royalblue", "id": "BP : circadian rhythm", "label": "BP : circadian rhythm", "shape": "dot", "size": 25}, {"color": "royalblue", "id": "BP : rhythmic process", "label": "BP : rhythmic process", "shape": "dot", "size": 23}, {"color": "mediumblue", "id": "Ddx5", "label": "Ddx5", "shape": "dot", "size": 20}, {"color": "mediumblue", "id": "Top2a", "label": "Top2a", "shape": "dot", "size": 16}, {"color": "royalblue", "id": "MF : protein-macromolecule adaptor activity", "label": "MF : protein-macromolecule adaptor activity", "shape": "dot", "size": 25}, {"color": "mediumblue", "id": "Traf2", "label": "Traf2", "shape": "dot", "size": 19}, {"color": "mediumblue", "id": "Tpr", "label": "Tpr", "shape": "dot", "size": 21}, {"color": "gold", "id": "BP : positive regulation of DNA-binding transcription factor activity", "label": "BP : positive regulation of DNA-binding transcription factor activity", "shape": "dot", "size": 27}, {"color": "royalblue", "id": "BP : positive regulation of molecular function", "label": "BP : positive regulation of molecular function", "shape": "dot", "size": 25}, {"color": "mediumblue", "id": "Hdac2", "label": "Hdac2", "shape": "dot", "size": 21}, {"color": "mediumblue", "id": "Ctnnb1", "label": "Ctnnb1", "shape": "dot", "size": 21}, {"color": "royalblue", "id": "CC : RNA polymerase II transcription regulator complex", "label": "CC : RNA polymerase II transcription regulator complex", "shape": "dot", "size": 27}, {"color": "mediumblue", "id": "Fos", "label": "Fos", "shape": "dot", "size": 21}, {"color": "royalblue", "id": "CC : beta-catenin-TCF complex", "label": "CC : beta-catenin-TCF complex", "shape": "dot", "size": 26}, {"color": "mediumblue", "id": "Tcf4", "label": "Tcf4", "shape": "dot", "size": 16}, {"color": "gold", "id": "MF : DNA topoisomerase activity", "label": "MF : DNA topoisomerase activity", "shape": "dot", "size": 21}, {"color": "gold", "id": "MF : DNA topoisomerase type II (double strand cut, ATP-hydrolyzing) activity", "label": "MF : DNA topoisomerase type II (double strand cut, ATP-hydrolyzing) activity", "shape": "dot", "size": 23}, {"color": "royalblue", "id": "MF : protein folding chaperone", "label": "MF : protein folding chaperone", "shape": "dot", "size": 23}, {"color": "mediumblue", "id": "Hspa4", "label": "Hspa4", "shape": "dot", "size": 18}, {"color": "mediumblue", "id": "Hspa8", "label": "Hspa8", "shape": "dot", "size": 21}, {"color": "gold", "id": "BP : telomere maintenance via telomerase", "label": "BP : telomere maintenance via telomerase", "shape": "dot", "size": 25}, {"color": "mediumblue", "id": "Hnrnpu", "label": "Hnrnpu", "shape": "dot", "size": 19}, {"color": "orangered", "id": "BP : adenylate cyclase-inhibiting G protein-coupled glutamate receptor signaling pathway", "label": "BP : adenylate cyclase-inhibiting G protein-coupled glutamate receptor signaling pathway", "shape": "dot", "size": 25}, {"color": "orangered", "id": "MF : adenylate cyclase inhibiting G protein-coupled glutamate receptor activity", "label": "MF : adenylate cyclase inhibiting G protein-coupled glutamate receptor activity", "shape": "dot", "size": 25}, {"color": "turquoise", "id": "Grm5", "label": "Grm5", "shape": "dot", "size": 18}, {"color": "royalblue", "id": "CC : catalytic complex", "label": "CC : catalytic complex", "shape": "dot", "size": 23}, {"color": "royalblue", "id": "CC : protein folding chaperone complex", "label": "CC : protein folding chaperone complex", "shape": "dot", "size": 21}, {"color": "royalblue", "id": "Neurodegenerative disease", "label": "Neurodegenerative disease", "shape": "dot", "size": 32}, {"color": "mediumblue", "id": "Gapdh", "label": "Gapdh", "shape": "dot", "size": 16}, {"color": "mediumblue", "id": "Psma5", "label": "Psma5", "shape": "dot", "size": 23}, {"color": "mediumblue", "id": "Hspa5", "label": "Hspa5", "shape": "dot", "size": 18}, {"color": "mediumblue", "id": "Hnrnpa2b1", "label": "Hnrnpa2b1", "shape": "dot", "size": 19}, {"color": "mediumblue", "id": "Matr3", "label": "Matr3", "shape": "dot", "size": 13}, {"color": "mediumblue", "id": "Clta", "label": "Clta", "shape": "dot", "size": 20}, {"color": "mediumblue", "id": "Nop56", "label": "Nop56", "shape": "dot", "size": 12}, {"color": "mediumblue", "id": "Egr1", "label": "Egr1", "shape": "dot", "size": 20}, {"color": "royalblue", "id": "Protein families: genetic information processing", "label": "Protein families: genetic information processing", "shape": "dot", "size": 31}, {"color": "turquoise", "id": "Cops6", "label": "Cops6", "shape": "dot", "size": 20}, {"color": "mediumblue", "id": "Ybx1", "label": "Ybx1", "shape": "dot", "size": 20}, {"color": "mediumblue", "id": "Hnrnpc", "label": "Hnrnpc", "shape": "dot", "size": 19}, {"color": "mediumblue", "id": "Hnrnpk", "label": "Hnrnpk", "shape": "dot", "size": 19}, {"color": "mediumblue", "id": "Serbp1", "label": "Serbp1", "shape": "dot", "size": 11}, {"color": "mediumblue", "id": "Npm1", "label": "Npm1", "shape": "dot", "size": 20}, {"color": "mediumblue", "id": "Aspm", "label": "Aspm", "shape": "dot", "size": 13}, {"color": "mediumblue", "id": "Baz2a", "label": "Baz2a", "shape": "dot", "size": 17}, {"color": "royalblue", "id": "Transcription", "label": "Transcription", "shape": "dot", "size": 25}, {"color": "royalblue", "id": "Folding, sorting and degradation", "label": "Folding, sorting and degradation", "shape": "dot", "size": 25}, {"color": "royalblue", "id": "Signal transduction", "label": "Signal transduction", "shape": "dot", "size": 25}, {"color": "mediumblue", "id": "Sox2", "label": "Sox2", "shape": "dot", "size": 19}, {"color": "gold", "id": "Nervous system", "label": "Nervous system", "shape": "dot", "size": 21}, {"color": "royalblue", "id": "Cancer: overview", "label": "Cancer: overview", "shape": "dot", "size": 28}, {"color": "gold", "id": "Cancer: specific types", "label": "Cancer: specific types", "shape": "dot", "size": 23}, {"color": "royalblue", "id": "Infectious disease: bacterial", "label": "Infectious disease: bacterial", "shape": "dot", "size": 28}, {"color": "orangered", "id": "Protein families: signaling and cellular processes", "label": "Protein families: signaling and cellular processes", "shape": "dot", "size": 27}, {"color": "mediumblue", "id": "Tmsb10", "label": "Tmsb10", "shape": "dot", "size": 11}, {"color": "royalblue", "id": "Immune system", "label": "Immune system", "shape": "dot", "size": 25}, {"color": "royalblue", "id": "Cardiovascular disease", "label": "Cardiovascular disease", "shape": "dot", "size": 25}, {"color": "orangered", "id": "Metabolism of proteins", "label": "Metabolism of proteins", "shape": "dot", "size": 43}, {"color": "turquoise", "id": "Actr1a", "label": "Actr1a", "shape": "dot", "size": 21}, {"color": "turquoise", "id": "Dync1li2", "label": "Dync1li2", "shape": "dot", "size": 21}, {"color": "mediumblue", "id": "Eif4a1", "label": "Eif4a1", "shape": "dot", "size": 17}, {"color": "mediumblue", "id": "Actb", "label": "Actb", "shape": "dot", "size": 22}, {"color": "royalblue", "id": "DNA Repair", "label": "DNA Repair", "shape": "dot", "size": 38}, {"color": "orangered", "id": "Signal Transduction", "label": "Signal Transduction", "shape": "dot", "size": 48}, {"color": "turquoise", "id": "Camk2b", "label": "Camk2b", "shape": "dot", "size": 21}, {"color": "mediumblue", "id": "Ywhaz", "label": "Ywhaz", "shape": "dot", "size": 20}, {"color": "mediumblue", "id": "Ppp1r12a", "label": "Ppp1r12a", "shape": "dot", "size": 17}, {"color": "mediumblue", "id": "Mdk", "label": "Mdk", "shape": "dot", "size": 17}, {"color": "orangered", "id": "Disease", "label": "Disease", "shape": "dot", "size": 44}, {"color": "orangered", "id": "Cell Cycle", "label": "Cell Cycle", "shape": "dot", "size": 45}, {"color": "orangered", "id": "Cellular responses to stimuli", "label": "Cellular responses to stimuli", "shape": "dot", "size": 44}, {"color": "royalblue", "id": "Autophagy", "label": "Autophagy", "shape": "dot", "size": 39}, {"color": "orangered", "id": "Vesicle-mediated transport", "label": "Vesicle-mediated transport", "shape": "dot", "size": 44}, {"color": "mediumblue", "id": "Myo5a", "label": "Myo5a", "shape": "dot", "size": 19}, {"color": "mediumblue", "id": "Dennd5a", "label": "Dennd5a", "shape": "dot", "size": 17}, {"color": "orangered", "id": "Immune System", "label": "Immune System", "shape": "dot", "size": 45}, {"color": "orangered", "id": "Neuronal System", "label": "Neuronal System", "shape": "dot", "size": 37}, {"color": "royalblue", "id": "Organelle biogenesis and maintenance", "label": "Organelle biogenesis and maintenance", "shape": "dot", "size": 33}, {"color": "royalblue", "id": "Gene expression (Transcription)", "label": "Gene expression (Transcription)", "shape": "dot", "size": 46}, {"color": "orangered", "id": "Transport of small molecules", "label": "Transport of small molecules", "shape": "dot", "size": 36}, {"color": "orangered", "id": "Developmental Biology", "label": "Developmental Biology", "shape": "dot", "size": 43}, {"color": "mediumblue", "id": "Upf3b", "label": "Upf3b", "shape": "dot", "size": 19}, {"color": "orangered", "id": "Hemostasis", "label": "Hemostasis", "shape": "dot", "size": 36}, {"color": "royalblue", "id": "Metabolism of RNA", "label": "Metabolism of RNA", "shape": "dot", "size": 45}, {"color": "mediumblue", "id": "Hnrnpa3", "label": "Hnrnpa3", "shape": "dot", "size": 19}, {"color": "mediumblue", "id": "Prpf40a", "label": "Prpf40a", "shape": "dot", "size": 19}, {"color": "royalblue", "id": "Programmed Cell Death", "label": "Programmed Cell Death", "shape": "dot", "size": 36}, {"color": "royalblue", "id": "Chromatin organization", "label": "Chromatin organization", "shape": "dot", "size": 27}, {"color": "gold", "id": "DNA Replication", "label": "DNA Replication", "shape": "dot", "size": 39}, {"color": "gold", "id": "Cell-Cell communication", "label": "Cell-Cell communication", "shape": "dot", "size": 32}, {"color": "orangered", "id": "Extracellular matrix organization", "label": "Extracellular matrix organization", "shape": "dot", "size": 32}, {"color": "orangered", "id": "Metabolism", "label": "Metabolism", "shape": "dot", "size": 35}, {"color": "orangered", "id": "Sensory Perception", "label": "Sensory Perception", "shape": "dot", "size": 32}]);
+                  edges = new vis.DataSet([{"color": "gray", "from": "MF : GTPase activity", "to": "Eef1a1", "width": 1}, {"color": "gray", "from": "CC : protein-containing complex", "to": "CC : transcription regulator complex", "width": 1}, {"color": "gray", "from": "CC : protein-containing complex", "to": "CC : microtubule associated complex", "width": 1}, {"color": "gray", "from": "CC : protein-containing complex", "to": "CC : ribonucleoprotein complex", "width": 1}, {"color": "gray", "from": "CC : protein-containing complex", "to": "Hsp90ab1", "width": 1}, {"color": "gray", "from": "CC : protein-containing complex", "to": "Map1b", "width": 1}, {"color": "gray", "from": "CC : protein-containing complex", "to": "Eef1b2", "width": 1}, {"color": "gray", "from": "CC : protein-containing complex", "to": "Psma7", "width": 1}, {"color": "gray", "from": "CC : ribonucleoprotein complex", "to": "CC : spliceosomal complex", "width": 1}, {"color": "gray", "from": "CC : ribonucleoprotein complex", "to": "Ncl", "width": 1}, {"color": "gray", "from": "CC : ribonucleoprotein complex", "to": "Hsp90ab1", "width": 1}, {"color": "gray", "from": "CC : microtubule associated complex", "to": "Map1b", "width": 1}, {"color": "gray", "from": "CC : microtubule associated complex", "to": "Hsp90ab1", "width": 1}, {"color": "gray", "from": "BP : immune system process", "to": "Rab6a", "width": 1}, {"color": "gray", "from": "BP : circadian rhythm", "to": "BP : rhythmic process", "width": 1}, {"color": "gray", "from": "BP : circadian rhythm", "to": "Ddx5", "width": 1}, {"color": "gray", "from": "BP : circadian rhythm", "to": "Top2a", "width": 1}, {"color": "gray", "from": "MF : protein-macromolecule adaptor activity", "to": "Traf2", "width": 1}, {"color": "gray", "from": "MF : protein-macromolecule adaptor activity", "to": "Tpr", "width": 1}, {"color": "gray", "from": "BP : positive regulation of DNA-binding transcription factor activity", "to": "BP : positive regulation of molecular function", "width": 1}, {"color": "gray", "from": "BP : positive regulation of DNA-binding transcription factor activity", "to": "Hdac2", "width": 1}, {"color": "gray", "from": "BP : positive regulation of DNA-binding transcription factor activity", "to": "Ctnnb1", "width": 1}, {"color": "gray", "from": "CC : spliceosomal complex", "to": "Ncl", "width": 1}, {"color": "gray", "from": "CC : transcription regulator complex", "to": "CC : RNA polymerase II transcription regulator complex", "width": 1}, {"color": "gray", "from": "CC : transcription regulator complex", "to": "Fos", "width": 1}, {"color": "gray", "from": "CC : transcription regulator complex", "to": "Hsp90ab1", "width": 1}, {"color": "gray", "from": "CC : RNA polymerase II transcription regulator complex", "to": "CC : beta-catenin-TCF complex", "width": 1}, {"color": "gray", "from": "CC : RNA polymerase II transcription regulator complex", "to": "Tcf4", "width": 1}, {"color": "gray", "from": "CC : RNA polymerase II transcription regulator complex", "to": "Fos", "width": 1}, {"color": "gray", "from": "MF : DNA topoisomerase activity", "to": "MF : DNA topoisomerase type II (double strand cut, ATP-hydrolyzing) activity", "width": 1}, {"color": "gray", "from": "MF : DNA topoisomerase activity", "to": "Top2a", "width": 1}, {"color": "gray", "from": "BP : rhythmic process", "to": "Ddx5", "width": 1}, {"color": "gray", "from": "BP : rhythmic process", "to": "Top2a", "width": 1}, {"color": "gray", "from": "MF : DNA topoisomerase type II (double strand cut, ATP-hydrolyzing) activity", "to": "Top2a", "width": 1}, {"color": "gray", "from": "BP : positive regulation of molecular function", "to": "Hdac2", "width": 1}, {"color": "gray", "from": "BP : positive regulation of molecular function", "to": "Ctnnb1", "width": 1}, {"color": "gray", "from": "CC : beta-catenin-TCF complex", "to": "Tcf4", "width": 1}, {"color": "gray", "from": "CC : beta-catenin-TCF complex", "to": "Fos", "width": 1}, {"color": "gray", "from": "MF : protein folding chaperone", "to": "Hspa4", "width": 1}, {"color": "gray", "from": "MF : protein folding chaperone", "to": "Hspa8", "width": 1}, {"color": "gray", "from": "BP : telomere maintenance via telomerase", "to": "Hnrnpu", "width": 1}, {"color": "gray", "from": "BP : adenylate cyclase-inhibiting G protein-coupled glutamate receptor signaling pathway", "to": "MF : adenylate cyclase inhibiting G protein-coupled glutamate receptor activity", "width": 1}, {"color": "gray", "from": "BP : adenylate cyclase-inhibiting G protein-coupled glutamate receptor signaling pathway", "to": "Grm5", "width": 1}, {"color": "gray", "from": "MF : adenylate cyclase inhibiting G protein-coupled glutamate receptor activity", "to": "Grm5", "width": 1}, {"color": "gray", "from": "CC : catalytic complex", "to": "Psma7", "width": 1}, {"color": "gray", "from": "CC : catalytic complex", "to": "Top2a", "width": 1}, {"color": "gray", "from": "CC : protein folding chaperone complex", "to": "Hsp90ab1", "width": 1}, {"color": "gray", "from": "Neurodegenerative disease", "to": "Grm5", "width": 1}, {"color": "gray", "from": "Neurodegenerative disease", "to": "Gapdh", "width": 1}, {"color": "gray", "from": "Neurodegenerative disease", "to": "Traf2", "width": 1}, {"color": "gray", "from": "Neurodegenerative disease", "to": "Psma7", "width": 1}, {"color": "gray", "from": "Neurodegenerative disease", "to": "Psma5", "width": 1}, {"color": "gray", "from": "Neurodegenerative disease", "to": "Ctnnb1", "width": 1}, {"color": "gray", "from": "Neurodegenerative disease", "to": "Hspa5", "width": 1}, {"color": "gray", "from": "Neurodegenerative disease", "to": "Hnrnpa2b1", "width": 1}, {"color": "gray", "from": "Neurodegenerative disease", "to": "Matr3", "width": 1}, {"color": "gray", "from": "Neurodegenerative disease", "to": "Tpr", "width": 1}, {"color": "gray", "from": "Neurodegenerative disease", "to": "Clta", "width": 1}, {"color": "gray", "from": "Neurodegenerative disease", "to": "Nop56", "width": 1}, {"color": "gray", "from": "Neurodegenerative disease", "to": "Egr1", "width": 1}, {"color": "gray", "from": "Protein families: genetic information processing", "to": "Cops6", "width": 1}, {"color": "gray", "from": "Protein families: genetic information processing", "to": "Tpr", "width": 1}, {"color": "gray", "from": "Protein families: genetic information processing", "to": "Eef1a1", "width": 1}, {"color": "gray", "from": "Protein families: genetic information processing", "to": "Hnrnpa2b1", "width": 1}, {"color": "gray", "from": "Protein families: genetic information processing", "to": "Ybx1", "width": 1}, {"color": "gray", "from": "Protein families: genetic information processing", "to": "Traf2", "width": 1}, {"color": "gray", "from": "Protein families: genetic information processing", "to": "Hnrnpc", "width": 1}, {"color": "gray", "from": "Protein families: genetic information processing", "to": "Hnrnpk", "width": 1}, {"color": "gray", "from": "Protein families: genetic information processing", "to": "Hnrnpu", "width": 1}, {"color": "gray", "from": "Protein families: genetic information processing", "to": "Ddx5", "width": 1}, {"color": "gray", "from": "Protein families: genetic information processing", "to": "Serbp1", "width": 1}, {"color": "gray", "from": "Protein families: genetic information processing", "to": "Matr3", "width": 1}, {"color": "gray", "from": "Protein families: genetic information processing", "to": "Clta", "width": 1}, {"color": "gray", "from": "Protein families: genetic information processing", "to": "Psma7", "width": 1}, {"color": "gray", "from": "Protein families: genetic information processing", "to": "Rab6a", "width": 1}, {"color": "gray", "from": "Protein families: genetic information processing", "to": "Hspa5", "width": 1}, {"color": "gray", "from": "Protein families: genetic information processing", "to": "Fos", "width": 1}, {"color": "gray", "from": "Protein families: genetic information processing", "to": "Gapdh", "width": 1}, {"color": "gray", "from": "Protein families: genetic information processing", "to": "Npm1", "width": 1}, {"color": "gray", "from": "Protein families: genetic information processing", "to": "Ncl", "width": 1}, {"color": "gray", "from": "Protein families: genetic information processing", "to": "Aspm", "width": 1}, {"color": "gray", "from": "Protein families: genetic information processing", "to": "Baz2a", "width": 1}, {"color": "gray", "from": "Transcription", "to": "Ddx5", "width": 1}, {"color": "gray", "from": "Transcription", "to": "Hnrnpc", "width": 1}, {"color": "gray", "from": "Transcription", "to": "Hnrnpk", "width": 1}, {"color": "gray", "from": "Transcription", "to": "Hnrnpu", "width": 1}, {"color": "gray", "from": "Folding, sorting and degradation", "to": "Hspa5", "width": 1}, {"color": "gray", "from": "Folding, sorting and degradation", "to": "Hsp90ab1", "width": 1}, {"color": "gray", "from": "Folding, sorting and degradation", "to": "Hspa4", "width": 1}, {"color": "gray", "from": "Folding, sorting and degradation", "to": "Traf2", "width": 1}, {"color": "gray", "from": "Signal transduction", "to": "Fos", "width": 1}, {"color": "gray", "from": "Signal transduction", "to": "Traf2", "width": 1}, {"color": "gray", "from": "Signal transduction", "to": "Ctnnb1", "width": 1}, {"color": "gray", "from": "Signal transduction", "to": "Sox2", "width": 1}, {"color": "gray", "from": "Nervous system", "to": "Fos", "width": 1}, {"color": "gray", "from": "Cancer: overview", "to": "Ctnnb1", "width": 1}, {"color": "gray", "from": "Cancer: overview", "to": "Traf2", "width": 1}, {"color": "gray", "from": "Cancer: overview", "to": "Fos", "width": 1}, {"color": "gray", "from": "Cancer: overview", "to": "Tpr", "width": 1}, {"color": "gray", "from": "Cancer: overview", "to": "Hsp90ab1", "width": 1}, {"color": "gray", "from": "Cancer: overview", "to": "Hnrnpk", "width": 1}, {"color": "gray", "from": "Cancer: specific types", "to": "Ctnnb1", "width": 1}, {"color": "gray", "from": "Cancer: specific types", "to": "Hsp90ab1", "width": 1}, {"color": "gray", "from": "Infectious disease: bacterial", "to": "Ncl", "width": 1}, {"color": "gray", "from": "Infectious disease: bacterial", "to": "Gapdh", "width": 1}, {"color": "gray", "from": "Infectious disease: bacterial", "to": "Traf2", "width": 1}, {"color": "gray", "from": "Infectious disease: bacterial", "to": "Fos", "width": 1}, {"color": "gray", "from": "Infectious disease: bacterial", "to": "Hsp90ab1", "width": 1}, {"color": "gray", "from": "Infectious disease: bacterial", "to": "Ctnnb1", "width": 1}, {"color": "gray", "from": "Protein families: signaling and cellular processes", "to": "Tmsb10", "width": 1}, {"color": "gray", "from": "Protein families: signaling and cellular processes", "to": "Gapdh", "width": 1}, {"color": "gray", "from": "Protein families: signaling and cellular processes", "to": "Eef1a1", "width": 1}, {"color": "gray", "from": "Protein families: signaling and cellular processes", "to": "Hspa5", "width": 1}, {"color": "gray", "from": "Protein families: signaling and cellular processes", "to": "Hnrnpa2b1", "width": 1}, {"color": "gray", "from": "Protein families: signaling and cellular processes", "to": "Clta", "width": 1}, {"color": "gray", "from": "Protein families: signaling and cellular processes", "to": "Rab6a", "width": 1}, {"color": "gray", "from": "Immune system", "to": "Fos", "width": 1}, {"color": "gray", "from": "Immune system", "to": "Hsp90ab1", "width": 1}, {"color": "gray", "from": "Immune system", "to": "Traf2", "width": 1}, {"color": "gray", "from": "Cardiovascular disease", "to": "Fos", "width": 1}, {"color": "gray", "from": "Cardiovascular disease", "to": "Hsp90ab1", "width": 1}, {"color": "gray", "from": "Cardiovascular disease", "to": "Hspa5", "width": 1}, {"color": "gray", "from": "Cardiovascular disease", "to": "Traf2", "width": 1}, {"color": "gray", "from": "Metabolism of proteins", "to": "Actr1a", "width": 1}, {"color": "gray", "from": "Metabolism of proteins", "to": "Dync1li2", "width": 1}, {"color": "gray", "from": "Metabolism of proteins", "to": "Cops6", "width": 1}, {"color": "gray", "from": "Metabolism of proteins", "to": "Psma5", "width": 1}, {"color": "gray", "from": "Metabolism of proteins", "to": "Psma7", "width": 1}, {"color": "gray", "from": "Metabolism of proteins", "to": "Eif4a1", "width": 1}, {"color": "gray", "from": "Metabolism of proteins", "to": "Top2a", "width": 1}, {"color": "gray", "from": "Metabolism of proteins", "to": "Tpr", "width": 1}, {"color": "gray", "from": "Metabolism of proteins", "to": "Actb", "width": 1}, {"color": "gray", "from": "Metabolism of proteins", "to": "Traf2", "width": 1}, {"color": "gray", "from": "Metabolism of proteins", "to": "Rab6a", "width": 1}, {"color": "gray", "from": "DNA Repair", "to": "Cops6", "width": 1}, {"color": "gray", "from": "DNA Repair", "to": "Actb", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "Camk2b", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "Grm5", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "Dync1li2", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "Egr1", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "Hdac2", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "Psma5", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "Psma7", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "Ctnnb1", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "Ddx5", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "Fos", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "Hsp90ab1", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "Actb", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "Ybx1", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "Sox2", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "Tcf4", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "Ywhaz", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "Clta", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "Ppp1r12a", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "Mdk", "width": 1}, {"color": "gray", "from": "Signal Transduction", "to": "Hnrnpc", "width": 1}, {"color": "gray", "from": "Disease", "to": "Camk2b", "width": 1}, {"color": "gray", "from": "Disease", "to": "Eef1a1", "width": 1}, {"color": "gray", "from": "Disease", "to": "Npm1", "width": 1}, {"color": "gray", "from": "Disease", "to": "Ywhaz", "width": 1}, {"color": "gray", "from": "Disease", "to": "Hsp90ab1", "width": 1}, {"color": "gray", "from": "Disease", "to": "Actb", "width": 1}, {"color": "gray", "from": "Disease", "to": "Hdac2", "width": 1}, {"color": "gray", "from": "Disease", "to": "Map1b", "width": 1}, {"color": "gray", "from": "Disease", "to": "Ncl", "width": 1}, {"color": "gray", "from": "Disease", "to": "Psma5", "width": 1}, {"color": "gray", "from": "Disease", "to": "Psma7", "width": 1}, {"color": "gray", "from": "Disease", "to": "Ctnnb1", "width": 1}, {"color": "gray", "from": "Disease", "to": "Tpr", "width": 1}, {"color": "gray", "from": "Cell Cycle", "to": "Actr1a", "width": 1}, {"color": "gray", "from": "Cell Cycle", "to": "Dync1li2", "width": 1}, {"color": "gray", "from": "Cell Cycle", "to": "Psma5", "width": 1}, {"color": "gray", "from": "Cell Cycle", "to": "Psma7", "width": 1}, {"color": "gray", "from": "Cell Cycle", "to": "Ppp1r12a", "width": 1}, {"color": "gray", "from": "Cell Cycle", "to": "Hsp90ab1", "width": 1}, {"color": "gray", "from": "Cell Cycle", "to": "Ywhaz", "width": 1}, {"color": "gray", "from": "Cell Cycle", "to": "Tpr", "width": 1}, {"color": "gray", "from": "Cellular responses to stimuli", "to": "Actr1a", "width": 1}, {"color": "gray", "from": "Cellular responses to stimuli", "to": "Dync1li2", "width": 1}, {"color": "gray", "from": "Cellular responses to stimuli", "to": "Camk2b", "width": 1}, {"color": "gray", "from": "Cellular responses to stimuli", "to": "Hspa4", "width": 1}, {"color": "gray", "from": "Cellular responses to stimuli", "to": "Hspa5", "width": 1}, {"color": "gray", "from": "Cellular responses to stimuli", "to": "Hspa8", "width": 1}, {"color": "gray", "from": "Cellular responses to stimuli", "to": "Tpr", "width": 1}, {"color": "gray", "from": "Cellular responses to stimuli", "to": "Hsp90ab1", "width": 1}, {"color": "gray", "from": "Cellular responses to stimuli", "to": "Eef1a1", "width": 1}, {"color": "gray", "from": "Cellular responses to stimuli", "to": "Psma5", "width": 1}, {"color": "gray", "from": "Cellular responses to stimuli", "to": "Psma7", "width": 1}, {"color": "gray", "from": "Autophagy", "to": "Dync1li2", "width": 1}, {"color": "gray", "from": "Autophagy", "to": "Hspa8", "width": 1}, {"color": "gray", "from": "Autophagy", "to": "Eef1a1", "width": 1}, {"color": "gray", "from": "Autophagy", "to": "Hsp90ab1", "width": 1}, {"color": "gray", "from": "Vesicle-mediated transport", "to": "Cops6", "width": 1}, {"color": "gray", "from": "Vesicle-mediated transport", "to": "Actr1a", "width": 1}, {"color": "gray", "from": "Vesicle-mediated transport", "to": "Dync1li2", "width": 1}, {"color": "gray", "from": "Vesicle-mediated transport", "to": "Actb", "width": 1}, {"color": "gray", "from": "Vesicle-mediated transport", "to": "Myo5a", "width": 1}, {"color": "gray", "from": "Vesicle-mediated transport", "to": "Ywhaz", "width": 1}, {"color": "gray", "from": "Vesicle-mediated transport", "to": "Clta", "width": 1}, {"color": "gray", "from": "Vesicle-mediated transport", "to": "Hspa8", "width": 1}, {"color": "gray", "from": "Vesicle-mediated transport", "to": "Rab6a", "width": 1}, {"color": "gray", "from": "Vesicle-mediated transport", "to": "Dennd5a", "width": 1}, {"color": "gray", "from": "Immune System", "to": "Actr1a", "width": 1}, {"color": "gray", "from": "Immune System", "to": "Dync1li2", "width": 1}, {"color": "gray", "from": "Immune System", "to": "Hsp90ab1", "width": 1}, {"color": "gray", "from": "Immune System", "to": "Traf2", "width": 1}, {"color": "gray", "from": "Immune System", "to": "Psma5", "width": 1}, {"color": "gray", "from": "Immune System", "to": "Psma7", "width": 1}, {"color": "gray", "from": "Immune System", "to": "Eif4a1", "width": 1}, {"color": "gray", "from": "Immune System", "to": "Tpr", "width": 1}, {"color": "gray", "from": "Immune System", "to": "Hspa8", "width": 1}, {"color": "gray", "from": "Immune System", "to": "Npm1", "width": 1}, {"color": "gray", "from": "Immune System", "to": "Actb", "width": 1}, {"color": "gray", "from": "Immune System", "to": "Myo5a", "width": 1}, {"color": "gray", "from": "Immune System", "to": "Fos", "width": 1}, {"color": "gray", "from": "Immune System", "to": "Sox2", "width": 1}, {"color": "gray", "from": "Immune System", "to": "Clta", "width": 1}, {"color": "gray", "from": "Immune System", "to": "Hnrnpa2b1", "width": 1}, {"color": "gray", "from": "Neuronal System", "to": "Camk2b", "width": 1}, {"color": "gray", "from": "Neuronal System", "to": "Grm5", "width": 1}, {"color": "gray", "from": "Organelle biogenesis and maintenance", "to": "Actr1a", "width": 1}, {"color": "gray", "from": "Gene expression (Transcription)", "to": "Camk2b", "width": 1}, {"color": "gray", "from": "Gene expression (Transcription)", "to": "Fos", "width": 1}, {"color": "gray", "from": "Gene expression (Transcription)", "to": "Baz2a", "width": 1}, {"color": "gray", "from": "Gene expression (Transcription)", "to": "Hdac2", "width": 1}, {"color": "gray", "from": "Gene expression (Transcription)", "to": "Ybx1", "width": 1}, {"color": "gray", "from": "Gene expression (Transcription)", "to": "Tpr", "width": 1}, {"color": "gray", "from": "Gene expression (Transcription)", "to": "Psma5", "width": 1}, {"color": "gray", "from": "Gene expression (Transcription)", "to": "Psma7", "width": 1}, {"color": "gray", "from": "Gene expression (Transcription)", "to": "Ywhaz", "width": 1}, {"color": "gray", "from": "Gene expression (Transcription)", "to": "Ctnnb1", "width": 1}, {"color": "gray", "from": "Gene expression (Transcription)", "to": "Npm1", "width": 1}, {"color": "gray", "from": "Gene expression (Transcription)", "to": "Sox2", "width": 1}, {"color": "gray", "from": "Gene expression (Transcription)", "to": "Actb", "width": 1}, {"color": "gray", "from": "Transport of small molecules", "to": "Camk2b", "width": 1}, {"color": "gray", "from": "Transport of small molecules", "to": "Psma5", "width": 1}, {"color": "gray", "from": "Transport of small molecules", "to": "Psma7", "width": 1}, {"color": "gray", "from": "Developmental Biology", "to": "Eif4a1", "width": 1}, {"color": "gray", "from": "Developmental Biology", "to": "Ctnnb1", "width": 1}, {"color": "gray", "from": "Developmental Biology", "to": "Sox2", "width": 1}, {"color": "gray", "from": "Developmental Biology", "to": "Ywhaz", "width": 1}, {"color": "gray", "from": "Developmental Biology", "to": "Hspa8", "width": 1}, {"color": "gray", "from": "Developmental Biology", "to": "Psma5", "width": 1}, {"color": "gray", "from": "Developmental Biology", "to": "Psma7", "width": 1}, {"color": "gray", "from": "Developmental Biology", "to": "Upf3b", "width": 1}, {"color": "gray", "from": "Developmental Biology", "to": "Actb", "width": 1}, {"color": "gray", "from": "Developmental Biology", "to": "Clta", "width": 1}, {"color": "gray", "from": "Developmental Biology", "to": "Hdac2", "width": 1}, {"color": "gray", "from": "Developmental Biology", "to": "Hnrnpu", "width": 1}, {"color": "gray", "from": "Developmental Biology", "to": "Hsp90ab1", "width": 1}, {"color": "gray", "from": "Developmental Biology", "to": "Myo5a", "width": 1}, {"color": "gray", "from": "Hemostasis", "to": "Actb", "width": 1}, {"color": "gray", "from": "Hemostasis", "to": "Hdac2", "width": 1}, {"color": "gray", "from": "Metabolism of RNA", "to": "Ddx5", "width": 1}, {"color": "gray", "from": "Metabolism of RNA", "to": "Hnrnpa2b1", "width": 1}, {"color": "gray", "from": "Metabolism of RNA", "to": "Hnrnpa3", "width": 1}, {"color": "gray", "from": "Metabolism of RNA", "to": "Hnrnpc", "width": 1}, {"color": "gray", "from": "Metabolism of RNA", "to": "Hnrnpk", "width": 1}, {"color": "gray", "from": "Metabolism of RNA", "to": "Hnrnpu", "width": 1}, {"color": "gray", "from": "Metabolism of RNA", "to": "Hspa8", "width": 1}, {"color": "gray", "from": "Metabolism of RNA", "to": "Prpf40a", "width": 1}, {"color": "gray", "from": "Metabolism of RNA", "to": "Upf3b", "width": 1}, {"color": "gray", "from": "Metabolism of RNA", "to": "Ybx1", "width": 1}, {"color": "gray", "from": "Metabolism of RNA", "to": "Tpr", "width": 1}, {"color": "gray", "from": "Metabolism of RNA", "to": "Actb", "width": 1}, {"color": "gray", "from": "Metabolism of RNA", "to": "Psma5", "width": 1}, {"color": "gray", "from": "Metabolism of RNA", "to": "Psma7", "width": 1}, {"color": "gray", "from": "Programmed Cell Death", "to": "Ywhaz", "width": 1}, {"color": "gray", "from": "Programmed Cell Death", "to": "Ctnnb1", "width": 1}, {"color": "gray", "from": "Programmed Cell Death", "to": "Psma5", "width": 1}, {"color": "gray", "from": "Programmed Cell Death", "to": "Psma7", "width": 1}, {"color": "gray", "from": "Chromatin organization", "to": "Actb", "width": 1}, {"color": "gray", "from": "Chromatin organization", "to": "Hdac2", "width": 1}, {"color": "gray", "from": "DNA Replication", "to": "Psma5", "width": 1}, {"color": "gray", "from": "DNA Replication", "to": "Psma7", "width": 1}, {"color": "gray", "from": "Cell-Cell communication", "to": "Actb", "width": 1}, {"color": "gray", "from": "Cell-Cell communication", "to": "Ctnnb1", "width": 1}, {"color": "gray", "from": "Extracellular matrix organization", "to": "Actb", "width": 1}, {"color": "gray", "from": "Metabolism", "to": "Psma5", "width": 1}, {"color": "gray", "from": "Metabolism", "to": "Psma7", "width": 1}, {"color": "gray", "from": "Metabolism", "to": "Hsp90ab1", "width": 1}, {"color": "gray", "from": "Sensory Perception", "to": "Actb", "width": 1}, {"color": "red", "from": "Ncl", "to": "Npm1", "width": 1}, {"color": "red", "from": "Ncl", "to": "Fos", "width": 1}, {"color": "red", "from": "Ncl", "to": "Ybx1", "width": 1}, {"color": "red", "from": "Ncl", "to": "Hnrnpu", "width": 1}, {"color": "red", "from": "Ncl", "to": "Hnrnpk", "width": 1}, {"color": "red", "from": "Ncl", "to": "Mdk", "width": 1}, {"color": "red", "from": "Ncl", "to": "Nop56", "width": 1}, {"color": "red", "from": "Ncl", "to": "Hnrnpa2b1", "width": 1}, {"color": "red", "from": "Hsp90ab1", "to": "Traf2", "width": 1}, {"color": "red", "from": "Hsp90ab1", "to": "Hspa8", "width": 1}, {"color": "red", "from": "Hsp90ab1", "to": "Hspa5", "width": 1}, {"color": "red", "from": "Hsp90ab1", "to": "Eef1a1", "width": 1}, {"color": "red", "from": "Hsp90ab1", "to": "Gapdh", "width": 1}, {"color": "red", "from": "Hsp90ab1", "to": "Actb", "width": 1}, {"color": "red", "from": "Hsp90ab1", "to": "Hspa4", "width": 1}, {"color": "red", "from": "Gapdh", "to": "Ctnnb1", "width": 1}, {"color": "red", "from": "Gapdh", "to": "Hspa8", "width": 1}, {"color": "red", "from": "Gapdh", "to": "Eef1a1", "width": 1}, {"color": "red", "from": "Gapdh", "to": "Actb", "width": 1}, {"color": "red", "from": "Gapdh", "to": "Traf2", "width": 1}, {"color": "red", "from": "Gapdh", "to": "Hspa4", "width": 1}, {"color": "red", "from": "Prpf40a", "to": "Clta", "width": 1}, {"color": "red", "from": "Prpf40a", "to": "Ctnnb1", "width": 1}, {"color": "red", "from": "Top2a", "to": "Ctnnb1", "width": 1}, {"color": "red", "from": "Top2a", "to": "Aspm", "width": 1}, {"color": "red", "from": "Ctnnb1", "to": "Egr1", "width": 1}, {"color": "red", "from": "Ctnnb1", "to": "Tcf4", "width": 1}, {"color": "red", "from": "Ctnnb1", "to": "Clta", "width": 1}, {"color": "red", "from": "Ctnnb1", "to": "Ywhaz", "width": 1}, {"color": "red", "from": "Ctnnb1", "to": "Sox2", "width": 1}, {"color": "red", "from": "Egr1", "to": "Fos", "width": 1}, {"color": "red", "from": "Fos", "to": "Serbp1", "width": 1}, {"color": "red", "from": "Fos", "to": "Map1b", "width": 1}, {"color": "red", "from": "Fos", "to": "Ppp1r12a", "width": 1}, {"color": "red", "from": "Fos", "to": "Tpr", "width": 1}, {"color": "red", "from": "Fos", "to": "Matr3", "width": 1}, {"color": "red", "from": "Fos", "to": "Tmsb10", "width": 1}, {"color": "red", "from": "Actr1a", "to": "Dync1li2", "width": 1}, {"color": "red", "from": "Grm5", "to": "Camk2b", "width": 1}, {"color": "red", "from": "Hspa8", "to": "Eef1a1", "width": 1}, {"color": "red", "from": "Hspa8", "to": "Ybx1", "width": 1}, {"color": "red", "from": "Hspa8", "to": "Hspa5", "width": 1}, {"color": "red", "from": "Hspa8", "to": "Actb", "width": 1}, {"color": "red", "from": "Hspa8", "to": "Hspa4", "width": 1}, {"color": "red", "from": "Hspa4", "to": "Hspa5", "width": 1}, {"color": "red", "from": "Hspa4", "to": "Eef1a1", "width": 1}, {"color": "red", "from": "Ddx5", "to": "Upf3b", "width": 1}, {"color": "red", "from": "Ddx5", "to": "Hnrnpk", "width": 1}, {"color": "red", "from": "Ddx5", "to": "Hnrnpc", "width": 1}, {"color": "red", "from": "Psma7", "to": "Psma5", "width": 1}, {"color": "red", "from": "Rab6a", "to": "Dennd5a", "width": 1}, {"color": "red", "from": "Eef1a1", "to": "Eef1b2", "width": 1}, {"color": "red", "from": "Eef1a1", "to": "Actb", "width": 1}, {"color": "red", "from": "Eef1a1", "to": "Eif4a1", "width": 1}, {"color": "red", "from": "Hnrnpu", "to": "Ybx1", "width": 1}, {"color": "red", "from": "Hnrnpu", "to": "Hnrnpa2b1", "width": 1}, {"color": "red", "from": "Hnrnpu", "to": "Hnrnpa3", "width": 1}, {"color": "red", "from": "Hnrnpu", "to": "Hnrnpk", "width": 1}, {"color": "red", "from": "Hnrnpu", "to": "Hnrnpc", "width": 1}, {"color": "red", "from": "Ybx1", "to": "Hnrnpa2b1", "width": 1}, {"color": "red", "from": "Ybx1", "to": "Hnrnpc", "width": 1}, {"color": "red", "from": "Ybx1", "to": "Hnrnpa3", "width": 1}, {"color": "red", "from": "Hnrnpa2b1", "to": "Hnrnpa3", "width": 1}, {"color": "red", "from": "Hnrnpa2b1", "to": "Hnrnpc", "width": 1}, {"color": "red", "from": "Hnrnpa2b1", "to": "Hnrnpk", "width": 1}, {"color": "red", "from": "Hnrnpc", "to": "Hnrnpa3", "width": 1}, {"color": "red", "from": "Hnrnpc", "to": "Hnrnpk", "width": 1}, {"color": "red", "from": "Hnrnpc", "to": "Matr3", "width": 1}, {"color": "red", "from": "Hnrnpa3", "to": "Hnrnpk", "width": 1}, {"color": "red", "from": "Hnrnpk", "to": "Matr3", "width": 1}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "repulsion": {
+            "centralGravity": 0.2,
+            "damping": 0.09,
+            "nodeDistance": 150,
+            "springConstant": 0.05,
+            "springLength": 200
+        },
+        "solver": "repulsion",
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+                      network.on("stabilizationProgress", function(params) {
+                          document.getElementById('loadingBar').removeAttribute("style");
+                          var maxWidth = 496;
+                          var minWidth = 20;
+                          var widthFactor = params.iterations/params.total;
+                          var width = Math.max(minWidth,maxWidth * widthFactor);
+                          document.getElementById('bar').style.width = width + 'px';
+                          document.getElementById('text').innerHTML = Math.round(widthFactor*100) + '%';
+                      });
+                      network.once("stabilizationIterationsDone", function() {
+                          document.getElementById('text').innerHTML = '100%';
+                          document.getElementById('bar').style.width = '496px';
+                          document.getElementById('loadingBar').style.opacity = 0;
+                          // really clean the dom element
+                          setTimeout(function () {document.getElementById('loadingBar').style.display = 'none';}, 500);
+                      });
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+        <script type="text/javascript">
+        
+            let selectedNodes = [];
+            let previousStyles = {}; 
+            let undoStack = [];
+    
+            function saveNetworkState() {
+                const nodes = network.body.data.nodes.get();
+                const edges = network.body.data.edges.get();
+                const styles = {};
+            
+                nodes.forEach(node => {
+                    styles[node.id] = {
+                        color: previousStyles[node.id]?.color || node.color || null
+                    };
+                });
+            
+                undoStack.push(JSON.stringify({ nodes, edges, styles }));
+            }
+            
+            
+            function removeSelectedNodes() {
+                if (selectedNodes.length > 0) {
+                    saveNetworkState();
+            
+                    network.body.data.nodes.remove(selectedNodes.map(id => ({ id })));
+                    selectedNodes = [];
+                } else {
+                    alert("No nodes selected.");
+                }
+            }
+            
+            function undo() {
+                if (undoStack.length > 0) {
+                    const previousState = JSON.parse(undoStack.pop());
+            
+                    network.body.data.nodes.clear();
+                    network.body.data.edges.clear();
+                    network.body.data.nodes.add(previousState.nodes);
+                    network.body.data.edges.add(previousState.edges);
+            
+                    Object.keys(previousState.styles).forEach(nodeId => {
+                        network.body.data.nodes.update({
+                            id: nodeId,
+                            ...previousState.styles[nodeId]
+                        });
+                    });
+            
+                    selectedNodes = [];
+                    previousStyles = previousState.styles;
+                } else {
+                    alert("Nothing to undo.");
+                }
+            }
+            
+            network.on("selectNode", function (params) {
+                if (event.ctrlKey) {
+                    selectedNodes = [...new Set([...selectedNodes, ...params.nodes])];
+                } else {
+                    selectedNodes.forEach(nodeId => {
+                        if (previousStyles[nodeId]) {
+                            network.body.data.nodes.update({
+                                id: nodeId,
+                                ...previousStyles[nodeId]
+                            });
+                        }
+                    });
+                    selectedNodes = params.nodes;
+                }
+            
+                params.nodes.forEach(nodeId => {
+                    const nodeData = network.body.data.nodes.get(nodeId);
+                    if (!previousStyles[nodeId]) {
+                        previousStyles[nodeId] = {
+                            color: nodeData.color || null
+                        };
+                    }
+                    network.body.data.nodes.update({
+                        id: nodeId,
+                        color: "black"
+                    });
+                });
+            });
+            
+            network.on("deselectNode", function (params) {
+                if (!event.ctrlKey) {
+                    selectedNodes.forEach(nodeId => {
+                        if (previousStyles[nodeId]) {
+                            network.body.data.nodes.update({
+                                id: nodeId,
+                                ...previousStyles[nodeId]
+                            });
+                        }
+                    });
+                    selectedNodes = [];
+                } else {
+                    params.nodes.forEach(nodeId => {
+                        if (previousStyles[nodeId]) {
+                            network.body.data.nodes.update({
+                                id: nodeId,
+                                ...previousStyles[nodeId]
+                            });
+                        }
+                    });
+                }
+            });
+                    
+                    
+            
+            
+            
+            function changePhysics(value) {
+                network.setOptions({
+                    physics: {
+                        solver: 'repulsion',
+                        repulsion: {
+                            nodeDistance: parseInt(value),
+                        },
+                    },
+                });
+            }
+            
+            
+            
+            
+            
+                            
+            let originalNodeSizes = {};
+            
+            function initializeOriginalNodeSizes() {
+                network.body.data.nodes.get().forEach(node => {
+                    if (!originalNodeSizes[node.id]) {
+                        originalNodeSizes[node.id] = node.size || 1; 
+                    }
+                });
+            }
+            
+            function scaleNetworkSize(scaleFactor) {
+                initializeOriginalNodeSizes(); 
+            
+                network.body.data.nodes.update(
+                    network.body.data.nodes.get().map(node => ({
+                        id: node.id,
+                        size: originalNodeSizes[node.id] * scaleFactor 
+                    }))
+                );
+            }
+                            
+                        
+            
+            function changeFontSize(size) {
+                network.body.data.nodes.update(
+                    network.body.data.nodes.get().map(node => ({
+                        id: node.id,
+                        font: { size: size }
+                    }))
+                );
+            }
+            
+            
+            let physicsEnabled = true;
+            
+            function togglePhysics() {
+                physicsEnabled = !physicsEnabled;
+            
+                network.setOptions({
+                    physics: physicsEnabled
+                });
+            
+
+                document.getElementById("togglePhysicsButton").innerText = physicsEnabled
+                    ? "Disable Physics"
+                    : "Enable Physics";
+            }
+
+
+
+            function downloadFile(blob, filename) {
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = filename;
+                link.click();
+    
+                URL.revokeObjectURL(link.href);
+            }
+
+
+            function saveGraph(format, resolution = 96) {
+                
+                if (format === "svg") {
+
+                    const positions = network.getPositions();
+
+                    const nodes = network.body.data.nodes.get();
+                    const edges = network.body.data.edges.get();
+                
+                    let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+                    Object.values(positions).forEach(pos => {
+                        minX = Math.min(minX, pos.x);
+                        maxX = Math.max(maxX, pos.x);
+                        minY = Math.min(minY, pos.y);
+                        maxY = Math.max(maxY, pos.y);
+                    });
+                
+                    const margin = 600; 
+                    const width = maxX - minX + margin * 2.5; 
+                    const height = maxY - minY + margin * 1.5; 
+                
+                    const offsetX = margin - minX; 
+                    const offsetY = margin - minY; 
+                
+                    let svgContent = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">`;
+                
+                    edges.forEach((edge) => {
+                        const from = positions[edge.from];
+                        const to = positions[edge.to];
+                        if (from && to) {
+                            const controlX = (from.x + to.x) / 2; 
+                            const controlY = (from.y + to.y) / 2 - 50; 
+                    
+                            const pathData = `M${from.x + offsetX},${from.y + offsetY} C${controlX + offsetX},${controlY + offsetY} ${controlX + offsetX},${controlY + offsetY} ${to.x + offsetX},${to.y + offsetY}`;
+                            const color = edge.color || "black"; 
+                            const width = edge.width || 2; 
+                            svgContent += `<path d="${pathData}" stroke="${color}" stroke-width="${width}" fill="none"/>`;
+                        }
+                    });
+                
+
+                    nodes.forEach((node) => {
+                        const pos = positions[node.id];
+                        if (pos) {
+                            const size = (node.size || 10); 
+                            const color = node.color || "blue"; 
+                            svgContent += `<circle cx="${pos.x + offsetX}" cy="${pos.y + offsetY}" r="${size}" fill="${color}" />`;
+                
+                            const labelColor = node.font?.color || "black"; 
+                            const labelFontSize = node.font?.size || 12; 
+                            svgContent += `<text x="${pos.x + offsetX + size + 5}" y="${pos.y + offsetY}" font-size="${labelFontSize}" fill="${labelColor}">${node.label || node.id}</text>`;
+                        }
+                    });
+                
+                    svgContent += `</svg>`;
+                
+                    const blob = new Blob([svgContent], { type: "image/svg+xml;charset=utf-8" });
+                    const link = document.createElement("a");
+                    link.href = URL.createObjectURL(blob);
+                    link.download = "graph.svg";
+                    link.click();
+                                            
+                    
+                } else {
+                    
+                    const positions = network.getPositions();
+
+                    const nodes = network.body.data.nodes.get();
+                    const edges = network.body.data.edges.get();
+                
+                    let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+                    Object.values(positions).forEach(pos => {
+                        minX = Math.min(minX, pos.x);
+                        maxX = Math.max(maxX, pos.x);
+                        minY = Math.min(minY, pos.y);
+                        maxY = Math.max(maxY, pos.y);
+                    });
+                
+                    const margin = 600;  
+                    const width = maxX - minX + margin * 2.5; 
+                    const height = maxY - minY + margin * 1.5; 
+                
+                    const offsetX = margin - minX; 
+                    const offsetY = margin - minY; 
+                
+                    let svgContent = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">`;
+                
+                    edges.forEach((edge) => {
+                        const from = positions[edge.from];
+                        const to = positions[edge.to];
+                        if (from && to) {
+                            const controlX = (from.x + to.x) / 2; 
+                            const controlY = (from.y + to.y) / 2 - 50; 
+                    
+                            const pathData = `M${from.x + offsetX},${from.y + offsetY} C${controlX + offsetX},${controlY + offsetY} ${controlX + offsetX},${controlY + offsetY} ${to.x + offsetX},${to.y + offsetY}`;
+                            const color = edge.color || "black"; 
+                            const width = edge.width || 2; 
+                            svgContent += `<path d="${pathData}" stroke="${color}" stroke-width="${width}" fill="none"/>`;
+                        }
+                    });
+                
+                    nodes.forEach((node) => {
+                        const pos = positions[node.id];
+                        if (pos) {
+                            const size = (node.size || 10); 
+                            const color = node.color || "blue"; 
+                            svgContent += `<circle cx="${pos.x + offsetX}" cy="${pos.y + offsetY}" r="${size}" fill="${color}" />`;
+                
+                            const labelColor = node.font?.color || "black"; 
+                            const labelFontSize = node.font?.size || 12; 
+                            svgContent += `<text x="${pos.x + offsetX + size + 5}" y="${pos.y + offsetY}" font-size="${labelFontSize}" fill="${labelColor}">${node.label || node.id}</text>`;
+                        }
+                    });
+                
+                    svgContent += `</svg>`;
+                    
+                    const svgBlob = new Blob([svgContent], { type: 'image/svg+xml' });
+                    const svgUrl = URL.createObjectURL(svgBlob);
+                    
+                    const getScaleFactor = (resolution = 300) => {
+                        const defaultDPI = 96;
+                        return resolution / defaultDPI;
+                    };
+                    
+                    const scaleFactor = getScaleFactor(resolution || 300);
+                    
+                    const canvas = document.createElement('canvas');
+                    const context = canvas.getContext('2d');
+                    const img = new Image();
+                    
+                    img.onload = () => {
+                        try {
+                            canvas.width = width * scaleFactor;
+                            canvas.height = height * scaleFactor;
+                    
+                            context.setTransform(scaleFactor, 0, 0, scaleFactor, 0, 0);
+                    
+                            if (format === 'jpeg' || format === 'jpg') {
+                                context.fillStyle = 'white';
+                                context.fillRect(0, 0, canvas.width, canvas.height);
+                            }
+                    
+                            context.drawImage(img, 0, 0, width, height);
+                    
+                            canvas.toBlob((blob) => {
+                                if (blob) {
+                                    downloadFile(blob, `image.${format}`);
+                                } else {
+                                    console.error('Błąd: Blob jest pusty!');
+                                }
+                            }, `image/${format}`);
+                        } catch (error) {
+                            console.error('Błąd podczas rysowania na canvasie:', error);
+                        }
+                    };
+                    
+                    img.onerror = (error) => {
+                        console.error('Nie udało się załadować obrazu SVG jako źródła:', error);
+                    };
+                    
+                    img.src = svgUrl;
+                    
+
+                        
+                        
+                }
+            }
+                        
+                        
+                        
+    
+    
+            document.body.insertAdjacentHTML('beforeend', `
+                <div style="position: fixed; top: 0; left: 0; width: 100%; background: #353834; padding: 10px; z-index: 1000; display: flex; gap: 10px; align-items: center; border-bottom: 1px solid #ddd;">
+                    <button onclick="removeSelectedNodes()">
+                        <i class="fa-solid fa-eraser"></i>
+                    </button>
+                    
+                    
+
+                    
+                    
+                    <button onclick="undo()">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </button>
+                    
+
+                    <label for="formatSelect" style="color: white;">Save As:</label>
+                    <select id="formatSelect">
+                        <option value="png">PNG</option>
+                        <option value="jpg">JPEG</option>
+                        <option value="svg">SVG</option>
+
+                    </select>
+                    
+                    <label for="resolutionSelect" style="color: white;">Resolution (DPI):</label>
+                    <select id="resolutionSelect">
+                        <option value="200">300 DPI</option>
+                        <option value="300">300 DPI</option>
+                        <option value="600">600 DPI</option>
+
+                    </select>
+                    
+                    <button onclick="saveGraph(
+                        document.getElementById('formatSelect').value,
+                        parseInt(document.getElementById('resolutionSelect').value)
+                    )">
+                        Export Graph
+                    </button>
+                    
+
+        
+                    <label style="color: white;">Font Size:</label>
+                    <input type="range" min="10" max="50" value="14" onchange="changeFontSize(this.value)">
+                    <label style="color: white;">Node Size:</label>
+                    <input type="range" min="0.1" max="10" value="0.1" onchange="scaleNetworkSize(this.value)">
+                    
+                    <button id="togglePhysicsButton" onclick="togglePhysics()">Disable Physics</button>
+
+                    <label style="color: white;">Physics:</label>
+                    <input type="range" min="50" max="500" value="200" step="10" onchange="changePhysics(this.value)">
+               
+                </div>
+            `);
+        </script>
+        </body>
+</html>

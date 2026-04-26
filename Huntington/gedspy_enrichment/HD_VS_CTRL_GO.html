@@ -1,0 +1,674 @@
+<html>
+    <head>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 1900px;
+                 height: 864px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+             #loadingBar {
+                 position:absolute;
+                 top:0px;
+                 left:0px;
+                 width: 1900px;
+                 height: 864px;
+                 background-color:rgba(200,200,200,0.8);
+                 -webkit-transition: all 0.5s ease;
+                 -moz-transition: all 0.5s ease;
+                 -ms-transition: all 0.5s ease;
+                 -o-transition: all 0.5s ease;
+                 transition: all 0.5s ease;
+                 opacity:1;
+             }
+
+             #bar {
+                 position:absolute;
+                 top:0px;
+                 left:0px;
+                 width:20px;
+                 height:20px;
+                 margin:auto auto auto auto;
+                 border-radius:11px;
+                 border:2px solid rgba(30,30,30,0.05);
+                 background: rgb(0, 173, 246); /* Old browsers */
+                 box-shadow: 2px 0px 4px rgba(0,0,0,0.4);
+             }
+
+             #border {
+                 position:absolute;
+                 top:10px;
+                 left:10px;
+                 width:500px;
+                 height:23px;
+                 margin:auto auto auto auto;
+                 box-shadow: 0px 0px 4px rgba(0,0,0,0.2);
+                 border-radius:10px;
+             }
+
+             #text {
+                 position:absolute;
+                 top:8px;
+                 left:530px;
+                 width:30px;
+                 height:50px;
+                 margin:auto auto auto auto;
+                 font-size:22px;
+                 color: #000000;
+             }
+
+             div.outerBorder {
+                 position:relative;
+                 top:400px;
+                 width:600px;
+                 height:44px;
+                 margin:auto auto auto auto;
+                 border:8px solid rgba(0,0,0,0.1);
+                 background: rgb(252,252,252); /* Old browsers */
+                 background: -moz-linear-gradient(top,  rgba(252,252,252,1) 0%, rgba(237,237,237,1) 100%); /* FF3.6+ */
+                 background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(252,252,252,1)), color-stop(100%,rgba(237,237,237,1))); /* Chrome,Safari4+ */
+                 background: -webkit-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Chrome10+,Safari5.1+ */
+                 background: -o-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Opera 11.10+ */
+                 background: -ms-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* IE10+ */
+                 background: linear-gradient(to bottom,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* W3C */
+                 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfcfc', endColorstr='#ededed',GradientType=0 ); /* IE6-9 */
+                 border-radius:72px;
+                 box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+             }
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+            <div id="loadingBar">
+              <div class="outerBorder">
+                <div id="text">0%</div>
+                <div id="border">
+                  <div id="bar"></div>
+                </div>
+              </div>
+            </div>
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "royalblue", "id": "CC : cyclin-dependent protein kinase holoenzyme complex", "label": "CC : cyclin-dependent protein kinase holoenzyme complex", "shape": "dot", "size": 26}, {"color": "mediumblue", "id": "CKS2", "label": "CKS2", "shape": "dot", "size": 15}, {"color": "mediumblue", "id": "CCNA2", "label": "CCNA2", "shape": "dot", "size": 16}, {"color": "mediumblue", "id": "CCNB1", "label": "CCNB1", "shape": "dot", "size": 16}, {"color": "orangered", "id": "CC : Hrd1p ubiquitin ligase complex", "label": "CC : Hrd1p ubiquitin ligase complex", "shape": "dot", "size": 23}, {"color": "turquoise", "id": "UBE2J1", "label": "UBE2J1", "shape": "dot", "size": 12}, {"color": "turquoise", "id": "SYVN1", "label": "SYVN1", "shape": "dot", "size": 12}, {"color": "orangered", "id": "CC : protein-containing complex", "label": "CC : protein-containing complex", "shape": "dot", "size": 32}, {"color": "royalblue", "id": "CC : outer kinetochore", "label": "CC : outer kinetochore", "shape": "dot", "size": 27}, {"color": "royalblue", "id": "CC : collagen trimer", "label": "CC : collagen trimer", "shape": "dot", "size": 27}, {"color": "gold", "id": "CC : microtubule associated complex", "label": "CC : microtubule associated complex", "shape": "dot", "size": 27}, {"color": "royalblue", "id": "CC : ribonucleoprotein complex", "label": "CC : ribonucleoprotein complex", "shape": "dot", "size": 25}, {"color": "mediumblue", "id": "CENPE", "label": "CENPE", "shape": "dot", "size": 16}, {"color": "mediumblue", "id": "HSP90AB1", "label": "HSP90AB1", "shape": "dot", "size": 16}, {"color": "mediumblue", "id": "COL1A2", "label": "COL1A2", "shape": "dot", "size": 15}, {"color": "mediumblue", "id": "KIF4A", "label": "KIF4A", "shape": "dot", "size": 14}, {"color": "mediumblue", "id": "SPC25", "label": "SPC25", "shape": "dot", "size": 13}, {"color": "mediumblue", "id": "MCM3", "label": "MCM3", "shape": "dot", "size": 13}, {"color": "mediumblue", "id": "CYCS", "label": "CYCS", "shape": "dot", "size": 14}, {"color": "mediumblue", "id": "TUBB", "label": "TUBB", "shape": "dot", "size": 13}, {"color": "orangered", "id": "BP : cell differentiation", "label": "BP : cell differentiation", "shape": "dot", "size": 25}, {"color": "gold", "id": "BP : stem cell differentiation", "label": "BP : stem cell differentiation", "shape": "dot", "size": 27}, {"color": "mediumblue", "id": "NOG", "label": "NOG", "shape": "dot", "size": 15}, {"color": "gold", "id": "BP : animal organ morphogenesis", "label": "BP : animal organ morphogenesis", "shape": "dot", "size": 25}, {"color": "orangered", "id": "BP : heart morphogenesis", "label": "BP : heart morphogenesis", "shape": "dot", "size": 27}, {"color": "mediumblue", "id": "COL11A1", "label": "COL11A1", "shape": "dot", "size": 15}, {"color": "orangered", "id": "MF : protein-macromolecule adaptor activity", "label": "MF : protein-macromolecule adaptor activity", "shape": "dot", "size": 28}, {"color": "orangered", "id": "MF : transcription coregulator activity", "label": "MF : transcription coregulator activity", "shape": "dot", "size": 25}, {"color": "orangered", "id": "MF : molecular adaptor activity", "label": "MF : molecular adaptor activity", "shape": "dot", "size": 27}, {"color": "mediumblue", "id": "DTL", "label": "DTL", "shape": "dot", "size": 14}, {"color": "mediumblue", "id": "AGER", "label": "AGER", "shape": "dot", "size": 14}, {"color": "mediumblue", "id": "PKM", "label": "PKM", "shape": "dot", "size": 15}, {"color": "orangered", "id": "MF : kinase activity", "label": "MF : kinase activity", "shape": "dot", "size": 23}, {"color": "orangered", "id": "MF : protein kinase activity", "label": "MF : protein kinase activity", "shape": "dot", "size": 32}, {"color": "mediumblue", "id": "CDK1", "label": "CDK1", "shape": "dot", "size": 17}, {"color": "orangered", "id": "MF : protein serine/threonine kinase activity", "label": "MF : protein serine/threonine kinase activity", "shape": "dot", "size": 27}, {"color": "gold", "id": "MF : protein kinase activator activity", "label": "MF : protein kinase activator activity", "shape": "dot", "size": 27}, {"color": "gold", "id": "BP : positive regulation of protein kinase activity", "label": "BP : positive regulation of protein kinase activity", "shape": "dot", "size": 29}, {"color": "mediumblue", "id": "TTK", "label": "TTK", "shape": "dot", "size": 15}, {"color": "mediumblue", "id": "NPM1", "label": "NPM1", "shape": "dot", "size": 14}, {"color": "orangered", "id": "MF : phosphatase activity", "label": "MF : phosphatase activity", "shape": "dot", "size": 27}, {"color": "orangered", "id": "MF : phosphoprotein phosphatase activity", "label": "MF : phosphoprotein phosphatase activity", "shape": "dot", "size": 27}, {"color": "mediumblue", "id": "PTPRZ1", "label": "PTPRZ1", "shape": "dot", "size": 15}, {"color": "turquoise", "id": "DUSP4", "label": "DUSP4", "shape": "dot", "size": 13}, {"color": "orangered", "id": "MF : protein serine/threonine phosphatase activity", "label": "MF : protein serine/threonine phosphatase activity", "shape": "dot", "size": 27}, {"color": "orangered", "id": "MF : protein tyrosine phosphatase activity", "label": "MF : protein tyrosine phosphatase activity", "shape": "dot", "size": 27}, {"color": "mediumblue", "id": "CDKN3", "label": "CDKN3", "shape": "dot", "size": 15}, {"color": "orangered", "id": "MF : calcium-dependent protein serine/threonine phosphatase activity", "label": "MF : calcium-dependent protein serine/threonine phosphatase activity", "shape": "dot", "size": 25}, {"color": "turquoise", "id": "PPP3CC", "label": "PPP3CC", "shape": "dot", "size": 13}, {"color": "orangered", "id": "MF : GTPase regulator activity", "label": "MF : GTPase regulator activity", "shape": "dot", "size": 27}, {"color": "orangered", "id": "MF : GTPase activity", "label": "MF : GTPase activity", "shape": "dot", "size": 28}, {"color": "mediumblue", "id": "HMGCR", "label": "HMGCR", "shape": "dot", "size": 15}, {"color": "mediumblue", "id": "RANBP1", "label": "RANBP1", "shape": "dot", "size": 14}, {"color": "orangered", "id": "MF : structural molecule activity", "label": "MF : structural molecule activity", "shape": "dot", "size": 25}, {"color": "royalblue", "id": "MF : extracellular matrix structural constituent", "label": "MF : extracellular matrix structural constituent", "shape": "dot", "size": 26}, {"color": "mediumblue", "id": "COL1A1", "label": "COL1A1", "shape": "dot", "size": 15}, {"color": "royalblue", "id": "CC : spliceosomal complex", "label": "CC : spliceosomal complex", "shape": "dot", "size": 30}, {"color": "mediumblue", "id": "SNRPE", "label": "SNRPE", "shape": "dot", "size": 15}, {"color": "royalblue", "id": "CC : U2-type spliceosomal complex", "label": "CC : U2-type spliceosomal complex", "shape": "dot", "size": 27}, {"color": "royalblue", "id": "CC : precatalytic spliceosome", "label": "CC : precatalytic spliceosome", "shape": "dot", "size": 29}, {"color": "royalblue", "id": "CC : catalytic step 2 spliceosome", "label": "CC : catalytic step 2 spliceosome", "shape": "dot", "size": 29}, {"color": "mediumblue", "id": "SF3B5", "label": "SF3B5", "shape": "dot", "size": 14}, {"color": "mediumblue", "id": "HNRNPA1", "label": "HNRNPA1", "shape": "dot", "size": 13}, {"color": "mediumblue", "id": "KIFC1", "label": "KIFC1", "shape": "dot", "size": 13}, {"color": "gold", "id": "CC : calcium channel complex", "label": "CC : calcium channel complex", "shape": "dot", "size": 23}, {"color": "mediumblue", "id": "CALM2", "label": "CALM2", "shape": "dot", "size": 13}, {"color": "orangered", "id": "CC : protein serine/threonine phosphatase complex", "label": "CC : protein serine/threonine phosphatase complex", "shape": "dot", "size": 21}, {"color": "turquoise", "id": "PPP3CA", "label": "PPP3CA", "shape": "dot", "size": 13}, {"color": "orangered", "id": "BP : positive regulation of cell migration", "label": "BP : positive regulation of cell migration", "shape": "dot", "size": 31}, {"color": "gold", "id": "BP : regulation of cell migration", "label": "BP : regulation of cell migration", "shape": "dot", "size": 25}, {"color": "mediumblue", "id": "HMGB1", "label": "HMGB1", "shape": "dot", "size": 15}, {"color": "mediumblue", "id": "S100A11", "label": "S100A11", "shape": "dot", "size": 13}, {"color": "mediumblue", "id": "MDK", "label": "MDK", "shape": "dot", "size": 15}, {"color": "gold", "id": "BP : regulation of neuron projection development", "label": "BP : regulation of neuron projection development", "shape": "dot", "size": 30}, {"color": "orangered", "id": "BP : positive regulation of neuron projection development", "label": "BP : positive regulation of neuron projection development", "shape": "dot", "size": 27}, {"color": "gold", "id": "BP : regulation of dendrite development", "label": "BP : regulation of dendrite development", "shape": "dot", "size": 27}, {"color": "orangered", "id": "BP : neuron projection development", "label": "BP : neuron projection development", "shape": "dot", "size": 27}, {"color": "mediumblue", "id": "TBR1", "label": "TBR1", "shape": "dot", "size": 15}, {"color": "mediumblue", "id": "B2M", "label": "B2M", "shape": "dot", "size": 14}, {"color": "orangered", "id": "BP : dendrite development", "label": "BP : dendrite development", "shape": "dot", "size": 30}, {"color": "mediumblue", "id": "FEZF2", "label": "FEZF2", "shape": "dot", "size": 15}, {"color": "orangered", "id": "CC : SWI/SNF superfamily-type complex", "label": "CC : SWI/SNF superfamily-type complex", "shape": "dot", "size": 28}, {"color": "turquoise", "id": "ARID1A", "label": "ARID1A", "shape": "dot", "size": 15}, {"color": "turquoise", "id": "PBRM1", "label": "PBRM1", "shape": "dot", "size": 15}, {"color": "turquoise", "id": "ACTL6B", "label": "ACTL6B", "shape": "dot", "size": 14}, {"color": "turquoise", "id": "ARID1B", "label": "ARID1B", "shape": "dot", "size": 15}, {"color": "orangered", "id": "MF : catalytic activity", "label": "MF : catalytic activity", "shape": "dot", "size": 21}, {"color": "mediumblue", "id": "HMGCS1", "label": "HMGCS1", "shape": "dot", "size": 13}, {"color": "gold", "id": "CC : cullin-RING ubiquitin ligase complex", "label": "CC : cullin-RING ubiquitin ligase complex", "shape": "dot", "size": 27}, {"color": "orangered", "id": "CC : ubiquitin ligase complex", "label": "CC : ubiquitin ligase complex", "shape": "dot", "size": 23}, {"color": "mediumblue", "id": "RBX1", "label": "RBX1", "shape": "dot", "size": 15}, {"color": "orangered", "id": "BP : central nervous system neuron differentiation", "label": "BP : central nervous system neuron differentiation", "shape": "dot", "size": 29}, {"color": "orangered", "id": "BP : neuron differentiation", "label": "BP : neuron differentiation", "shape": "dot", "size": 28}, {"color": "orangered", "id": "BP : central nervous system development", "label": "BP : central nervous system development", "shape": "dot", "size": 30}, {"color": "mediumblue", "id": "PAX7", "label": "PAX7", "shape": "dot", "size": 15}, {"color": "mediumblue", "id": "VCAN", "label": "VCAN", "shape": "dot", "size": 15}, {"color": "gold", "id": "BP : regulation of neuron differentiation", "label": "BP : regulation of neuron differentiation", "shape": "dot", "size": 28}, {"color": "mediumblue", "id": "PAX6", "label": "PAX6", "shape": "dot", "size": 16}, {"color": "orangered", "id": "BP : negative regulation of cell growth", "label": "BP : negative regulation of cell growth", "shape": "dot", "size": 27}, {"color": "mediumblue", "id": "ENO1", "label": "ENO1", "shape": "dot", "size": 14}, {"color": "mediumblue", "id": "HMMR", "label": "HMMR", "shape": "dot", "size": 14}, {"color": "orangered", "id": "CC : cilium", "label": "CC : cilium", "shape": "dot", "size": 27}, {"color": "mediumblue", "id": "EZR", "label": "EZR", "shape": "dot", "size": 12}, {"color": "gold", "id": "MF : ubiquitin protein ligase activity", "label": "MF : ubiquitin protein ligase activity", "shape": "dot", "size": 29}, {"color": "orangered", "id": "MF : ubiquitin-protein transferase activity", "label": "MF : ubiquitin-protein transferase activity", "shape": "dot", "size": 25}, {"color": "mediumblue", "id": "BIRC5", "label": "BIRC5", "shape": "dot", "size": 16}, {"color": "mediumblue", "id": "UBE2C", "label": "UBE2C", "shape": "dot", "size": 16}, {"color": "mediumblue", "id": "DBF4", "label": "DBF4", "shape": "dot", "size": 14}, {"color": "orangered", "id": "CC : RNA polymerase II transcription regulator complex", "label": "CC : RNA polymerase II transcription regulator complex", "shape": "dot", "size": 21}, {"color": "turquoise", "id": "DDIT3", "label": "DDIT3", "shape": "dot", "size": 14}, {"color": "gold", "id": "BP : regulation of embryonic development", "label": "BP : regulation of embryonic development", "shape": "dot", "size": 27}, {"color": "orangered", "id": "BP : embryo development", "label": "BP : embryo development", "shape": "dot", "size": 28}, {"color": "gold", "id": "BP : positive regulation of MAP kinase activity", "label": "BP : positive regulation of MAP kinase activity", "shape": "dot", "size": 25}, {"color": "orangered", "id": "BP : regulation of GTPase activity", "label": "BP : regulation of GTPase activity", "shape": "dot", "size": 25}, {"color": "mediumblue", "id": "ECT2", "label": "ECT2", "shape": "dot", "size": 15}, {"color": "gold", "id": "BP : pigmentation", "label": "BP : pigmentation", "shape": "dot", "size": 21}, {"color": "mediumblue", "id": "PAX3", "label": "PAX3", "shape": "dot", "size": 14}, {"color": "gold", "id": "BP : positive regulation of striated muscle tissue development", "label": "BP : positive regulation of striated muscle tissue development", "shape": "dot", "size": 27}, {"color": "mediumblue", "id": "GJA1", "label": "GJA1", "shape": "dot", "size": 14}, {"color": "gold", "id": "BP : cell fate commitment", "label": "BP : cell fate commitment", "shape": "dot", "size": 25}, {"color": "orangered", "id": "BP : cell morphogenesis", "label": "BP : cell morphogenesis", "shape": "dot", "size": 21}, {"color": "orangered", "id": "BP : neuron projection extension", "label": "BP : neuron projection extension", "shape": "dot", "size": 27}, {"color": "orangered", "id": "BP : neuron projection morphogenesis", "label": "BP : neuron projection morphogenesis", "shape": "dot", "size": 25}, {"color": "mediumblue", "id": "POSTN", "label": "POSTN", "shape": "dot", "size": 14}, {"color": "gold", "id": "BP : skeletal system development", "label": "BP : skeletal system development", "shape": "dot", "size": 27}, {"color": "gold", "id": "BP : cartilage development", "label": "BP : cartilage development", "shape": "dot", "size": 25}, {"color": "gold", "id": "BP : blood vessel development", "label": "BP : blood vessel development", "shape": "dot", "size": 23}, {"color": "mediumblue", "id": "UBE2G1", "label": "UBE2G1", "shape": "dot", "size": 12}, {"color": "royalblue", "id": "MF : molecular sequestering activity", "label": "MF : molecular sequestering activity", "shape": "dot", "size": 23}, {"color": "mediumblue", "id": "TTR", "label": "TTR", "shape": "dot", "size": 12}, {"color": "orangered", "id": "MF : protein folding chaperone", "label": "MF : protein folding chaperone", "shape": "dot", "size": 23}, {"color": "mediumblue", "id": "BMP5", "label": "BMP5", "shape": "dot", "size": 14}, {"color": "orangered", "id": "BP : regulation of neuron migration", "label": "BP : regulation of neuron migration", "shape": "dot", "size": 25}, {"color": "mediumblue", "id": "DCN", "label": "DCN", "shape": "dot", "size": 14}, {"color": "orangered", "id": "BP : heart development", "label": "BP : heart development", "shape": "dot", "size": 23}, {"color": "gold", "id": "BP : retina development in camera-type eye", "label": "BP : retina development in camera-type eye", "shape": "dot", "size": 27}, {"color": "gold", "id": "BP : neural retina development", "label": "BP : neural retina development", "shape": "dot", "size": 27}, {"color": "gold", "id": "BP : camera-type eye development", "label": "BP : camera-type eye development", "shape": "dot", "size": 23}, {"color": "mediumblue", "id": "ATP2B4", "label": "ATP2B4", "shape": "dot", "size": 13}, {"color": "gold", "id": "BP : spermatogenesis", "label": "BP : spermatogenesis", "shape": "dot", "size": 23}, {"color": "mediumblue", "id": "HMGB2", "label": "HMGB2", "shape": "dot", "size": 13}, {"color": "orangered", "id": "BP : axon development", "label": "BP : axon development", "shape": "dot", "size": 25}, {"color": "orangered", "id": "BP : nervous system development", "label": "BP : nervous system development", "shape": "dot", "size": 27}, {"color": "orangered", "id": "BP : brain development", "label": "BP : brain development", "shape": "dot", "size": 27}, {"color": "gold", "id": "BP : spinal cord development", "label": "BP : spinal cord development", "shape": "dot", "size": 27}, {"color": "gold", "id": "BP : astrocyte differentiation", "label": "BP : astrocyte differentiation", "shape": "dot", "size": 27}, {"color": "gold", "id": "BP : head development", "label": "BP : head development", "shape": "dot", "size": 23}, {"color": "orangered", "id": "BP : wound healing", "label": "BP : wound healing", "shape": "dot", "size": 25}, {"color": "orangered", "id": "BP : blood coagulation", "label": "BP : blood coagulation", "shape": "dot", "size": 27}, {"color": "mediumblue", "id": "ANXA5", "label": "ANXA5", "shape": "dot", "size": 14}, {"color": "orangered", "id": "BP : forebrain development", "label": "BP : forebrain development", "shape": "dot", "size": 27}, {"color": "gold", "id": "BP : cerebral cortex development", "label": "BP : cerebral cortex development", "shape": "dot", "size": 23}, {"color": "mediumblue", "id": "PPIA", "label": "PPIA", "shape": "dot", "size": 13}, {"color": "orangered", "id": "CC : nuclear pore", "label": "CC : nuclear pore", "shape": "dot", "size": 21}, {"color": "orangered", "id": "BP : dendritic spine development", "label": "BP : dendritic spine development", "shape": "dot", "size": 25}, {"color": "gold", "id": "BP : lung development", "label": "BP : lung development", "shape": "dot", "size": 27}, {"color": "orangered", "id": "CC : sperm flagellum", "label": "CC : sperm flagellum", "shape": "dot", "size": 25}, {"color": "gold", "id": "BP : erythrocyte differentiation", "label": "BP : erythrocyte differentiation", "shape": "dot", "size": 25}, {"color": "mediumblue", "id": "CASP3", "label": "CASP3", "shape": "dot", "size": 15}, {"color": "orangered", "id": "MF : JUN kinase activity", "label": "MF : JUN kinase activity", "shape": "dot", "size": 27}, {"color": "orangered", "id": "MF : MAP kinase activity", "label": "MF : MAP kinase activity", "shape": "dot", "size": 23}, {"color": "turquoise", "id": "MAPK8", "label": "MAPK8", "shape": "dot", "size": 14}, {"color": "turquoise", "id": "MAPK13", "label": "MAPK13", "shape": "dot", "size": 15}, {"color": "gold", "id": "BP : skeletal muscle tissue development", "label": "BP : skeletal muscle tissue development", "shape": "dot", "size": 27}, {"color": "orangered", "id": "BP : neuron migration", "label": "BP : neuron migration", "shape": "dot", "size": 25}, {"color": "orangered", "id": "CC : nucleosome", "label": "CC : nucleosome", "shape": "dot", "size": 23}, {"color": "turquoise", "id": "H2AC6", "label": "H2AC6", "shape": "dot", "size": 12}, {"color": "turquoise", "id": "H4C8", "label": "H4C8", "shape": "dot", "size": 12}, {"color": "orangered", "id": "BP : in utero embryonic development", "label": "BP : in utero embryonic development", "shape": "dot", "size": 21}, {"color": "turquoise", "id": "CEBPB", "label": "CEBPB", "shape": "dot", "size": 14}, {"color": "orangered", "id": "BP : axon guidance", "label": "BP : axon guidance", "shape": "dot", "size": 23}, {"color": "turquoise", "id": "UNC5D", "label": "UNC5D", "shape": "dot", "size": 12}, {"color": "turquoise", "id": "NTN1", "label": "NTN1", "shape": "dot", "size": 12}, {"color": "royalblue", "id": "MF : cytoskeletal motor activity", "label": "MF : cytoskeletal motor activity", "shape": "dot", "size": 21}, {"color": "royalblue", "id": "MF : microtubule motor activity", "label": "MF : microtubule motor activity", "shape": "dot", "size": 25}, {"color": "royalblue", "id": "MF : electron transfer activity", "label": "MF : electron transfer activity", "shape": "dot", "size": 25}, {"color": "mediumblue", "id": "COX5A", "label": "COX5A", "shape": "dot", "size": 14}, {"color": "mediumblue", "id": "NDUFA6", "label": "NDUFA6", "shape": "dot", "size": 13}, {"color": "mediumblue", "id": "KIF11", "label": "KIF11", "shape": "dot", "size": 16}]);
+                  edges = new vis.DataSet([{"color": "gray", "from": "CC : cyclin-dependent protein kinase holoenzyme complex", "to": "CKS2", "width": 1}, {"color": "gray", "from": "CC : cyclin-dependent protein kinase holoenzyme complex", "to": "CCNA2", "width": 1}, {"color": "gray", "from": "CC : cyclin-dependent protein kinase holoenzyme complex", "to": "CCNB1", "width": 1}, {"color": "gray", "from": "CC : Hrd1p ubiquitin ligase complex", "to": "UBE2J1", "width": 1}, {"color": "gray", "from": "CC : Hrd1p ubiquitin ligase complex", "to": "SYVN1", "width": 1}, {"color": "blue", "from": "CC : protein-containing complex", "to": "CC : outer kinetochore", "width": 1}, {"color": "blue", "from": "CC : protein-containing complex", "to": "CC : collagen trimer", "width": 1}, {"color": "blue", "from": "CC : protein-containing complex", "to": "CC : microtubule associated complex", "width": 1}, {"color": "blue", "from": "CC : protein-containing complex", "to": "CC : ribonucleoprotein complex", "width": 1}, {"color": "gray", "from": "CC : protein-containing complex", "to": "CENPE", "width": 1}, {"color": "gray", "from": "CC : protein-containing complex", "to": "HSP90AB1", "width": 1}, {"color": "gray", "from": "CC : protein-containing complex", "to": "COL1A2", "width": 1}, {"color": "gray", "from": "CC : protein-containing complex", "to": "KIF4A", "width": 1}, {"color": "gray", "from": "CC : protein-containing complex", "to": "SPC25", "width": 1}, {"color": "gray", "from": "CC : protein-containing complex", "to": "MCM3", "width": 1}, {"color": "gray", "from": "CC : protein-containing complex", "to": "CYCS", "width": 1}, {"color": "gray", "from": "CC : protein-containing complex", "to": "TUBB", "width": 1}, {"color": "blue", "from": "BP : cell differentiation", "to": "BP : stem cell differentiation", "width": 1}, {"color": "gray", "from": "BP : cell differentiation", "to": "NOG", "width": 1}, {"color": "blue", "from": "BP : animal organ morphogenesis", "to": "BP : heart morphogenesis", "width": 1}, {"color": "gray", "from": "BP : animal organ morphogenesis", "to": "COL11A1", "width": 1}, {"color": "gray", "from": "BP : animal organ morphogenesis", "to": "NOG", "width": 1}, {"color": "blue", "from": "MF : protein-macromolecule adaptor activity", "to": "MF : transcription coregulator activity", "width": 1}, {"color": "blue", "from": "MF : protein-macromolecule adaptor activity", "to": "MF : molecular adaptor activity", "width": 1}, {"color": "gray", "from": "MF : protein-macromolecule adaptor activity", "to": "DTL", "width": 1}, {"color": "gray", "from": "MF : protein-macromolecule adaptor activity", "to": "AGER", "width": 1}, {"color": "gray", "from": "MF : transcription coregulator activity", "to": "PKM", "width": 1}, {"color": "gray", "from": "MF : transcription coregulator activity", "to": "DTL", "width": 1}, {"color": "blue", "from": "MF : kinase activity", "to": "MF : protein kinase activity", "width": 1}, {"color": "gray", "from": "MF : kinase activity", "to": "CDK1", "width": 1}, {"color": "blue", "from": "MF : protein kinase activity", "to": "MF : protein serine/threonine kinase activity", "width": 1}, {"color": "brown", "from": "MF : protein kinase activity", "to": "MF : protein kinase activator activity", "width": 1}, {"color": "brown", "from": "MF : protein kinase activity", "to": "BP : positive regulation of protein kinase activity", "width": 1}, {"color": "gray", "from": "MF : protein kinase activity", "to": "CDK1", "width": 1}, {"color": "gray", "from": "MF : protein kinase activity", "to": "TTK", "width": 1}, {"color": "gray", "from": "MF : protein kinase activity", "to": "PKM", "width": 1}, {"color": "gray", "from": "MF : protein kinase activity", "to": "NPM1", "width": 1}, {"color": "blue", "from": "MF : phosphatase activity", "to": "MF : phosphoprotein phosphatase activity", "width": 1}, {"color": "gray", "from": "MF : phosphatase activity", "to": "PTPRZ1", "width": 1}, {"color": "gray", "from": "MF : phosphatase activity", "to": "DUSP4", "width": 1}, {"color": "blue", "from": "MF : phosphoprotein phosphatase activity", "to": "MF : protein serine/threonine phosphatase activity", "width": 1}, {"color": "blue", "from": "MF : phosphoprotein phosphatase activity", "to": "MF : protein tyrosine phosphatase activity", "width": 1}, {"color": "gray", "from": "MF : phosphoprotein phosphatase activity", "to": "DUSP4", "width": 1}, {"color": "gray", "from": "MF : phosphoprotein phosphatase activity", "to": "CDKN3", "width": 1}, {"color": "gray", "from": "MF : phosphoprotein phosphatase activity", "to": "PTPRZ1", "width": 1}, {"color": "blue", "from": "MF : protein serine/threonine phosphatase activity", "to": "MF : calcium-dependent protein serine/threonine phosphatase activity", "width": 1}, {"color": "gray", "from": "MF : protein serine/threonine phosphatase activity", "to": "PPP3CC", "width": 1}, {"color": "gray", "from": "MF : protein serine/threonine phosphatase activity", "to": "CDKN3", "width": 1}, {"color": "gray", "from": "MF : protein serine/threonine phosphatase activity", "to": "DUSP4", "width": 1}, {"color": "gray", "from": "MF : protein tyrosine phosphatase activity", "to": "PTPRZ1", "width": 1}, {"color": "gray", "from": "MF : protein tyrosine phosphatase activity", "to": "DUSP4", "width": 1}, {"color": "red", "from": "MF : GTPase regulator activity", "to": "MF : GTPase activity", "width": 1}, {"color": "gray", "from": "MF : GTPase regulator activity", "to": "HMGCR", "width": 1}, {"color": "gray", "from": "MF : GTPase regulator activity", "to": "RANBP1", "width": 1}, {"color": "blue", "from": "MF : structural molecule activity", "to": "MF : extracellular matrix structural constituent", "width": 1}, {"color": "gray", "from": "MF : structural molecule activity", "to": "TUBB", "width": 1}, {"color": "gray", "from": "MF : structural molecule activity", "to": "COL1A1", "width": 1}, {"color": "blue", "from": "CC : ribonucleoprotein complex", "to": "CC : spliceosomal complex", "width": 1}, {"color": "gray", "from": "CC : ribonucleoprotein complex", "to": "SNRPE", "width": 1}, {"color": "gray", "from": "CC : ribonucleoprotein complex", "to": "HSP90AB1", "width": 1}, {"color": "blue", "from": "CC : spliceosomal complex", "to": "CC : U2-type spliceosomal complex", "width": 1}, {"color": "blue", "from": "CC : spliceosomal complex", "to": "CC : precatalytic spliceosome", "width": 1}, {"color": "blue", "from": "CC : spliceosomal complex", "to": "CC : catalytic step 2 spliceosome", "width": 1}, {"color": "gray", "from": "CC : spliceosomal complex", "to": "SNRPE", "width": 1}, {"color": "gray", "from": "CC : spliceosomal complex", "to": "SF3B5", "width": 1}, {"color": "gray", "from": "CC : spliceosomal complex", "to": "HNRNPA1", "width": 1}, {"color": "gray", "from": "CC : microtubule associated complex", "to": "KIF4A", "width": 1}, {"color": "gray", "from": "CC : microtubule associated complex", "to": "KIFC1", "width": 1}, {"color": "gray", "from": "CC : microtubule associated complex", "to": "HSP90AB1", "width": 1}, {"color": "gray", "from": "CC : calcium channel complex", "to": "CALM2", "width": 1}, {"color": "gray", "from": "CC : protein serine/threonine phosphatase complex", "to": "PPP3CA", "width": 1}, {"color": "blue", "from": "BP : positive regulation of cell migration", "to": "BP : regulation of cell migration", "width": 1}, {"color": "gray", "from": "BP : positive regulation of cell migration", "to": "HMGB1", "width": 1}, {"color": "gray", "from": "BP : positive regulation of cell migration", "to": "S100A11", "width": 1}, {"color": "gray", "from": "BP : positive regulation of cell migration", "to": "MDK", "width": 1}, {"color": "blue", "from": "BP : regulation of neuron projection development", "to": "BP : positive regulation of neuron projection development", "width": 1}, {"color": "blue", "from": "BP : regulation of neuron projection development", "to": "BP : regulation of dendrite development", "width": 1}, {"color": "red", "from": "BP : regulation of neuron projection development", "to": "BP : neuron projection development", "width": 1}, {"color": "gray", "from": "BP : regulation of neuron projection development", "to": "TBR1", "width": 1}, {"color": "gray", "from": "BP : regulation of neuron projection development", "to": "B2M", "width": 1}, {"color": "gray", "from": "BP : stem cell differentiation", "to": "NOG", "width": 1}, {"color": "blue", "from": "BP : neuron projection development", "to": "BP : dendrite development", "width": 1}, {"color": "gray", "from": "BP : neuron projection development", "to": "FEZF2", "width": 1}, {"color": "gray", "from": "BP : neuron projection development", "to": "TBR1", "width": 1}, {"color": "gray", "from": "BP : neuron projection development", "to": "B2M", "width": 1}, {"color": "gray", "from": "CC : SWI/SNF superfamily-type complex", "to": "ARID1A", "width": 1}, {"color": "gray", "from": "CC : SWI/SNF superfamily-type complex", "to": "PBRM1", "width": 1}, {"color": "gray", "from": "CC : SWI/SNF superfamily-type complex", "to": "ACTL6B", "width": 1}, {"color": "gray", "from": "CC : SWI/SNF superfamily-type complex", "to": "ARID1B", "width": 1}, {"color": "gray", "from": "MF : catalytic activity", "to": "HMGCS1", "width": 1}, {"color": "blue", "from": "CC : cullin-RING ubiquitin ligase complex", "to": "CC : ubiquitin ligase complex", "width": 1}, {"color": "gray", "from": "CC : cullin-RING ubiquitin ligase complex", "to": "RBX1", "width": 1}, {"color": "gray", "from": "CC : cullin-RING ubiquitin ligase complex", "to": "CKS2", "width": 1}, {"color": "blue", "from": "BP : central nervous system neuron differentiation", "to": "BP : neuron differentiation", "width": 1}, {"color": "orange", "from": "BP : central nervous system neuron differentiation", "to": "BP : central nervous system development", "width": 1}, {"color": "gray", "from": "BP : central nervous system neuron differentiation", "to": "FEZF2", "width": 1}, {"color": "gray", "from": "BP : central nervous system neuron differentiation", "to": "PAX7", "width": 1}, {"color": "gray", "from": "BP : central nervous system neuron differentiation", "to": "VCAN", "width": 1}, {"color": "red", "from": "BP : neuron differentiation", "to": "BP : regulation of neuron differentiation", "width": 1}, {"color": "gray", "from": "BP : neuron differentiation", "to": "FEZF2", "width": 1}, {"color": "gray", "from": "BP : neuron differentiation", "to": "PAX7", "width": 1}, {"color": "gray", "from": "BP : neuron differentiation", "to": "PAX6", "width": 1}, {"color": "gray", "from": "MF : extracellular matrix structural constituent", "to": "COL1A1", "width": 1}, {"color": "gray", "from": "BP : regulation of cell migration", "to": "HMGB1", "width": 1}, {"color": "gray", "from": "BP : negative regulation of cell growth", "to": "ENO1", "width": 1}, {"color": "gray", "from": "MF : molecular adaptor activity", "to": "DTL", "width": 1}, {"color": "gray", "from": "MF : molecular adaptor activity", "to": "AGER", "width": 1}, {"color": "gray", "from": "MF : molecular adaptor activity", "to": "HMMR", "width": 1}, {"color": "gray", "from": "CC : ubiquitin ligase complex", "to": "RBX1", "width": 1}, {"color": "gray", "from": "CC : cilium", "to": "PKM", "width": 1}, {"color": "gray", "from": "CC : cilium", "to": "EZR", "width": 1}, {"color": "gray", "from": "BP : positive regulation of protein kinase activity", "to": "NPM1", "width": 1}, {"color": "gray", "from": "BP : positive regulation of protein kinase activity", "to": "CDK1", "width": 1}, {"color": "gray", "from": "MF : calcium-dependent protein serine/threonine phosphatase activity", "to": "PPP3CC", "width": 1}, {"color": "gray", "from": "MF : calcium-dependent protein serine/threonine phosphatase activity", "to": "CDKN3", "width": 1}, {"color": "blue", "from": "MF : ubiquitin protein ligase activity", "to": "MF : ubiquitin-protein transferase activity", "width": 1}, {"color": "gray", "from": "MF : ubiquitin protein ligase activity", "to": "RBX1", "width": 1}, {"color": "gray", "from": "MF : ubiquitin protein ligase activity", "to": "BIRC5", "width": 1}, {"color": "gray", "from": "MF : ubiquitin protein ligase activity", "to": "UBE2C", "width": 1}, {"color": "gray", "from": "MF : protein serine/threonine kinase activity", "to": "PKM", "width": 1}, {"color": "gray", "from": "MF : protein serine/threonine kinase activity", "to": "DBF4", "width": 1}, {"color": "gray", "from": "MF : protein serine/threonine kinase activity", "to": "CDK1", "width": 1}, {"color": "gray", "from": "CC : RNA polymerase II transcription regulator complex", "to": "DDIT3", "width": 1}, {"color": "red", "from": "BP : regulation of embryonic development", "to": "BP : embryo development", "width": 1}, {"color": "gray", "from": "BP : regulation of embryonic development", "to": "CDK1", "width": 1}, {"color": "gray", "from": "BP : regulation of embryonic development", "to": "HMGCR", "width": 1}, {"color": "gray", "from": "BP : positive regulation of MAP kinase activity", "to": "AGER", "width": 1}, {"color": "gray", "from": "MF : protein kinase activator activity", "to": "DBF4", "width": 1}, {"color": "gray", "from": "MF : protein kinase activator activity", "to": "CDK1", "width": 1}, {"color": "gray", "from": "BP : regulation of GTPase activity", "to": "ECT2", "width": 1}, {"color": "gray", "from": "BP : regulation of neuron differentiation", "to": "PAX6", "width": 1}, {"color": "gray", "from": "BP : pigmentation", "to": "PAX3", "width": 1}, {"color": "gray", "from": "BP : positive regulation of striated muscle tissue development", "to": "HMGCR", "width": 1}, {"color": "gray", "from": "BP : positive regulation of striated muscle tissue development", "to": "GJA1", "width": 1}, {"color": "gray", "from": "BP : cell fate commitment", "to": "PAX7", "width": 1}, {"color": "gray", "from": "BP : cell fate commitment", "to": "PAX6", "width": 1}, {"color": "gray", "from": "BP : cell morphogenesis", "to": "ECT2", "width": 1}, {"color": "orange", "from": "BP : neuron projection extension", "to": "BP : neuron projection morphogenesis", "width": 1}, {"color": "gray", "from": "BP : neuron projection extension", "to": "POSTN", "width": 1}, {"color": "orange", "from": "BP : skeletal system development", "to": "BP : cartilage development", "width": 1}, {"color": "gray", "from": "BP : skeletal system development", "to": "VCAN", "width": 1}, {"color": "gray", "from": "BP : skeletal system development", "to": "PAX7", "width": 1}, {"color": "gray", "from": "BP : blood vessel development", "to": "ARID1A", "width": 1}, {"color": "gray", "from": "BP : blood vessel development", "to": "COL1A1", "width": 1}, {"color": "gray", "from": "MF : ubiquitin-protein transferase activity", "to": "BIRC5", "width": 1}, {"color": "gray", "from": "MF : ubiquitin-protein transferase activity", "to": "UBE2G1", "width": 1}, {"color": "gray", "from": "CC : U2-type spliceosomal complex", "to": "SNRPE", "width": 1}, {"color": "gray", "from": "CC : precatalytic spliceosome", "to": "SNRPE", "width": 1}, {"color": "gray", "from": "CC : precatalytic spliceosome", "to": "SF3B5", "width": 1}, {"color": "gray", "from": "MF : molecular sequestering activity", "to": "TTR", "width": 1}, {"color": "gray", "from": "MF : protein folding chaperone", "to": "HSP90AB1", "width": 1}, {"color": "gray", "from": "BP : positive regulation of neuron projection development", "to": "BMP5", "width": 1}, {"color": "gray", "from": "BP : positive regulation of neuron projection development", "to": "TBR1", "width": 1}, {"color": "red", "from": "BP : regulation of dendrite development", "to": "BP : dendrite development", "width": 1}, {"color": "gray", "from": "BP : regulation of dendrite development", "to": "BMP5", "width": 1}, {"color": "gray", "from": "BP : regulation of dendrite development", "to": "TBR1", "width": 1}, {"color": "gray", "from": "BP : regulation of dendrite development", "to": "FEZF2", "width": 1}, {"color": "gray", "from": "BP : regulation of neuron migration", "to": "MDK", "width": 1}, {"color": "gray", "from": "CC : collagen trimer", "to": "DCN", "width": 1}, {"color": "gray", "from": "CC : collagen trimer", "to": "COL1A2", "width": 1}, {"color": "gray", "from": "CC : collagen trimer", "to": "HSP90AB1", "width": 1}, {"color": "gray", "from": "BP : cartilage development", "to": "COL11A1", "width": 1}, {"color": "gray", "from": "BP : cartilage development", "to": "VCAN", "width": 1}, {"color": "orange", "from": "BP : heart development", "to": "BP : heart morphogenesis", "width": 1}, {"color": "gray", "from": "BP : heart development", "to": "COL11A1", "width": 1}, {"color": "gray", "from": "BP : heart morphogenesis", "to": "COL11A1", "width": 1}, {"color": "orange", "from": "BP : retina development in camera-type eye", "to": "BP : neural retina development", "width": 1}, {"color": "orange", "from": "BP : retina development in camera-type eye", "to": "BP : camera-type eye development", "width": 1}, {"color": "gray", "from": "BP : retina development in camera-type eye", "to": "ATP2B4", "width": 1}, {"color": "gray", "from": "BP : retina development in camera-type eye", "to": "PAX6", "width": 1}, {"color": "gray", "from": "BP : spermatogenesis", "to": "HMGB2", "width": 1}, {"color": "gray", "from": "BP : axon development", "to": "FEZF2", "width": 1}, {"color": "orange", "from": "BP : nervous system development", "to": "BP : central nervous system development", "width": 1}, {"color": "gray", "from": "BP : nervous system development", "to": "VCAN", "width": 1}, {"color": "gray", "from": "BP : nervous system development", "to": "PAX3", "width": 1}, {"color": "orange", "from": "BP : central nervous system development", "to": "BP : brain development", "width": 1}, {"color": "orange", "from": "BP : central nervous system development", "to": "BP : spinal cord development", "width": 1}, {"color": "orange", "from": "BP : central nervous system development", "to": "BP : astrocyte differentiation", "width": 1}, {"color": "gray", "from": "BP : central nervous system development", "to": "VCAN", "width": 1}, {"color": "gray", "from": "BP : central nervous system development", "to": "PAX6", "width": 1}, {"color": "gray", "from": "BP : central nervous system development", "to": "NOG", "width": 1}, {"color": "gray", "from": "BP : central nervous system development", "to": "FEZF2", "width": 1}, {"color": "gray", "from": "BP : central nervous system development", "to": "PTPRZ1", "width": 1}, {"color": "orange", "from": "BP : head development", "to": "BP : brain development", "width": 1}, {"color": "gray", "from": "BP : head development", "to": "PAX6", "width": 1}, {"color": "orange", "from": "BP : wound healing", "to": "BP : blood coagulation", "width": 1}, {"color": "gray", "from": "BP : wound healing", "to": "ANXA5", "width": 1}, {"color": "gray", "from": "BP : spinal cord development", "to": "NOG", "width": 1}, {"color": "gray", "from": "BP : spinal cord development", "to": "VCAN", "width": 1}, {"color": "orange", "from": "BP : forebrain development", "to": "BP : brain development", "width": 1}, {"color": "gray", "from": "BP : forebrain development", "to": "PAX6", "width": 1}, {"color": "gray", "from": "BP : cerebral cortex development", "to": "PAX6", "width": 1}, {"color": "gray", "from": "BP : blood coagulation", "to": "PPIA", "width": 1}, {"color": "gray", "from": "BP : blood coagulation", "to": "ANXA5", "width": 1}, {"color": "gray", "from": "BP : brain development", "to": "PAX6", "width": 1}, {"color": "gray", "from": "BP : brain development", "to": "VCAN", "width": 1}, {"color": "gray", "from": "CC : outer kinetochore", "to": "SPC25", "width": 1}, {"color": "gray", "from": "CC : outer kinetochore", "to": "CENPE", "width": 1}, {"color": "gray", "from": "CC : outer kinetochore", "to": "HSP90AB1", "width": 1}, {"color": "gray", "from": "BP : neural retina development", "to": "ATP2B4", "width": 1}, {"color": "gray", "from": "BP : neural retina development", "to": "PAX6", "width": 1}, {"color": "gray", "from": "CC : nuclear pore", "to": "RANBP1", "width": 1}, {"color": "orange", "from": "BP : dendrite development", "to": "BP : dendritic spine development", "width": 1}, {"color": "gray", "from": "BP : dendrite development", "to": "FEZF2", "width": 1}, {"color": "gray", "from": "BP : dendrite development", "to": "ARID1B", "width": 1}, {"color": "gray", "from": "BP : dendrite development", "to": "BMP5", "width": 1}, {"color": "gray", "from": "BP : camera-type eye development", "to": "PAX6", "width": 1}, {"color": "gray", "from": "BP : lung development", "to": "HMGB1", "width": 1}, {"color": "gray", "from": "BP : lung development", "to": "NOG", "width": 1}, {"color": "gray", "from": "CC : sperm flagellum", "to": "ATP2B4", "width": 1}, {"color": "gray", "from": "CC : sperm flagellum", "to": "CALM2", "width": 1}, {"color": "gray", "from": "BP : neuron projection morphogenesis", "to": "POSTN", "width": 1}, {"color": "gray", "from": "MF : GTPase activity", "to": "HMGCR", "width": 1}, {"color": "gray", "from": "MF : GTPase activity", "to": "RANBP1", "width": 1}, {"color": "gray", "from": "MF : GTPase activity", "to": "ECT2", "width": 1}, {"color": "gray", "from": "BP : erythrocyte differentiation", "to": "B2M", "width": 1}, {"color": "gray", "from": "BP : erythrocyte differentiation", "to": "CASP3", "width": 1}, {"color": "gray", "from": "BP : embryo development", "to": "CDK1", "width": 1}, {"color": "gray", "from": "BP : embryo development", "to": "HMGCR", "width": 1}, {"color": "gray", "from": "BP : dendritic spine development", "to": "ARID1B", "width": 1}, {"color": "gray", "from": "BP : dendritic spine development", "to": "FEZF2", "width": 1}, {"color": "gray", "from": "BP : astrocyte differentiation", "to": "PAX6", "width": 1}, {"color": "gray", "from": "BP : astrocyte differentiation", "to": "VCAN", "width": 1}, {"color": "blue", "from": "MF : JUN kinase activity", "to": "MF : MAP kinase activity", "width": 1}, {"color": "gray", "from": "MF : JUN kinase activity", "to": "AGER", "width": 1}, {"color": "gray", "from": "MF : JUN kinase activity", "to": "MAPK8", "width": 1}, {"color": "gray", "from": "MF : JUN kinase activity", "to": "MAPK13", "width": 1}, {"color": "gray", "from": "BP : skeletal muscle tissue development", "to": "PAX7", "width": 1}, {"color": "gray", "from": "BP : skeletal muscle tissue development", "to": "HMGCR", "width": 1}, {"color": "gray", "from": "BP : neuron migration", "to": "MDK", "width": 1}, {"color": "gray", "from": "MF : MAP kinase activity", "to": "MAPK13", "width": 1}, {"color": "gray", "from": "MF : MAP kinase activity", "to": "MAPK8", "width": 1}, {"color": "gray", "from": "CC : nucleosome", "to": "H2AC6", "width": 1}, {"color": "gray", "from": "CC : nucleosome", "to": "H4C8", "width": 1}, {"color": "gray", "from": "BP : in utero embryonic development", "to": "CEBPB", "width": 1}, {"color": "gray", "from": "BP : axon guidance", "to": "UNC5D", "width": 1}, {"color": "gray", "from": "BP : axon guidance", "to": "NTN1", "width": 1}, {"color": "blue", "from": "MF : cytoskeletal motor activity", "to": "MF : microtubule motor activity", "width": 1}, {"color": "gray", "from": "MF : cytoskeletal motor activity", "to": "KIF4A", "width": 1}, {"color": "gray", "from": "MF : electron transfer activity", "to": "CYCS", "width": 1}, {"color": "gray", "from": "MF : electron transfer activity", "to": "COX5A", "width": 1}, {"color": "gray", "from": "MF : electron transfer activity", "to": "NDUFA6", "width": 1}, {"color": "gray", "from": "MF : microtubule motor activity", "to": "KIF4A", "width": 1}, {"color": "gray", "from": "MF : microtubule motor activity", "to": "KIF11", "width": 1}, {"color": "gray", "from": "CC : catalytic step 2 spliceosome", "to": "HNRNPA1", "width": 1}, {"color": "gray", "from": "CC : catalytic step 2 spliceosome", "to": "SNRPE", "width": 1}, {"color": "red", "from": "CCNA2", "to": "CCNB1", "width": 1}, {"color": "red", "from": "CCNA2", "to": "KIF11", "width": 1}, {"color": "red", "from": "CCNA2", "to": "CDK1", "width": 1}, {"color": "red", "from": "CCNA2", "to": "TTK", "width": 1}, {"color": "red", "from": "CCNA2", "to": "UBE2C", "width": 1}, {"color": "red", "from": "CCNA2", "to": "CDKN3", "width": 1}, {"color": "red", "from": "CCNA2", "to": "BIRC5", "width": 1}, {"color": "red", "from": "CCNA2", "to": "CENPE", "width": 1}, {"color": "red", "from": "CCNA2", "to": "CKS2", "width": 1}, {"color": "red", "from": "CCNA2", "to": "RBX1", "width": 1}, {"color": "red", "from": "CCNA2", "to": "DTL", "width": 1}, {"color": "red", "from": "CCNA2", "to": "HMMR", "width": 1}, {"color": "red", "from": "CDK1", "to": "BIRC5", "width": 1}, {"color": "red", "from": "CDK1", "to": "CCNB1", "width": 1}, {"color": "red", "from": "CDK1", "to": "KIF11", "width": 1}, {"color": "red", "from": "CDK1", "to": "ECT2", "width": 1}, {"color": "red", "from": "CDK1", "to": "CDKN3", "width": 1}, {"color": "red", "from": "CDK1", "to": "GJA1", "width": 1}, {"color": "red", "from": "CDK1", "to": "UBE2C", "width": 1}, {"color": "red", "from": "CDK1", "to": "CKS2", "width": 1}, {"color": "red", "from": "CDK1", "to": "CENPE", "width": 1}, {"color": "red", "from": "CDK1", "to": "DTL", "width": 1}, {"color": "red", "from": "CDK1", "to": "TTK", "width": 1}, {"color": "red", "from": "CDK1", "to": "HMMR", "width": 1}, {"color": "red", "from": "BIRC5", "to": "KIF11", "width": 1}, {"color": "red", "from": "BIRC5", "to": "KIF4A", "width": 1}, {"color": "red", "from": "BIRC5", "to": "CCNB1", "width": 1}, {"color": "red", "from": "BIRC5", "to": "UBE2C", "width": 1}, {"color": "red", "from": "BIRC5", "to": "CASP3", "width": 1}, {"color": "red", "from": "BIRC5", "to": "CENPE", "width": 1}, {"color": "red", "from": "BIRC5", "to": "TTK", "width": 1}, {"color": "red", "from": "CCNB1", "to": "CENPE", "width": 1}, {"color": "red", "from": "CCNB1", "to": "UBE2C", "width": 1}, {"color": "red", "from": "CCNB1", "to": "CKS2", "width": 1}, {"color": "red", "from": "CCNB1", "to": "TTK", "width": 1}, {"color": "red", "from": "CCNB1", "to": "HMMR", "width": 1}, {"color": "red", "from": "CCNB1", "to": "CDKN3", "width": 1}, {"color": "red", "from": "CCNB1", "to": "KIF11", "width": 1}, {"color": "red", "from": "CCNB1", "to": "SPC25", "width": 1}, {"color": "red", "from": "CCNB1", "to": "ECT2", "width": 1}, {"color": "red", "from": "MAPK8", "to": "MAPK13", "width": 1}, {"color": "red", "from": "MAPK8", "to": "DUSP4", "width": 1}, {"color": "red", "from": "DDIT3", "to": "CEBPB", "width": 1}, {"color": "red", "from": "DDIT3", "to": "MAPK13", "width": 1}, {"color": "red", "from": "PPP3CA", "to": "PPP3CC", "width": 1}, {"color": "red", "from": "CEBPB", "to": "MAPK13", "width": 1}, {"color": "red", "from": "ARID1A", "to": "ARID1B", "width": 1}, {"color": "red", "from": "ARID1A", "to": "PBRM1", "width": 1}, {"color": "red", "from": "ARID1A", "to": "ACTL6B", "width": 1}, {"color": "red", "from": "NTN1", "to": "UNC5D", "width": 1}, {"color": "red", "from": "PBRM1", "to": "ARID1B", "width": 1}, {"color": "red", "from": "PBRM1", "to": "ACTL6B", "width": 1}, {"color": "red", "from": "ARID1B", "to": "ACTL6B", "width": 1}, {"color": "red", "from": "H2AC6", "to": "H4C8", "width": 1}, {"color": "red", "from": "SYVN1", "to": "UBE2J1", "width": 1}, {"color": "red", "from": "COX5A", "to": "NDUFA6", "width": 1}, {"color": "red", "from": "COX5A", "to": "CYCS", "width": 1}, {"color": "red", "from": "COL1A1", "to": "COL11A1", "width": 1}, {"color": "red", "from": "COL1A1", "to": "COL1A2", "width": 1}, {"color": "red", "from": "COL1A1", "to": "DCN", "width": 1}, {"color": "red", "from": "COL1A1", "to": "POSTN", "width": 1}, {"color": "red", "from": "TUBB", "to": "GJA1", "width": 1}, {"color": "red", "from": "PAX3", "to": "PAX7", "width": 1}, {"color": "red", "from": "BMP5", "to": "NOG", "width": 1}, {"color": "red", "from": "KIF11", "to": "KIF4A", "width": 1}, {"color": "red", "from": "KIF11", "to": "ECT2", "width": 1}, {"color": "red", "from": "KIF11", "to": "KIFC1", "width": 1}, {"color": "red", "from": "KIF11", "to": "TTK", "width": 1}, {"color": "red", "from": "KIF11", "to": "CENPE", "width": 1}, {"color": "red", "from": "KIF11", "to": "HMMR", "width": 1}, {"color": "red", "from": "KIF11", "to": "UBE2C", "width": 1}, {"color": "red", "from": "AGER", "to": "HMGB1", "width": 1}, {"color": "red", "from": "AGER", "to": "S100A11", "width": 1}, {"color": "red", "from": "HMGCR", "to": "HMGCS1", "width": 1}, {"color": "red", "from": "RBX1", "to": "DTL", "width": 1}, {"color": "red", "from": "RBX1", "to": "CKS2", "width": 1}, {"color": "red", "from": "RBX1", "to": "UBE2G1", "width": 1}, {"color": "red", "from": "HSP90AB1", "to": "PPIA", "width": 1}, {"color": "red", "from": "HSP90AB1", "to": "EZR", "width": 1}, {"color": "red", "from": "MDK", "to": "PTPRZ1", "width": 1}, {"color": "red", "from": "ANXA5", "to": "CASP3", "width": 1}, {"color": "red", "from": "COL1A2", "to": "POSTN", "width": 1}, {"color": "red", "from": "COL1A2", "to": "COL11A1", "width": 1}, {"color": "red", "from": "COL1A2", "to": "DCN", "width": 1}, {"color": "red", "from": "PKM", "to": "ENO1", "width": 1}, {"color": "red", "from": "TBR1", "to": "PAX6", "width": 1}, {"color": "red", "from": "TBR1", "to": "FEZF2", "width": 1}, {"color": "red", "from": "KIF4A", "to": "CENPE", "width": 1}, {"color": "red", "from": "KIF4A", "to": "TTK", "width": 1}, {"color": "red", "from": "KIF4A", "to": "ECT2", "width": 1}, {"color": "red", "from": "CENPE", "to": "TTK", "width": 1}, {"color": "red", "from": "CENPE", "to": "HMMR", "width": 1}, {"color": "red", "from": "MCM3", "to": "DBF4", "width": 1}, {"color": "red", "from": "TTK", "to": "UBE2C", "width": 1}, {"color": "red", "from": "HMGB2", "to": "HMGB1", "width": 1}, {"color": "red", "from": "PTPRZ1", "to": "VCAN", "width": 1}, {"color": "red", "from": "SF3B5", "to": "SNRPE", "width": 1}, {"color": "red", "from": "DCN", "to": "VCAN", "width": 1}, {"color": "red", "from": "RANBP1", "to": "PPIA", "width": 1}, {"color": "red", "from": "CASP3", "to": "CYCS", "width": 1}, {"color": "red", "from": "TTR", "to": "B2M", "width": 1}, {"color": "red", "from": "NPM1", "to": "HNRNPA1", "width": 1}, {"color": "red", "from": "ATP2B4", "to": "CALM2", "width": 1}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "repulsion": {
+            "centralGravity": 0.2,
+            "damping": 0.09,
+            "nodeDistance": 150,
+            "springConstant": 0.05,
+            "springLength": 200
+        },
+        "solver": "repulsion",
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+                      network.on("stabilizationProgress", function(params) {
+                          document.getElementById('loadingBar').removeAttribute("style");
+                          var maxWidth = 496;
+                          var minWidth = 20;
+                          var widthFactor = params.iterations/params.total;
+                          var width = Math.max(minWidth,maxWidth * widthFactor);
+                          document.getElementById('bar').style.width = width + 'px';
+                          document.getElementById('text').innerHTML = Math.round(widthFactor*100) + '%';
+                      });
+                      network.once("stabilizationIterationsDone", function() {
+                          document.getElementById('text').innerHTML = '100%';
+                          document.getElementById('bar').style.width = '496px';
+                          document.getElementById('loadingBar').style.opacity = 0;
+                          // really clean the dom element
+                          setTimeout(function () {document.getElementById('loadingBar').style.display = 'none';}, 500);
+                      });
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+        <script type="text/javascript">
+        
+            let selectedNodes = [];
+            let previousStyles = {}; 
+            let undoStack = [];
+    
+            function saveNetworkState() {
+                const nodes = network.body.data.nodes.get();
+                const edges = network.body.data.edges.get();
+                const styles = {};
+            
+                nodes.forEach(node => {
+                    styles[node.id] = {
+                        color: previousStyles[node.id]?.color || node.color || null
+                    };
+                });
+            
+                undoStack.push(JSON.stringify({ nodes, edges, styles }));
+            }
+            
+            
+            function removeSelectedNodes() {
+                if (selectedNodes.length > 0) {
+                    saveNetworkState();
+            
+                    network.body.data.nodes.remove(selectedNodes.map(id => ({ id })));
+                    selectedNodes = [];
+                } else {
+                    alert("No nodes selected.");
+                }
+            }
+            
+            function undo() {
+                if (undoStack.length > 0) {
+                    const previousState = JSON.parse(undoStack.pop());
+            
+                    network.body.data.nodes.clear();
+                    network.body.data.edges.clear();
+                    network.body.data.nodes.add(previousState.nodes);
+                    network.body.data.edges.add(previousState.edges);
+            
+                    Object.keys(previousState.styles).forEach(nodeId => {
+                        network.body.data.nodes.update({
+                            id: nodeId,
+                            ...previousState.styles[nodeId]
+                        });
+                    });
+            
+                    selectedNodes = [];
+                    previousStyles = previousState.styles;
+                } else {
+                    alert("Nothing to undo.");
+                }
+            }
+            
+            network.on("selectNode", function (params) {
+                if (event.ctrlKey) {
+                    selectedNodes = [...new Set([...selectedNodes, ...params.nodes])];
+                } else {
+                    selectedNodes.forEach(nodeId => {
+                        if (previousStyles[nodeId]) {
+                            network.body.data.nodes.update({
+                                id: nodeId,
+                                ...previousStyles[nodeId]
+                            });
+                        }
+                    });
+                    selectedNodes = params.nodes;
+                }
+            
+                params.nodes.forEach(nodeId => {
+                    const nodeData = network.body.data.nodes.get(nodeId);
+                    if (!previousStyles[nodeId]) {
+                        previousStyles[nodeId] = {
+                            color: nodeData.color || null
+                        };
+                    }
+                    network.body.data.nodes.update({
+                        id: nodeId,
+                        color: "black"
+                    });
+                });
+            });
+            
+            network.on("deselectNode", function (params) {
+                if (!event.ctrlKey) {
+                    selectedNodes.forEach(nodeId => {
+                        if (previousStyles[nodeId]) {
+                            network.body.data.nodes.update({
+                                id: nodeId,
+                                ...previousStyles[nodeId]
+                            });
+                        }
+                    });
+                    selectedNodes = [];
+                } else {
+                    params.nodes.forEach(nodeId => {
+                        if (previousStyles[nodeId]) {
+                            network.body.data.nodes.update({
+                                id: nodeId,
+                                ...previousStyles[nodeId]
+                            });
+                        }
+                    });
+                }
+            });
+                    
+                    
+            
+            
+            
+            function changePhysics(value) {
+                network.setOptions({
+                    physics: {
+                        solver: 'repulsion',
+                        repulsion: {
+                            nodeDistance: parseInt(value),
+                        },
+                    },
+                });
+            }
+            
+            
+            
+            
+            
+                            
+            let originalNodeSizes = {};
+            
+            function initializeOriginalNodeSizes() {
+                network.body.data.nodes.get().forEach(node => {
+                    if (!originalNodeSizes[node.id]) {
+                        originalNodeSizes[node.id] = node.size || 1; 
+                    }
+                });
+            }
+            
+            function scaleNetworkSize(scaleFactor) {
+                initializeOriginalNodeSizes(); 
+            
+                network.body.data.nodes.update(
+                    network.body.data.nodes.get().map(node => ({
+                        id: node.id,
+                        size: originalNodeSizes[node.id] * scaleFactor 
+                    }))
+                );
+            }
+                            
+                        
+            
+            function changeFontSize(size) {
+                network.body.data.nodes.update(
+                    network.body.data.nodes.get().map(node => ({
+                        id: node.id,
+                        font: { size: size }
+                    }))
+                );
+            }
+            
+            
+            let physicsEnabled = true;
+            
+            function togglePhysics() {
+                physicsEnabled = !physicsEnabled;
+            
+                network.setOptions({
+                    physics: physicsEnabled
+                });
+            
+
+                document.getElementById("togglePhysicsButton").innerText = physicsEnabled
+                    ? "Disable Physics"
+                    : "Enable Physics";
+            }
+
+
+
+            function downloadFile(blob, filename) {
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = filename;
+                link.click();
+    
+                URL.revokeObjectURL(link.href);
+            }
+
+
+            function saveGraph(format, resolution = 96) {
+                
+                if (format === "svg") {
+
+                    const positions = network.getPositions();
+
+                    const nodes = network.body.data.nodes.get();
+                    const edges = network.body.data.edges.get();
+                
+                    let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+                    Object.values(positions).forEach(pos => {
+                        minX = Math.min(minX, pos.x);
+                        maxX = Math.max(maxX, pos.x);
+                        minY = Math.min(minY, pos.y);
+                        maxY = Math.max(maxY, pos.y);
+                    });
+                
+                    const margin = 600; 
+                    const width = maxX - minX + margin * 2.5; 
+                    const height = maxY - minY + margin * 1.5; 
+                
+                    const offsetX = margin - minX; 
+                    const offsetY = margin - minY; 
+                
+                    let svgContent = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">`;
+                
+                    edges.forEach((edge) => {
+                        const from = positions[edge.from];
+                        const to = positions[edge.to];
+                        if (from && to) {
+                            const controlX = (from.x + to.x) / 2; 
+                            const controlY = (from.y + to.y) / 2 - 50; 
+                    
+                            const pathData = `M${from.x + offsetX},${from.y + offsetY} C${controlX + offsetX},${controlY + offsetY} ${controlX + offsetX},${controlY + offsetY} ${to.x + offsetX},${to.y + offsetY}`;
+                            const color = edge.color || "black"; 
+                            const width = edge.width || 2; 
+                            svgContent += `<path d="${pathData}" stroke="${color}" stroke-width="${width}" fill="none"/>`;
+                        }
+                    });
+                
+
+                    nodes.forEach((node) => {
+                        const pos = positions[node.id];
+                        if (pos) {
+                            const size = (node.size || 10); 
+                            const color = node.color || "blue"; 
+                            svgContent += `<circle cx="${pos.x + offsetX}" cy="${pos.y + offsetY}" r="${size}" fill="${color}" />`;
+                
+                            const labelColor = node.font?.color || "black"; 
+                            const labelFontSize = node.font?.size || 12; 
+                            svgContent += `<text x="${pos.x + offsetX + size + 5}" y="${pos.y + offsetY}" font-size="${labelFontSize}" fill="${labelColor}">${node.label || node.id}</text>`;
+                        }
+                    });
+                
+                    svgContent += `</svg>`;
+                
+                    const blob = new Blob([svgContent], { type: "image/svg+xml;charset=utf-8" });
+                    const link = document.createElement("a");
+                    link.href = URL.createObjectURL(blob);
+                    link.download = "graph.svg";
+                    link.click();
+                                            
+                    
+                } else {
+                    
+                    const positions = network.getPositions();
+
+                    const nodes = network.body.data.nodes.get();
+                    const edges = network.body.data.edges.get();
+                
+                    let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+                    Object.values(positions).forEach(pos => {
+                        minX = Math.min(minX, pos.x);
+                        maxX = Math.max(maxX, pos.x);
+                        minY = Math.min(minY, pos.y);
+                        maxY = Math.max(maxY, pos.y);
+                    });
+                
+                    const margin = 600;  
+                    const width = maxX - minX + margin * 2.5; 
+                    const height = maxY - minY + margin * 1.5; 
+                
+                    const offsetX = margin - minX; 
+                    const offsetY = margin - minY; 
+                
+                    let svgContent = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">`;
+                
+                    edges.forEach((edge) => {
+                        const from = positions[edge.from];
+                        const to = positions[edge.to];
+                        if (from && to) {
+                            const controlX = (from.x + to.x) / 2; 
+                            const controlY = (from.y + to.y) / 2 - 50; 
+                    
+                            const pathData = `M${from.x + offsetX},${from.y + offsetY} C${controlX + offsetX},${controlY + offsetY} ${controlX + offsetX},${controlY + offsetY} ${to.x + offsetX},${to.y + offsetY}`;
+                            const color = edge.color || "black"; 
+                            const width = edge.width || 2; 
+                            svgContent += `<path d="${pathData}" stroke="${color}" stroke-width="${width}" fill="none"/>`;
+                        }
+                    });
+                
+                    nodes.forEach((node) => {
+                        const pos = positions[node.id];
+                        if (pos) {
+                            const size = (node.size || 10); 
+                            const color = node.color || "blue"; 
+                            svgContent += `<circle cx="${pos.x + offsetX}" cy="${pos.y + offsetY}" r="${size}" fill="${color}" />`;
+                
+                            const labelColor = node.font?.color || "black"; 
+                            const labelFontSize = node.font?.size || 12; 
+                            svgContent += `<text x="${pos.x + offsetX + size + 5}" y="${pos.y + offsetY}" font-size="${labelFontSize}" fill="${labelColor}">${node.label || node.id}</text>`;
+                        }
+                    });
+                
+                    svgContent += `</svg>`;
+                    
+                    const svgBlob = new Blob([svgContent], { type: 'image/svg+xml' });
+                    const svgUrl = URL.createObjectURL(svgBlob);
+                    
+                    const getScaleFactor = (resolution = 300) => {
+                        const defaultDPI = 96;
+                        return resolution / defaultDPI;
+                    };
+                    
+                    const scaleFactor = getScaleFactor(resolution || 300);
+                    
+                    const canvas = document.createElement('canvas');
+                    const context = canvas.getContext('2d');
+                    const img = new Image();
+                    
+                    img.onload = () => {
+                        try {
+                            canvas.width = width * scaleFactor;
+                            canvas.height = height * scaleFactor;
+                    
+                            context.setTransform(scaleFactor, 0, 0, scaleFactor, 0, 0);
+                    
+                            if (format === 'jpeg' || format === 'jpg') {
+                                context.fillStyle = 'white';
+                                context.fillRect(0, 0, canvas.width, canvas.height);
+                            }
+                    
+                            context.drawImage(img, 0, 0, width, height);
+                    
+                            canvas.toBlob((blob) => {
+                                if (blob) {
+                                    downloadFile(blob, `image.${format}`);
+                                } else {
+                                    console.error('Błąd: Blob jest pusty!');
+                                }
+                            }, `image/${format}`);
+                        } catch (error) {
+                            console.error('Błąd podczas rysowania na canvasie:', error);
+                        }
+                    };
+                    
+                    img.onerror = (error) => {
+                        console.error('Nie udało się załadować obrazu SVG jako źródła:', error);
+                    };
+                    
+                    img.src = svgUrl;
+                    
+
+                        
+                        
+                }
+            }
+                        
+                        
+                        
+    
+    
+            document.body.insertAdjacentHTML('beforeend', `
+                <div style="position: fixed; top: 0; left: 0; width: 100%; background: #353834; padding: 10px; z-index: 1000; display: flex; gap: 10px; align-items: center; border-bottom: 1px solid #ddd;">
+                    <button onclick="removeSelectedNodes()">
+                        <i class="fa-solid fa-eraser"></i>
+                    </button>
+                    
+                    
+
+                    
+                    
+                    <button onclick="undo()">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </button>
+                    
+
+                    <label for="formatSelect" style="color: white;">Save As:</label>
+                    <select id="formatSelect">
+                        <option value="png">PNG</option>
+                        <option value="jpg">JPEG</option>
+                        <option value="svg">SVG</option>
+
+                    </select>
+                    
+                    <label for="resolutionSelect" style="color: white;">Resolution (DPI):</label>
+                    <select id="resolutionSelect">
+                        <option value="200">300 DPI</option>
+                        <option value="300">300 DPI</option>
+                        <option value="600">600 DPI</option>
+
+                    </select>
+                    
+                    <button onclick="saveGraph(
+                        document.getElementById('formatSelect').value,
+                        parseInt(document.getElementById('resolutionSelect').value)
+                    )">
+                        Export Graph
+                    </button>
+                    
+
+        
+                    <label style="color: white;">Font Size:</label>
+                    <input type="range" min="10" max="50" value="14" onchange="changeFontSize(this.value)">
+                    <label style="color: white;">Node Size:</label>
+                    <input type="range" min="0.1" max="10" value="0.1" onchange="scaleNetworkSize(this.value)">
+                    
+                    <button id="togglePhysicsButton" onclick="togglePhysics()">Disable Physics</button>
+
+                    <label style="color: white;">Physics:</label>
+                    <input type="range" min="50" max="500" value="200" step="10" onchange="changePhysics(this.value)">
+               
+                </div>
+            `);
+        </script>
+        </body>
+</html>
