@@ -3,8 +3,8 @@ Acvr1,-,NS,-,UP,Type I serine/threonine kinase receptor; binds TGF-ß/BMP ligands
 Adgrb1,-,NS,-,UP,Adhesion G protein-coupled receptor (GPCR); inhibits brain angiogenesis and participates in synapse organization; regulates neuronal plasticity and phagocytosis of apoptotic cells.
 Adgrg1,-,-,-,UP,Adhesion G protein-coupled receptor (GPCR); activates the RhoA pathway in response to ligand 17-OH; maintains pial basement membrane integrity and supports cortical development and myelination.
 Adgrl1,-,NS,-,UP,Neuronal adhesion organizer; controls synapse formation and maturation; regulates neurotransmitter release to support the development of functional brain networks.
-Adgrl2,-,NS,-,UP,Adhesion G protein-coupled receptor (GPCR); controls synaptic connection specificity; promotes hippocampal synapse formation at postsynaptic dendritic spines.
-Adgrl3,DOWN,NS,NS,UP,"Adhesion G protein-coupled receptor (GPCR); directs glutamatergic synapse formation (e.g., CA3–CA1); supports the development of neuronal networks in the cortex and hippocampus."
+Adgrl2,-,NS,UP,UP,Adhesion G protein-coupled receptor (GPCR); controls synaptic connection specificity; promotes hippocampal synapse formation at postsynaptic dendritic spines.
+Adgrl3,DOWN,NS,DOWN,UP,"Adhesion G protein-coupled receptor (GPCR); directs glutamatergic synapse formation (e.g., CA3–CA1); supports the development of neuronal networks in the cortex and hippocampus."
 Agrn,-,NS,-,UP,Basement membrane glycoprotein; induces dendritic filopodia and synapse formation; regulates Ca2+ homeostasis and synaptic depolarization in the central nervous system.
 Aldh1a2,-,NS,-,UP,Aldehyde dehydrogenase enzyme; catalyzes retinoic acid (RA) synthesis; essential for cell differentiation and prevention of neural tube defects.
 Aplp2,-,NS,-,UP,Amyloid precursor-like transmembrane protein; participates in synapse organization and plasticity; supports spatial learning processes.
@@ -15,7 +15,7 @@ Bmp6,-,NS,-,UP,TGF-ß family ligand; activates the SMAD1/5/8 pathway; modulates V
 Bmpr1a,-,NS,-,UP,Type I serine/threonine kinase receptor; activates the SMAD1/5/8 pathway; controls developmental gene expression to support cell differentiation and BMP-dependent morphogenesis.
 Bmpr1b,-,NS,-,UP,Type I serine/threonine kinase receptor; activates the SMAD1/5/8 pathway; controls developmental gene expression to support embryonic morphogenesis.
 Bmpr2,-,NS,-,UP,BMP signaling receptor; activates SMAD and MAPK pathways; acts as a tissue development architect to ensure proper organizational structure.
-Bsg,-,NS,-,UP,Transmembrane protein; supports retinal cell survival and glucose metabolism; regulates monocarboxylate transporters during neuronal network formation.
+Bsg,-,NS,UP,UP,Transmembrane protein; supports retinal cell survival and glucose metabolism; regulates monocarboxylate transporters during neuronal network formation.
 Cd47,-,NS,-,UP,Membrane receptor; regulates cell survival and immune interactions; influences synaptic plasticity and memory processes in neurons.
 Clstn1,-,NS,-,UP,Transport protein and synapse organizer; enables axonal vesicle transport; supports the formation and stabilization of neuronal network connections.
 Clstn3,-,-,-,UP,Postsynaptyic adhesion molecule; binds presynaptic neurexins; regulates the balance between excitatory and inhibitory synapses and stabilizes APP metabolism.
@@ -27,9 +27,9 @@ Efna2,-,NS,-,UP,"Surface protein (Eph ligand); guides cell migration, adhesion, 
 Efna3,-,-,-,UP,GPI-anchored surface ligand; mediates bidirectional contact signaling; controls cell migration and adhesion during neuronal development.
 Efna5,-,NS,-,UP,GPI-anchored surface ligand; steers cytoskeleton organization and adhesion; modulates axonal migration and fasciculation in the developing nervous system.
 Efnb2,-,NS,-,UP,Cell contact navigator; controls cell migration and repulsion; organizes the structural development of the nervous system.
-Efnb3,-,NS,-,UP,Transmembrane ligand; coordinates axonal growth and orientation (including commissural axons); supports forebrain development and function.
+Efnb3,-,NS,UP,UP,Transmembrane ligand; coordinates axonal growth and orientation (including commissural axons); supports forebrain development and function.
 Epha4,-,NS,-,UP,Receptor tyrosine kinase; regulates cell morphology and guides corticospinal axonal pathfinding; participates in synaptic plasticity and neural repair.
-Epha5,UP,-,NS,-,Receptor tyrosine kinase; controls axonal growth and organizes brain neuronal networks; acts as a navigator for neuronal development and synaptic plasticity.
+Epha5,UP,-,UP,-,Receptor tyrosine kinase; controls axonal growth and organizes brain neuronal networks; acts as a navigator for neuronal development and synaptic plasticity.
 Ezr,-,NS,-,UP,Actin-membrane linking protein; conditions cell polarity and cytoskeletal reorganization during movement and migration.
 Fgfr2,DOWN,NS,NS,UP,"FGF receptor tyrosine kinase; activates MAPK and PI3K/AKT pathways; regulates cell proliferation, migration, and differentiation during organogenesis."
 Fgfr3,-,NS,-,UP,"Receptor tyrosine kinase; regulates cell growth, differentiation, and apoptosis; participates in inner ear development via RAS-MAPK and PI3K-AKT cascades."
@@ -38,12 +38,12 @@ Fzd3,-,UP,-,UP,Wnt signaling receptor; directs neuronal migration and axonal gui
 Gabbr1,-,NS,-,UP,GABA(B) receptor subunit (GPCR); inhibits presynaptic neurotransmitter release and reduces postsynaptic excitability; key for hippocampal plasticity.
 Gabrb3,-,NS,-,UP,GABA(A) receptor beta-3 subunit; mediates inhibitory synaptic transmission; supports the formation of rapid synaptic connections.
 Gabrd,DOWN,NS,NS,UP,GABA(A) receptor delta subunit; mediates tonic inhibitory transmission in the hippocampus and cerebellum; stabilizes neuronal inhibition and excitability.
-Gls,-,NS,-,UP,Mitochondrial glutaminase; catalyzes the hydrolysis of glutamine to glutamate; provides the primary excitatory neurotransmitter in the brain.
+Gls,-,NS,UP,UP,Mitochondrial glutaminase; catalyzes the hydrolysis of glutamine to glutamate; provides the primary excitatory neurotransmitter in the brain.
 Gria1,-,NS,-,UP,"Ionotropic glutamate receptor; enables rapid neuronal excitation; supports learning, memory, and neuronal network maturation."
 Gria2,-,UP,-,UP,"Ionotropic glutamate receptor; acts as an excitatory signal regulator and ""fuse""; protects neurons from excessive Ca2+ influx."
 Grik1,-,NS,-,UP,Ionotropic kainate receptor; regulates postsynaptic excitation and synaptic transmission; supports network plasticity in the hippocampus and cortex.
 Grm5,-,NS,-,UP,Metabotropic glutamate receptor mGlu5 (GPCR); supports neuronal network synchronization; regulates the strengthening or weakening of synaptic connections.
-Grm7,DOWN,-,NS,-,Metabotropic glutamate receptor (GPCR); acts as a signal regulator and silencer; inhibits neuronal excitability and stabilizes neuronal networks.
+Grm7,DOWN,-,DOWN,-,Metabotropic glutamate receptor (GPCR); acts as a signal regulator and silencer; inhibits neuronal excitability and stabilizes neuronal networks.
 Hsd17b12,-,NS,-,UP,Fatty acid elongase enzyme; participates in the synthesis of very long-chain fatty acids (VLCFA); provides precursors for neural cell membranes.
 Igf1r,-,NS,-,UP,Receptor growth switch; activates cell division and blocks apoptosis; plays a key role in tissue survival and development.
 Il27,-,NS,-,UP,Immune-regulating cytokine; influences T lymphocyte differentiation; maintains the balance between pro- and anti-inflammatory responses.
@@ -67,8 +67,8 @@ Rorb,-,NS,-,UP,"Nuclear transcription regulator; essential for neural cell diffe
 Rspo2,-,NS,-,UP,Secreted Wnt-enhancing ligand; regulates cell differentiation and tissue patterning during embryonic development.
 Rxrb,-,NS,-,UP,Nuclear retinoic acid receptor; directs developmental gene expression and metabolic homeostasis in response to retinoids.
 Ryk,-,NS,-,UP,Atypical receptor tyrosine kinase; essential for corpus callosum formation and axonal growth guidance via Wnt signaling.
-Sfrp1,-,NS,-,UP,"Wnt pathway modulator; regulates the balance between growth, differentiation, and migration in developing tissues."
-Slc1a1,-,NS,-,UP,Glutamate transporter; terminates postsynaptic neurotransmitter action; protects neurons from excitotoxicity and supports oxidative protection.
+Sfrp1,-,NS,UP,UP,"Wnt pathway modulator; regulates the balance between growth, differentiation, and migration in developing tissues."
+Slc1a1,-,NS,UP,UP,Glutamate transporter; terminates postsynaptic neurotransmitter action; protects neurons from excitotoxicity and supports oxidative protection.
 Slc1a2,-,NS,-,UP,Glutamate transporter (EAAT2); removes glutamate from synapses (primarily in astrocytes); critical for neuronal plasticity and preventing overexcitation.
 Slitrk2,-,NS,-,UP,Membrane protein; promotes excitatory synapse formation; controls neuronal process length and cognitive function development.
 Sort1,-,NS,-,UP,"Sortilin receptor; regulates neurotrophin transport (proBDNF, proNGFB); supports neuronal differentiation and functioning."
